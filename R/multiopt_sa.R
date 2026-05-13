@@ -4,7 +4,8 @@
 
 multiopt_sa <- function(
     trait_list, # list of trait data as vectors or matrices
-    measure_list, # list of measures corresponding to trait order. must match with supplied list.
+    measure_list, # list of measure functions corresponding to trait order.
+    measure_args_list, # list of any args needed for measures
     n_t = NULL, # how many total "individuals" to select
     weights_max = NULL, # single value or vector of length matching number of individuals in trait dataset
     weights_min = NULL,
@@ -21,41 +22,14 @@ multiopt_sa <- function(
 
   # Run checks --------------------------------------------------------------
 
-
-  validate_measures <- function(measures) {
-    allowed = c("nei", "shannon", "allele_enrichment", "vector_weighted_mean",
-                "negative_vector_weighted_mean", "sum_squared_difference",
-                "negative_sum_squared_difference", "vector_diff_weighted_mean",
-                "negative_vector_diff_weighted_mean", "matrix_weighted_mean",
-                "negative_matrix_weighted_mean")
-
-
-    bad_idx <- which(!measures %in% allowed)
-
-    if (length(bad_idx) > 0) {
-      stop(
-        paste0(
-          "Invalid measure at position(s): ",
-          paste(bad_idx, collapse = ", "),
-          "\nValue(s): ",
-          paste(measures[bad_idx], collapse = ", "),
-          "\nAllowed: ",
-          paste(allowed, collapse = ", ")
-        ),
-        call. = FALSE
-      )
-    }
-
-    invisible(TRUE)
+  if (!all(vapply(measure_list, is.function, logical(1)))) {
+    stop("All supplied measures must be functions")
   }
 
-  validate_measures(measure_list)
 
   if(any(!sapply(trait_list, is.matrix))) stop("All trait data within 'trait_list' must be in matrix format.")
 
-
-
-  if (is.null(n_t) && is.null(initial_wights)) stop("Either 'n_t' or 'initial_weights' must be provided.")
+  if (is.null(n_t) && is.null(initial_weights)) stop("Either 'n_t' or 'initial_weights' must be provided.")
 
   if ( !is.null(n_t) & !is.null(initial_weights)) {
 
