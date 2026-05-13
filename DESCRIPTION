@@ -1,0 +1,17 @@
+Package: MultiOpt
+Type: Package
+Title: Multi-objective Simulated Annealing for Ex Situ Conservation Collections
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Sarah", "Herzog",
+      email = "sherzog@mobot.org",
+      role = c("aut", "cre")
+    )
+  )
+Description: This package is modeled after the R package OptGenMix, with some tweaks and a 
+	focus on allowing for >2 objectives.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.3
