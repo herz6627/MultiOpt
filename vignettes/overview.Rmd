@@ -1,0 +1,160 @@
+---
+title: "overview"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+collapse = TRUE,
+comment = "#>"
+)
+```
+
+```{r setup}
+library(MultiOpt)
+```
+
+# Basics of simulated annealing
+
+# understanding this package: what it does and doesnt do
+
+# A simple example
+
+## Loading data
+
+For now we will generate some data to look at. This data is weakly positively correlated.
+```{r}
+
+n <- 100 # how many "individuals" we want in our sample
+
+set.seed(12345)
+x = rnorm(n = n, mean = 120, sd = 2)
+y = x * 4 + rnorm(n = n, mean = 0, sd = 5)
+z = y * 2 + rnorm(n = n, mean = 0, sd = 5)
+
+dat = data.frame(x = x, y = y, z = z)
+
+head(dat)
+```
+
+
+## Formatting data
+
+### "trait" data
+Expected formatting for trait data is a list of matrices. Here we are just working with vectors, but pairwise matrices of distances (genetic or otherwise) can also but added to the list.
+
+The package refers to provided data as "trait" data, but this is in the broad sense and can include phenotypic or genotypic data, so long as it can be put into a matrix. 
+```{r}
+trait_list = list(
+  x = as.matrix(dat$x),
+  y = as.matrix(dat$y),
+  z = as.matrix(dat$z)
+)
+```
+
+
+This list would work, however, as soon as you try and run the simulation you would notice a warning about the scales of the traits being off. This is an important consideration for your simulation. If the scales of your traits are considerably different, the trait with the larger values would be "favored" in the simulation if `p_depends_delta = TRUE`, as the larger differences in values between samples are larger and thus more important to the algorithm. Thus, its a good idea to transform your data before running simulated annealing. Fortunately, we have a function to do so. 
+
+```{r}
+trait_list_scaled <- scale_traits(trait_list)
+```
+
+
+### Measures
+Now we need to specify what out exact goals are for each of these traits. Some basic goals would be minimizing or maximizing a trait (e.g., minimizing inbreeding vs maximizing genetic diversity), or even maximizing variance (e.g., preserving phenotypes preventing selection when subsetting). There are quite a few options, see `multiopt_sa()` for more details. INSERT TABLE WITH DESCRIPTIONS HERE??? We can pick the direction of the measure in the arguments parameter, described next.
+
+Again, this information needs to be in a list, with each list element being the function we want to use to measure success. For simplicity, we'll just go with summarizing the measures with a mean of our trait data, which are vectors, and thus why we will pick `weighted_mean_of_vector`. Weighting is indicating the mean is modified by how many times an individiual is chosen. 
+```{r}
+measure_list = list(
+  x = weighted_mean_of_vector,
+  y = weighted_mean_of_vector,
+  z = weighted_mean_of_vector
+)
+```
+
+### Measure arguments
+Some arguments require specialized parameter specification; here is where you can add those details. The arguments are also where you can specify what direction of success you are interested in (minimizing or maximizing, specified by direction = 1 or -1). Again, this needs to be a list. All trait names need to match between the trait, measures, and argument lists.
+
+Let's choose to maximize the first two traits (`x`, and `y`), but minimize `z`. Since we are just doing a simple mean, we dont need to supply any other arguments
+```{r}
+args_list = list(
+  x = NULL, # dont need any special arguments here
+  y = NULL,
+  z = list(direction = -1) # -1 here indicates we want to get the minimum value of the measure
+)
+```
+
+
+## A basic analysis
+
+```{r}
+n_t = 50 # how many "individuals" or samples we want in the final population
+weights_max = 1 # maximum number of times an individual can be chosen in the population. Here we are selecting an individual a maximum time of 1. You could select an individual multiple times for example when taking cuttings or collecting seeds from a selfed individual.
+# initial_weights = sample(c(rep(1, n_t), rep(0, n-n_t))) # if you have an idea of what individuals are going to be best you can start the simulation off with those. There we are just picking the first `n_t` individuals. This argument isnt needed if specifying n_t.
+
+```
+
+And with that we can start a simulation:
+```{r}
+out <- multiopt_sa(
+  trait_list = trait_list_scaled,
+  measure_list = measure_list,
+  measure_args_list = args_list,
+  n_t = n_t, 
+  weights_max = weights_max,
+  verbose = F
+)
+```
+
+
+### Take a look at the results
+
+```{r}
+plot(out$chain$values[,1], type = "l") # trait x
+plot(out$chain$values[,2], type = "l") # trait y
+plot(out$chain$values[,3], type = "l") # trait z
+```
+
+What we want to see an lots of bouncing around in the beginning, indicating the algorithm was exploring. As the temperature cools, we want to see a gradual increase in value, with the final iterations being fairly stable. With three trait dimentions the trait relationships can get a bit convoluted. Here we can see very nice simulation results of our "chain" (what the algorithm decided as the temperature cooled) for two of the traits (`x` and `y`), but the opposite of what we would expect for the last trait (`z`). If we think back to how we generated our data, we made all the traits weakly positively correlated, then chose to maximize two of them and minimize the last one. So it was easy for the algorithm to maximize two traits (since they were positively correlated), but since the last trait was going in the opposite direction, it was not prioritized (as two traits being improved is better one trait improving). So these results make sense in the setup we provided. 
+
+
+We can also back transform the output to make the results a bit more interpretable.
+```{r}
+out_unscaled <- unscale_output(trait_list = trait_list, multiopt_output = out)
+
+plot(out_unscaled$chain$values[,1], type = "l") # trait x
+plot(out_unscaled$chain$values[,2], type = "l") # trait y
+plot(out_unscaled$chain$values[,3], type = "l") # trait z
+```
+
+
+## A more complicated analysis
+### Randomizations
+
+### Exploring the Pareto Front further
+#### adding to the front
+```{r}
+# test = explore_pareto(
+#   out$archive,
+#   trait_list = trait_list_scaled,
+#   measure_list = measure_list,
+#   measure_args_list = args_list,
+#   n_t = n_t,
+#   weights_max = weights_max,
+#   max_steps = 5000, # dont need as many step since we are not aiming for optimized result
+#   nd_samples = 500, # want maximum nd_samples
+#   verbose = F
+# )
+# 
+# # just returns the archive values.
+# # Here are the first two traits
+# plot(test$archive_summary)
+```
+
+
+#### comparing multi-objective to single objective
+

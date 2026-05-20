@@ -11,7 +11,7 @@ nei_diversity(v, w = NULL, direction = 1)
 
 \item{w}{Optional vector of weights}
 
-\item{direction}{numeric scalar. Must be 1 or -1. Applied as a multiplicative
+\item{direction}{Numeric scalar. Must be 1 or -1. Applied as a multiplicative
 factor to the computed metric to control its optimisation direction.}
 }
 \value{
