@@ -20,7 +20,7 @@
 #' @references   Bragg, J. G., van der Merwe, M., Yap, J.-Y. S., Borevitz, J., & Rossetto, M. (2022). Plant collections for conservation and restoration: Can they be adapted and adaptable? Molecular Ecology Resources, 22(6), 2171–2182. https://doi.org/10.1111/1755-0998.13605
 #'
 #' @export
-explore_pareto <- function(multiopt_archive_output, nd_samples = 100, max_steps = 5000, ...) {
+explore_pareto <- function(multiopt_archive_output, nd_samples = 100, max_steps = 5000, verbose = T, ...) {
 
   current_archive <- multiopt_archive_output
 
@@ -35,7 +35,7 @@ explore_pareto <- function(multiopt_archive_output, nd_samples = 100, max_steps 
 
   for (i in 1:nruns) {
 
-    cat("\rRefining", i, "of", nruns, "archived solutions")
+    if(verbose) cat("\rRefining", i, "of", nruns, "archived solutions")
 
     initial_weights <- multiopt_archive_output$archive_weights[i,] # which individuals to start with
 

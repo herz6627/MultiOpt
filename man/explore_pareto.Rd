@@ -8,6 +8,7 @@ explore_pareto(
   multiopt_archive_output,
   nd_samples = 100,
   max_steps = 5000,
+  verbose = T,
   ...
 )
 }

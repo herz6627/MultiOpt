@@ -38,6 +38,7 @@ future::plan(multisession, workers = 4) # multisession indicates this is run on 
 
 
 set.seed(12345)
+n = 100
 x = rnorm(n = n, mean = 120, sd = 2)
 y = x * 3 + rnorm(n = n, mean = 0, sd = 20)
 dat = data.frame(x = x, y = y)
@@ -63,7 +64,7 @@ sa_args = list(
 trait_list = trait_list_scaled,
 measure_list = measure_list,
 measure_args_list = args_list,
-n_t = 50,
+n_t = 10,
 weights_max = 1,
 max_steps = 50000,
 nda = T,

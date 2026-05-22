@@ -8,6 +8,8 @@
 #'
 #'Compatible with parallel computing when n_reps > 1. See `rand_multiopt()` for more details.
 #'
+#'Output value can be back transformed using `unscale_singleopt`.
+#'
 #' @inheritParams multiopt_sa
 #' @inheritParams rand_multiopt
 #'
@@ -20,6 +22,7 @@
 #' @examples
 #'
 #' set.seed(12345)
+#' n = 100
 #'x = rnorm(n = n, mean = 120, sd = 2)
 #'y = x * 3 + rnorm(n = n, mean = 0, sd = 20)
 #'dat = data.frame(x = x, y = y)
@@ -46,7 +49,7 @@
 #'  trait_list = trait_list_scaled,
 #'  measure_list = measure_list,
 #'  measure_args_list = args_list,
-#'  n_t = 20,
+#'  n_t = 10,
 #'  verbose = F
 #')
 #'
@@ -72,18 +75,11 @@ singleopt_context <- function(
   # checks
   if(!n_runs%%1 == 0 | n_runs < 0) stop("`n_runs` must be positive and an integer.")
 
-  # load in all traits/measures of interest ------------------------------------------
-  # same list information as needed for multi_opt
-
-
-
   # run multi_opt for a single trait ----------------------------------------
 
   if (n_runs == 1) {
 
     # single run --------------------------------------------------------------
-
-
     sim_out <-  multiopt_sa(
       trait_list,
       measure_list,
@@ -148,12 +144,9 @@ singleopt_context <- function(
     # first column of the tables we just made should match the original measure_summaries output (for the first trait)
     if(sum_out[[1]][1] != sim_out[[1]]$final_selection$measure_summary[1]) stop("Something went wrong. Outputs do not match.")
 
-
-
   } else {
 
     # multiple runs -----------------------------------------------------------
-
     rand_args = list(
       trait_list,
       measure_list,
@@ -207,7 +200,6 @@ singleopt_context <- function(
 
     )
 
-
     ## get measures for non-target trait ---------------------------------------
 
     # use the weights to calculate the measures for the other traits (individs_selected)
@@ -257,8 +249,6 @@ singleopt_context <- function(
     if(!all(sum_out[[1]][,1] == sim_out[[1]]$measure_summaries[,1])) stop("Something went wrong. Outputs do not match.")
 
   }
-
-
 
   return(sum_out)
 }

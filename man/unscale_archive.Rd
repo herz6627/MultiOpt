@@ -9,10 +9,10 @@ unscale_archive(trait_list, archive_output)
 \arguments{
 \item{trait_list}{Original list of trait data as used in `multiopt_sa`.}
 
-\item{multiopt_output}{Archive output from `multiopt_sa` (out$archive), `rand_multiopt` (out$archive) or `explore_pareto`.}
+\item{archive_output}{Archive output from `multiopt_sa` (out$archive), `rand_multiopt` (out$archive) or `explore_pareto`.}
 }
 \value{
-List with archive values and weights matching formatting of `multiopt_output`.
+List with archive values and weights matching formatting of `archive_output`.
 }
 \description{
 This function uses the original transformed trait data provided in `multiopt_sa` or `rand_multiopt` and the corresponding output

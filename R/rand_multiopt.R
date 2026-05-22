@@ -29,6 +29,7 @@
 #'
 #'
 #' set.seed(12345)
+#'n = 100
 #'x = rnorm(n = n, mean = 120, sd = 2)
 #'y = x * 3 + rnorm(n = n, mean = 0, sd = 20)
 #'dat = data.frame(x = x, y = y)
@@ -54,7 +55,7 @@
 #'trait_list = trait_list_scaled,
 #'measure_list = measure_list,
 #'measure_args_list = args_list,
-#'n_t = 50,
+#'n_t = 10,
 #'weights_max = 1,
 #'max_steps = 50000,
 #'nda = T,
@@ -112,9 +113,12 @@ rand_multiopt <- function(
 
   # combine archives if needed
   if (!is.null(multiopt_args$nda) && isTRUE(multiopt_args$nda)) {
-    print("breached containment")
+
     all_archives <- lapply(out, `[[`, "archive")
+
     archive <- Reduce(combine_archives, all_archives)
+
+    colnames(archive$archive_summary) = names(multiopt_args$trait_list)
   }
 
   if(verbose) message(

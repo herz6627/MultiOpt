@@ -73,10 +73,13 @@ happen when incorporating multiple objectives. No chains or archives are returne
 }
 \details{
 Compatible with parallel computing when n_reps > 1. See `rand_multiopt()` for more details.
+
+Output value can be back transformed using `unscale_singleopt`.
 }
 \examples{
 
 set.seed(12345)
+n = 100
 x = rnorm(n = n, mean = 120, sd = 2)
 y = x * 3 + rnorm(n = n, mean = 0, sd = 20)
 dat = data.frame(x = x, y = y)
@@ -103,7 +106,7 @@ singleopt_context(
  trait_list = trait_list_scaled,
  measure_list = measure_list,
  measure_args_list = args_list,
- n_t = 20,
+ n_t = 10,
  verbose = F
 )
 
