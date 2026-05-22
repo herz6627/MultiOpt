@@ -40,14 +40,15 @@
 #'   Pareto-optimal candidate solutions encountered during optimization.
 #' @param nd_samples Maximum number of archived non-dominated solutions
 #'   to retain when `nda = TRUE`. Once satisfied, simulated annealing run will stop.
+#' @param save_chain Logical; Whether to save the chain of results. Helpful to set to FALSE if trying to save storage.
 #' @param verbose If TRUE, prints status updates in the console.
 #'
 #' @return A list containing:
 #' \describe{
 #'   \item{final_selection}{List containing the final objective values
 #'   (`measure_summary`) and selected weights (`individs_selected`).}
-#'   \item{chain}{List containing optimization history, including proposed
-#'   weights, objective values, and acceptance status for each iteration.}
+#'   \item{chain}{If `save_chain = TRUE`, a list containing optimization history, including proposed
+#'   weights, objective values, and acceptance status for each iteration. Otherwise `NULL`}
 #'   \item{archive}{If `nda = TRUE`, a list containing archived
 #'   non-dominated solutions (`archive_summary`) and associated weights (`archive_weights`); otherwise `NULL`.}
 #' }
@@ -69,12 +70,13 @@ multiopt_sa <- function(
     acceptance_multiplier_all_worse = 1,
     nda = F,
     nd_samples = 100,
+    save_chain = T,
     verbose = T
 ) {
 
   objectives = length(trait_list)
 
-  if(verbose) message(paste("Found", objectives, "objective(s)."))
+  if(verbose) message(paste("\nFound", objectives, "objective(s)."))
 
   # Run checks --------------------------------------------------------------
 
@@ -88,6 +90,8 @@ multiopt_sa <- function(
 
 
   if (is.null(n_t) && is.null(initial_weights)) stop("Either 'n_t' or 'initial_weights' must be provided.")
+
+  if(is.null(n_t) & !is.null(initial_weights)) n_t = sum(initial_weights)
 
   if ( !is.null(n_t) & !is.null(initial_weights)) {
 
@@ -104,7 +108,7 @@ multiopt_sa <- function(
   # Set up ------------------------------------------------------------------
 
   # number of individuals
-  n_g <- ifelse(!is.null(initial_weights), length(initial_weights), nrow(trait_list[[1]]))
+  n_g <- nrow(trait_list[[1]])
 
   # if initial weights were not provided, need to assign
   if (is.null(initial_weights)) {
@@ -122,24 +126,28 @@ multiopt_sa <- function(
 
   # begin simulated annealing ----------------------------------------------
 
-  # allocate chain
-  chain <- list(
-    weight = matrix(NA_real_, max_steps, n_g),
-    values = matrix(NA_real_, max_steps, objectives),
-    accept = rep(NA, max_steps) #logical(max_steps)
-  )
+  if (save_chain) {
+    # allocate chain
+    chain <- list(
+      weight = matrix(NA_real_, max_steps, n_g),
+      values = matrix(NA_real_, max_steps, objectives),
+      accept = rep(NA, max_steps) #logical(max_steps)
+    )
 
-  # add first observations to chain
-  chain$weight[1,] <- initial_weights
-  chain$values[1,] <- unlist(measure_out)
-  # chain$accept[1] <- NA # not needed since it is already NA
+    # add first observations to chain
+    chain$weight[1,] <- initial_weights
+    chain$values[1,] <- unlist(measure_out)
+    # chain$accept[1] <- NA # not needed since it is already NA
+
+  }
 
   # set up archive if needed
   if (nda) {
 
     archive = list(
-      archive_summary = matrix(unlist(measure_out), nrow = 1),
-      archive_weights = matrix(initial_weights, nrow = 1))
+      archive_summary = matrix(unlist(measure_out), nrow = 1, dimnames = list(NULL, names(trait_list))),
+      archive_weights = matrix(initial_weights, nrow = 1)
+    )
 
   }
 
@@ -156,7 +164,7 @@ multiopt_sa <- function(
     temp <- temp_scheduler(s, max_steps, max_t, nda)
 
     # make new mixture
-    weights_mod <- modify_weights(wts, w_min = weights_min, w_max = weights_max)
+    weights_mod <- modify_weights(wts, w_min = weights_min, w_max = weights_max, n_t = n_t)
 
     # and see what they measure
     measure_mod = calculate_measure(trait_list, measure_list, measure_args_list, w = weights_mod)
@@ -190,9 +198,13 @@ multiopt_sa <- function(
     }
 
     # store chain information
+    if (save_chain) {
+
     chain$weight[s,] <- wts
-    chain$values[s,] <-  unlist(measure_out, use.names = FALSE)
+    chain$values[s,] <- unlist(measure_out, use.names = FALSE)
     chain$accept[s] <- acceptance
+
+    }
 
     if(verbose) cat("\rFinished", s, "of", max_steps)
 
@@ -210,7 +222,7 @@ multiopt_sa <- function(
     list(
 
       final_selection = final_selection,
-      chain = chain,
+      chain = if(save_chain) chain else NULL,
       archive = if (nda) archive else NULL
 
     )

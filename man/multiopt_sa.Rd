@@ -20,6 +20,7 @@ multiopt_sa(
   acceptance_multiplier_all_worse = 1,
   nda = F,
   nd_samples = 100,
+  save_chain = T,
   verbose = T
 )
 }
@@ -66,6 +67,8 @@ Pareto-optimal candidate solutions encountered during optimization.}
 \item{nd_samples}{Maximum number of archived non-dominated solutions
 to retain when `nda = TRUE`. Once satisfied, simulated annealing run will stop.}
 
+\item{save_chain}{Logical; Whether to save the chain of results. Helpful to set to FALSE if trying to save storage.}
+
 \item{verbose}{If TRUE, prints status updates in the console.}
 }
 \value{
@@ -73,8 +76,8 @@ A list containing:
 \describe{
   \item{final_selection}{List containing the final objective values
   (`measure_summary`) and selected weights (`individs_selected`).}
-  \item{chain}{List containing optimization history, including proposed
-  weights, objective values, and acceptance status for each iteration.}
+  \item{chain}{If `save_chain = TRUE`, a list containing optimization history, including proposed
+  weights, objective values, and acceptance status for each iteration. Otherwise `NULL`}
   \item{archive}{If `nda = TRUE`, a list containing archived
   non-dominated solutions (`archive_summary`) and associated weights (`archive_weights`); otherwise `NULL`.}
 }

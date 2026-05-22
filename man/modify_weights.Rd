@@ -4,7 +4,7 @@
 \alias{modify_weights}
 \title{Modify weight vector}
 \usage{
-modify_weights(w, w_min = NULL, w_max = NULL)
+modify_weights(w, w_min = NULL, w_max = NULL, n_t)
 }
 \arguments{
 \item{w}{Integer vector of current weights.}
@@ -24,6 +24,8 @@ May be:
    \item a scalar applied to all individuals.
    \item a vector of length n_g (number of individuals with trait data)
  }}
+
+\item{n_t}{Integer. Total target population size.}
 }
 \value{
 Modified weight vector of same length as w.

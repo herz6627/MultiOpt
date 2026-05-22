@@ -3,6 +3,9 @@
 #' Expands upon the archive values from an initial simulated annealing run
 #' to expand the known coverage of the Pareto Front.
 #'
+#'
+#' Can use `unscale_archive` to back transform data to original trait scales.
+#'
 #' @param multiopt_archive_output Unmodified archive output from `multiopt_sa`. out$archive
 #' @param nd_samples How many observations of the Pareto Front to explore.
 #' Will only impact settings for multiopt_sa internally, results may be larger than the provided `nd_samples`

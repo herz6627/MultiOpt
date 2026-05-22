@@ -37,6 +37,12 @@ scale_traits <- function(trait_list){
   return(trait_list_scaled)
 }
 
+
+min_max_unscale <- function(x_scaled, x_unscaled) {
+  x_scaled * (max(x_unscaled, na.rm = T) - min(x_unscaled, na.rm = T)) + min(x_unscaled, na.rm = T)
+}
+
+
 #' Back transform output to original scale
 #'
 #' This function uses the original transformed trait data provided in `multiopt_sa` and the corresponding output
@@ -52,11 +58,7 @@ scale_traits <- function(trait_list){
 #'
 #' @returns Object of same dimensions and formatting as `multiopt_output`.
 #' @export
-unscale_output <- function(trait_list, multiopt_output){
-
-  min_max_unscale <- function(x_scaled, x_unscaled) {
-    x_scaled * (max(x_unscaled, na.rm = T) - min(x_unscaled, na.rm = T)) + min(x_unscaled, na.rm = T)
-  }
+unscale_multiopt <- function(trait_list, multiopt_output){
 
   n_traits <- length(trait_list)
 
@@ -85,11 +87,7 @@ unscale_output <- function(trait_list, multiopt_output){
     # transform archive (if needed)
     if (!is.null(new_out$archive)) {
 
-      new_out$archive$archive_summary[,i] <-
-        min_max_unscale(
-          x_scaled = abs(multiopt_output$archive$archive_summary[,i]),
-          x_unscaled = trait_list[[i]]
-        )
+      new_out$archive <- unscale_archive(trait_list, multiopt_output$archive)
 
     }
 
@@ -97,3 +95,90 @@ unscale_output <- function(trait_list, multiopt_output){
 
   return(new_out)
 }
+
+#' Back transform output to original scale
+#'
+#' This function uses the original transformed trait data provided in `rand_multiopt` and the corresponding output
+#' from `rand_multiopt` to back transform simulation output to the original trait scale.
+#' This function assumes trait data was transformed using `scale_traits`.
+#'
+#' @param trait_list Original list of trait data as used in `rand_multiopt`.
+#' @param rand_multiopt_output Unmodified output from `rand_multiopt`.
+#'
+#' @details
+#' Note that this function takes the absolute value of transformed trait variables.
+#'
+#'
+#' @returns Object of same dimensions and formatting as `rand_multiopt_output`.
+#' @export
+unscale_rand_multiopt <- function(trait_list, rand_multiopt_output){
+
+  n_traits <- length(trait_list)
+
+  # check everything lines up (this check is not comprehensive)
+  if(!all(names(trait_list) %in% colnames(rand_multiopt_output$measure_summaries))) stop("Original trait names don't line up with multiopt output.")
+
+  # make output
+  new_out = rand_multiopt_output
+
+  for (i in seq(n_traits)) { # for each trait
+
+    # transform final_selection
+    new_out$measure_summaries[,i] <-
+      min_max_unscale(
+        x_scaled = abs(rand_multiopt_output$measure_summaries[,i]),
+        x_unscaled = trait_list[[i]]
+      )
+
+    # transform archive (if needed)
+    if (!is.null(new_out$archive)) {
+
+      new_out$archive <- unscale_archive(trait_list, rand_multiopt_output$archive)
+
+    }
+
+  }
+
+  return(new_out)
+}
+
+#' Back transform output to original scale
+#'
+#' This function uses the original transformed trait data provided in `multiopt_sa` or `rand_multiopt` and the corresponding output
+#' from `multiopt_sa` or `rand_multiopt` to back transform archive values to the original trait scale.
+#' This function assumes trait data was transformed using `scale_traits`.
+#'
+#' @param trait_list Original list of trait data as used in `multiopt_sa`.
+#' @param multiopt_output Archive output from `multiopt_sa` (out$archive), `rand_multiopt` (out$archive) or `explore_pareto`.
+#'
+#' @details
+#' Note that this function takes the absolute value of transformed trait variables.
+#'
+#' @returns List with archive values and weights matching formatting of `multiopt_output`.
+#' @export
+unscale_archive <- function(trait_list, archive_output){
+
+  n_traits <- length(trait_list)
+
+  # check everything lines up (this check is not comprehensive)
+  if(!all(names(trait_list) %in% colnames(archive_output$archive_summary))) stop("Original trait names don't line up with multiopt output.")
+
+  if (is.null(archive_output)) stop("Archive is NULL")
+
+  # make output
+  new_out = archive_output
+
+  # transform archive
+  for (i in seq(n_traits)) { # for each trait
+
+      new_out$archive_summary[,i] <-
+        min_max_unscale(
+          x_scaled = abs(archive_output$archive_summary[,i]),
+          x_unscaled = trait_list[[i]]
+        )
+  }
+
+  return(new_out)
+}
+
+

@@ -115,7 +115,7 @@ clean_archive <- function(
   W_new <- W[!dominated_old, , drop = FALSE]
 
   # Append new solution
-  archive$archive_summary <- rbind(S_new, new_vec)
+  archive$archive_summary <- rbind(S_new, unname(new_vec))
   archive$archive_weights <- rbind(W_new, wts)
 
   return(archive)

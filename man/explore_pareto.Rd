@@ -15,8 +15,8 @@ explore_pareto(
 \item{multiopt_archive_output}{Unmodified archive output from `multiopt_sa`. out$archive}
 
 \item{nd_samples}{How many observations of the Pareto Front to explore.
- Will only impact settings for multiopt_sa internally, results may be larger than the provided `nd_samples`
-Should probably be set higher than what you initially set for `multiopt_sa`.}
+Will only impact settings for multiopt_sa internally, results may be larger than the provided `nd_samples`
+Should probably be set higher than what you initially set for `multiopt_sa` for maximum Pareto front exploration.}
 
 \item{max_steps}{Maximum number of simulated annealing iterations.
 Since we are simply exploring the Pareto Front, not aiming for an optimum solution,
@@ -30,6 +30,9 @@ Returns a list matching the formatting of `multiopt_archive_output`, but with ho
 \description{
 Expands upon the archive values from an initial simulated annealing run
 to expand the known coverage of the Pareto Front.
+}
+\details{
+Can use `unscale_archive` to back transform data to original trait scales.
 }
 \references{
 Bragg, J. G., van der Merwe, M., Yap, J.-Y. S., Borevitz, J., & Rossetto, M. (2022). Plant collections for conservation and restoration: Can they be adapted and adaptable? Molecular Ecology Resources, 22(6), 2171–2182. https://doi.org/10.1111/1755-0998.13605

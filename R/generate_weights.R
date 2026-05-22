@@ -178,7 +178,8 @@ propose_initial_weights <- function(
 modify_weights <- function(
     w,
     w_min = NULL,
-    w_max = NULL
+    w_max = NULL,
+    n_t
 ) {
 
   n_g <- length(w)
