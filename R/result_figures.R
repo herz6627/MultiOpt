@@ -1,212 +1,411 @@
 
+#' Plot trait value chains over iterations
+#'
+#' Visualizes the temporal trajectory of trait values through the simulated annealing
+#' procedure.
+#'
+#' @param chain_list Chain output from `multiopt_sa` (out$chain).
+#'
+#' @return A ggplot object showing trait trajectories over iteration steps,
+#'   faceted by trait.
+#'
+#' @details
+#'
+#' This is primarily intended for diagnosing convergence, mixing, or
+#' temporal dynamics in optimization or sampling chains.
+#'
+#'
+#' @import ggplot2
+#' @import dplyr
+#' @import patchwork
+#' @export
+plot_chain = function(
+    chain_list
+){
 
-
-
-sa_plots_multi = function(sa_loop_out, max_steps = NULL, trait1_name, trait2_name) {
-
-  archive_dat = as_tibble(sa_loop_out$archive$archive_values)
-  trait_dat = sa_loop_out$trait_means
-  chain_dat = sa_loop_out$sample_chain
-  individ_dat = sa_loop_out$individs
-
-  # pareto front and final results for all replicates
-  p1 = ggplot() +
-    geom_point(data = archive_dat,
-               aes(x = value_1, y = value_2), size = 3) +                         # pareto front
-    geom_point(data =trait_dat,                                                   # final result from each replicate
-               aes(x = v1, y = v2), color = "red", alpha = 0.5) +
-    labs(
-      x = trait1_name,
-      y  = trait2_name,
-      title = "Pareto front") +
-    theme_bw()
-
-  # chain from one of the runs, with the final result in red
-  p2 = ggplot() +
-    geom_point(data = chain_dat, # one of the runs
-               aes(x = value_1, y = value_2), color = "gray", alpha = .2) +
-    geom_point(data = chain_dat[max_steps,], # final result
-               aes(x = value_1, y = value_2), color = "red", alpha = .5) +
-    labs(
-      x = trait1_name,
-      y = trait2_name,
-      title = "SA sample") +
-    theme_bw()
-
-  # chain and pareto together
-  p3 = ggplot() +
-
-    # chain
-    geom_point(data = chain_dat, # one of the runs
-               aes(x = value_1, y = value_2), color = "gray", alpha = .1) +
-
-    # pareto front
-    geom_point(data = archive_dat,
-               aes(x = value_1, y = value_2), size = 3) +                         # pareto front
-    geom_point(data =trait_dat,                                                   # final result from each replicate
-               aes(x = v1, y = v2), color = "red", alpha = 0.5) +
-
-    labs(
-      x = trait1_name,
-      y  = trait2_name,
-      title = "Pareto front and sample run") +
-    theme_bw()
-
-  # number of times an individual was selected
-  p4 = individ_dat %>%
-    ggplot(aes(x = .data[[trait1_name]], y = .data[[trait2_name]], fill = value)) +
-    geom_point(alpha = 0.5, size = 3, shape = 21, color = "gray30") +
-    theme_bw() +
-    paletteer::scale_fill_paletteer_c("grDevices::Purple-Yellow", direction = -1)+
-    labs(
-      # x = "Stem length",
-      # y = "Leaf length",
-      fill = "Numer of times\nselected in\nreplicates")
-
-  return(list(parato = p1, chain = p2, pareto_chain = p3, individ_selec = p4))
-
-}
-
-
-sa_plots_single = function(sa_loop_out, max_steps) {
-
-  traits = names(sa_loop_out)
-
-  for (i in seq(length(traits))) {
-
-    trait_dat = sa_loop_out[[traits[[i]]]]$trait_means
-    chain_dat = sa_loop_out[[traits[[i]]]]$sample_chain
-    individ_dat = sa_loop_out[[traits[[i]]]]$individs
-
-
-    # final results for all replicates
-    p1 = ggplot(data = trait_dat, aes(x = v1)) +                                                   # final result from each replicate
-      geom_histogram(bins = 50) +
-      labs(
-        x = traits[[i]],
-        title = "Run results") +
-      theme_bw()
-
-    # chain from one of the runs, with the final result in red
-    p2 = chain_dat %>%
-      mutate(t = row_number(),
-      ) %>%
-      ggplot(aes(y = value, x = t)) +
-      geom_line() +
-      labs(
-        x = "Step",
-        y =  traits[[i]],
-        title = "SA sample") +
-      theme_bw()
-
-
-    # number of times an individual was selected
-    p3 = individ_dat %>%
-      ggplot(aes(x = reorder(bolt_id, -.data[[traits[[i]]]]), y = .data[[traits[[i]]]], fill = value)) +
-      geom_bar(stat = "identity") +
-      theme_classic() +
-      paletteer::scale_fill_paletteer_c("grDevices::Purple-Yellow", direction = -1)+
-      labs(
-        x = "Individual",
-        y = traits[[i]],
-        fill = "Numer of times\nselected in\nreplicates") +
-      theme(
-        axis.text.x = element_blank(),
-        axis.ticks = element_blank()
-      ) +
-      scale_y_continuous(limits = c(0,1), expand = c(0, 0))
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop(
+      "Package 'ggplot2' is required for this function.",
+      call. = FALSE
+    )
   }
 
-  return(list(results = p1, chain = p2, individ_selec = p3))
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    stop(
+      "Package 'dplyr' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+  if (!requireNamespace("tidyr", quietly = TRUE)) {
+    stop(
+      "Package 'ggplot2' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+  chain_dat <- as.data.frame(chain_list$values)
+
+  chain_dat |>
+    dplyr::mutate(t = dplyr::row_number()) |>
+    tidyr::pivot_longer(cols = -t, names_to = "trait", values_to = "val") |>
+    ggplot2::ggplot(ggplot2::aes(y = val, x = t)) +
+    ggplot2::geom_line() +
+    ggplot2::facet_wrap(~trait, scales = "free_y") +
+    ggplot2::labs(
+      x = "Step",
+      y =  "Trait value",
+      title = "Chain") +
+    ggplot2::theme_bw()
 
 }
 
-sa_plots = function(
-    sa_multi_loop_out = NULL,
-    sa_single_loop_out = NULL,
-    max_steps,
-    trait_names,
-    return_all = T, # if T and both multi and single results are supplied, all possible figures are returned. If F, returns only figures using both datasets.
-    show_multi = T # If T, all multi objective results will be shown. If F, just pareto front and single objective results will be shown.
+
+#' Visualize selection frequency across individuals and traits
+#'
+#' Produces plots showing how frequently individuals are selected across
+#' replicates. Supports both single-trait and multi-trait visualization modes.
+#'
+#' For each individual, selection frequency is computed as the number of
+#' replicates in which the individual was selected (ignoring weights).
+#'
+#' @param individs_selected Matrix or data structure indicating selected
+#'   individuals across replicates as produced by `rand_multiopt` (out$individs_selected).
+#' @param trait_list Named list of trait data frames, each containing a
+#'   single column of trait values. Must not contain multi-column objects
+#'   (e.g. pairwise matrices are not supported). This data does not need to be the same supplied to `rand_multiopt`,
+#'   but does need to be in the same order for each individual.
+#'
+#' @return A ggplot2 object (single trait case) or a patchwork object
+#'   containing pairwise trait scatterplots (multi-trait case).
+#'
+#' @details
+#' The function operates in two modes:
+#'
+#' **Single trait case**
+#' \itemize{
+#'   \item Aggregates trait values with selection frequency.
+#'   \item Produces a bar plot ordered by trait value.
+#'   \item Fill indicates number of replicates in which each individual
+#'         was selected.
+#' }
+#'
+#' **Multi-trait case**
+#' \itemize{
+#'   \item Constructs a data frame of trait values.
+#'   \item Computes selection frequency per individual.
+#'   \item Generates all pairwise trait scatterplots.
+#'   \item Uses fill color to indicate selection frequency.
+#' }
+#'
+#' Selection frequency is computed as the row-wise count of nonzero
+#' entries in `individs_selected`.
+#'
+#' @import ggplot2
+#' @import dplyr
+#' @import patchwork
+#' @export
+plot_selection <- function(
+    individs_selected,
+    trait_list # a  list of trait data. Does not have to be the same as used in multiopt, in fact, in some cases it is better to not use the same data, as we are more interested in raw trait data than in pairwise data (genomic or otherwise) or scaled variables.
+){
+
+  # checks -----------------------------------------------------------
+
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop(
+      "Package 'ggplot2' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    stop(
+      "Package 'dplyr' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+  if (!requireNamespace("patchwork", quietly = TRUE)) {
+    stop(
+      "Package 'patchwork' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+  if(any(lapply(trait_list, ncol) != 1)) stop("Trait data should only have 1 column for each trait. If you are attempting to use a pairwise matrix, this is not supported.")
+
+  # loop through traits if needed -------------------------------------------
+  dat <- as.data.frame(t(individs_selected))
+
+  if(length(trait_list) == 1) { # only 1 trait
+
+    # get data table put together
+    trait_dat = trait_list[[1]]
+
+    trait_dat = cbind(
+      trait_dat,
+      colSums(dat > 0) # how many times an individual was selected across replicates (ignores weights)
+    )
+
+    colnames(trait_dat) <- c("trait", "n_selected")
+
+    # put plot together
+    trait_dat |>
+      as.data.frame() |>
+      dplyr::mutate(id = dplyr::row_number()) |>
+      ggplot2::ggplot(ggplot2::aes(x = reorder(id, -trait), y = trait, fill = n_selected)) +
+      ggplot2::geom_bar(stat = "identity") +
+      ggplot2::theme_classic() +
+      ggplot2::scale_fill_gradientn(
+        colours = rev(
+          grDevices::hcl.colors(
+            300,
+            palette = "Purple-Yellow"
+          )
+        )
+      ) +
+      ggplot2::labs(
+        x = "Individual",
+        y = names(trait_list),
+        fill = "Numer of times\nselected in\nreplicates") +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_blank(),
+        axis.ticks = ggplot2::element_blank()
+      ) +
+      ggplot2::scale_y_continuous(expand = c(0, 0))
+
+  } else {
+
+    # multiple traits
+
+    # format data
+    trait_names = names(trait_list)
+
+    trait_dat = as.data.frame(trait_list)
+
+    trait_dat = cbind(
+      trait_dat,
+      n_selected = rowSums(dat > 0) # how many times an individual was selected across replicates (ignores weights)
+    )
+
+
+    # All pairwise combinations
+    pairs <- combn(trait_names, 2, simplify = FALSE)
+
+    plot_list <- lapply(pairs, function(vars){
+
+      trait_dat |>
+        ggplot2::ggplot(
+          ggplot2::aes(
+            x = .data[[vars[[1]]]],
+            y = .data[[vars[[2]]]],
+            fill = n_selected
+          )) +
+        ggplot2::geom_point(alpha = 0.5, size = 3, shape = 21, color = "gray30") +
+        ggplot2::theme_bw() +
+        ggplot2::scale_fill_gradientn(
+          colours = rev(
+            grDevices::hcl.colors(
+              300,
+              palette = "Purple-Yellow"
+            )
+          )
+        ) +          ggplot2::labs(
+          fill = "Numer of times\nselected in\nreplicates"
+        )
+
+
+    }
+    )
+
+    patchwork::wrap_plots(plot_list) +  patchwork::plot_layout(guides = "collect") & ggplot2::theme(legend.position = "bottom")
+
+  }
+
+}
+
+
+#' Visualize pairwise Pareto trade-offs
+#'
+#' Generates a grid of pairwise scatterplots showing trade-offs among
+#' traits in a Pareto archive. Optionally overlays results from
+#' multi-objective and single-objective optimization runs for comparison.
+#'
+#' @param archive_list A list containing Pareto archive output,
+#'   expected to include an element `archive_summary` with trait values.
+#' @param multi_list Optional list containing multi-objective optimization
+#'   results from `rand_multiopt` or `multiopt_sa`. Must include either `measure_summaries` or
+#'   `final_selection$measure_summary`.
+#' @param single_list Optional list of single-objective optimization
+#'   results from `singleopt_context`.
+#'
+#' @return A patchwork object consisting of multiple ggplot2
+#'   pairwise scatterplots with shared legends.
+#'
+#' @details
+#'
+#' Required packages: ggplot2, dplyr, patchwork.
+#'
+#' @import ggplot2
+#' @import dplyr
+#' @import patchwork
+#' @export
+plot_pareto <- function(
+    archive_list,
+    multi_list = NULL, # optional for multi-objective; rand_multiopt or multiopt_sa
+    single_list = NULL # optional for single-objective output from singleopt_context
 ) {
 
-  out = list()
-
-  # multi objective ------------------------------------------------
-  if (!is.null(sa_multi_loop_out) & return_all) {
-
-    out <- append(out, sa_plots_multi(sa_multi_loop_out, trait1_name = trait_names[[1]], trait2_name = trait_names[[2]], max_steps = max_steps))
-
-  } # end of multi
-
-  # single objective ------------------------------------------------
-  if (!is.null(sa_single_loop_out) & return_all) {
-
-    out <- append(out, sa_plots_single(sa_single_loop_out, max_steps))
-
-  } # end of single
-
-
-  # both single and multi --------------------------------------------
-  if (!is.null(sa_single_loop_out) & !is.null(sa_multi_loop_out)) {
-
-    if(any(!trait_names == names(sa_single_loop_out))) stop("`trait_names` do not match names in `sa_single_loop_out`.")
-    if (is.null(sa_single_loop_out[[trait_names[[1]]]]$sup_trait_means) | is.null(sa_single_loop_out[[trait_names[[2]]]]$sup_trait_means)) {
-      stop("`sup_trait_means` is missing from `sa_single_loop_out`")
-    }
-
-    # prep single-objective
-    single_dat1 = sa_single_loop_out[[trait_names[[1]]]]$sup_trait_means %>%
-      filter(trait == trait_names[[2]]) %>%
-      rename(v2 = trait.mean) %>%
-      mutate(v1 = pull(sa_single_loop_out[[trait_names[[1]]]]$trait_means))
-
-    single_dat2 = sa_single_loop_out[[trait_names[[2]]]]$sup_trait_means %>%
-      filter(trait == trait_names[[1]]) %>%
-      rename(v1 = trait.mean) %>%
-      mutate(v2 = pull(sa_single_loop_out[[trait_names[[2]]]]$trait_means))
-
-
-    # pareto front and final results for all replicates
-    lab1 <- paste("Single objective:\n", trait_names[[1]])
-    lab2 <- paste("Single objective:\n", trait_names[[2]])
-
-    p = ggplot() +
-
-      # pareto front
-      geom_point(data = as_tibble(sa_multi_loop_out$archive$archive_values),
-                 aes(x = value_1, y = value_2, color = "Pareto front"), size = 5) +
-
-      # final result to trait 1 single
-      geom_point(data =  single_dat1,
-                 aes(x = v1, y = v2, color = lab1), alpha = 0.75, size = 4) +
-
-      # final result to trait 2 single
-      geom_point(data =  single_dat2,
-                 aes(x = v1, y = v2, color = lab2), alpha = 0.75, size = 4) +
-      scale_color_manual(
-        values = setNames(
-          c("black", "#5495CFFF", "#DB4743FF", "#7C873EFF"),
-          c("Pareto front", "Multi-objective", lab1, lab2)
-        ),
-        name = "Legend"
-      ) +
-      labs(
-        x = trait_names[[1]],
-        y  = trait_names[[2]],
-        title = "Pareto front and all results") +
-      theme_bw()
-
-
-    if(show_multi) {
-      p = p +
-        # final result from each multi replicate
-        geom_point(data = sa_multi_loop_out$trait_means,
-                   aes(x = v1, y = v2, color = "Multi-objective"), alpha = 0.75, size = 4)
-    } else p = p
-
-    out <- append(out, p)
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop(
+      "Package 'ggplot2' is required for this function.",
+      call. = FALSE
+    )
   }
 
-  return(out)
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    stop(
+      "Package 'dplyr' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+
+  if (is.null(archive_list)) stop("Archive is NULL.")
+
+
+
+  # get ready ---------------------------------------------------------------
+  archive_dat = as.data.frame(archive_list$archive_summary)
+
+  # get trait info
+  trait_names = names(archive_dat)
+
+  # all pairwise combinations
+  pairs <- combn(trait_names, 2, simplify = FALSE)
+
+  archive_dat$group <- "archive" # for legend
+
+  ## If multi-objective results are provided ---------------------------------
+  if (!is.null(multi_list)) {
+
+    # try and assign
+    multi_dat <- multi_list$measure_summaries
+
+    # if it fails, try the other version
+    if (is.null(multi_dat)) multi_dat <- multi_list$final_selection$measure_summary
+
+    # if that fails, we have an issue
+    if (is.null(multi_dat)) stop("There is an issue with the multi_list formatting.")
+
+    multi_dat = as.data.frame(multi_dat)
+
+    multi_dat$group <- "multi" # for legend
+
+  }
+
+
+  ## If single-objective outputs are provided --------------------------------
+  if (!is.null(single_list)) {
+
+    single_dat <-
+      single_list |>
+      dplyr::bind_rows(.id = "trait") |>
+      dplyr::as_tibble()
+
+    single_dat$group <- single_dat$trait # for legend
+
+  }
+
+  # make plot -------------------------------------------------------
+
+  plot_list <- lapply(pairs, function(vars){
+
+    p <- archive_dat |>
+      ggplot2::ggplot(
+        ggplot2::aes(
+          x = .data[[vars[1]]],
+          y = .data[[vars[2]]],
+          color = group
+        )
+      ) +
+      ggplot2::geom_point(
+        alpha = 0.5,
+        size = 3
+      ) +
+      ggplot2::theme_minimal()
+
+    # add multi-objective if needed
+    if (!is.null(multi_list)) {
+
+      p <- p +
+        ggplot2::geom_point(data = multi_dat,
+                            shape = 3,
+                            alpha = 0.75,
+                            size = 3,
+                            ggplot2::aes(
+                              color = group # need to specify in aes() so it appears on the legend
+                            )
+        )
+
+    }
+
+    # add single-objective if needed
+    if (!is.null(single_list)) {
+
+      # make the color and shape palettes
+      cols = grDevices::hcl.colors(
+        n = length(trait_names),
+        palette = "Purple-Yellow"
+      )
+
+      shapes = rep(
+        c(21, 22, 23, 24, 25), # only want the ones with outlines
+        length.out = length(trait_names)
+      )
+
+      # add to plot
+      p <- p +
+        ggplot2::geom_point(data = single_dat,
+                            ggplot2::aes(
+                              fill = trait,
+                              shape = trait
+                            ),
+                            alpha = 0.75,
+                            size = 3,
+                            color = "gray40"
+        ) +
+        ggplot2::scale_fill_manual(values = cols) +
+        ggplot2::scale_shape_manual(values = shapes)
+
+
+    }
+
+    p +
+      ggplot2::scale_color_manual(
+        values = c(
+          "black", # Pareto front
+          "hotpink" # multi-objective results
+        ),
+        labels = c(
+          "Pareto front",
+          "Multi-objective\nresults"
+        )) +
+      ggplot2::labs(
+        shape = "Single-objective\nresults",
+        fill = "Single-objective\nresults",
+        color = NULL
+      )
+
+  })
+
+  final_plot <- patchwork::wrap_plots(plot_list) +
+    patchwork::plot_layout(guides = "collect") &
+    ggplot2::theme(legend.position = "bottom")
+
+  return(final_plot)
+
 }
+
+

@@ -130,7 +130,7 @@ multiopt_sa <- function(
     # allocate chain
     chain <- list(
       weight = matrix(NA_real_, max_steps, n_g),
-      values = matrix(NA_real_, max_steps, objectives),
+      values = matrix(NA_real_, max_steps, objectives, dimnames = list(NULL, names(trait_list))),
       accept = rep(NA, max_steps) #logical(max_steps)
     )
 
