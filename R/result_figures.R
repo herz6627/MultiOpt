@@ -234,6 +234,7 @@ plot_selection <- function(
 #'
 #' @param archive_list A list containing Pareto archive output,
 #'   expected to include an element `archive_summary` with trait values.
+#'   Either  $archive from `multiopt_sa` or `rand_multiopt` or output from `explore_pareto`
 #' @param multi_list Optional list containing multi-objective optimization
 #'   results from `rand_multiopt` or `multiopt_sa`. Must include either `measure_summaries` or
 #'   `final_selection$measure_summary`.
@@ -377,7 +378,12 @@ plot_pareto <- function(
                             color = "gray40"
         ) +
         ggplot2::scale_fill_manual(values = cols) +
-        ggplot2::scale_shape_manual(values = shapes)
+        ggplot2::scale_shape_manual(values = shapes)+
+        ggplot2::labs(
+          shape = "Single-objective\nresults",
+          fill = "Single-objective\nresults",
+          color = NULL
+        )
 
 
     }
@@ -393,10 +399,8 @@ plot_pareto <- function(
           "Multi-objective\nresults"
         )) +
       ggplot2::labs(
-        shape = "Single-objective\nresults",
-        fill = "Single-objective\nresults",
         color = NULL
-      )
+        )
 
   })
 

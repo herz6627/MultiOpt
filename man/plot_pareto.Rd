@@ -8,7 +8,8 @@ plot_pareto(archive_list, multi_list = NULL, single_list = NULL)
 }
 \arguments{
 \item{archive_list}{A list containing Pareto archive output,
-expected to include an element `archive_summary` with trait values.}
+expected to include an element `archive_summary` with trait values.
+Either  $archive from `multiopt_sa` or `rand_multiopt` or output from `explore_pareto`}
 
 \item{multi_list}{Optional list containing multi-objective optimization
 results from `rand_multiopt` or `multiopt_sa`. Must include either `measure_summaries` or

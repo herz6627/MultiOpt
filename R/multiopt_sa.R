@@ -184,7 +184,7 @@ multiopt_sa <- function(
       archive <- clean_archive(measure_mod, weights_mod, archive)
 
       if (nrow(archive$archive_summary) >= nd_samples) {
-        message("\nMaximum archive values reached. Stopping simulation")
+        if(verbose) message("\nMaximum archive values reached. Stopping simulation")
         break # dont continue simulation if we have maxed out the archive
       }
     }

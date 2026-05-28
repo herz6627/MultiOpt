@@ -48,6 +48,4 @@ The function operates in two modes:
 
 Selection frequency is computed as the row-wise count of nonzero
 entries in `individs_selected`.
-
-Required packages: ggplot2, dplyr, patchwork.
 }
