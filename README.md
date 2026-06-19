@@ -8,8 +8,7 @@ The package was developed to support analyses presented in:
 
 
 Website: 
-https://herz6627.github.io/MultiOpt/reference/multiopt_sa.html 
-
+[Here](https://herz6627.github.io/MultiOpt/index.html)
 ## Installation
 
 ### Development version
