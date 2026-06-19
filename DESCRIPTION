@@ -9,7 +9,7 @@ Description: This package is modeled after the R package OptGenMix, with
     some tweaks and a focus on allowing for >2 objectives.
 License: MIT + file LICENSE
 Imports: 
-    future
+    future,
     future.apply
 Suggests: 
     dplyr,
