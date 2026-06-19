@@ -8,6 +8,9 @@ The package was developed to support analyses presented in:
 > Author A, Author B, and Author C. (Year). *Title of manuscript*.
 > Journal Name. DOI: xxx
 
+Website:
+<https://herz6627.github.io/MultiOpt/reference/multiopt_sa.html>
+
 ## Installation
 
 ### Development version
