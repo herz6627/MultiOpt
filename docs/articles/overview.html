@@ -4,81 +4,69 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>overview • MultiOpt</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="overview">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="overview">
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">MultiOpt</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
-      </span>
-    </div>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
+    <a class="navbar-brand me-2" href="../index.html">MultiOpt</a>
 
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/overview.html">overview</a>
-    </li>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/overview.html">overview</a></li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
 
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>overview</h1>
+<link href="overview_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="overview_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="overview_files/plotly-binding-4.12.0/plotly.js"></script><script src="overview_files/typedarray-0.1/typedarray.min.js"></script><link href="overview_files/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="overview_files/crosstalk-1.2.2/js/crosstalk.min.js"></script><link href="overview_files/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="overview_files/plotly-main-2.25.2/plotly-latest.min.js"></script><div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+
+      <h1>overview</h1>
             
       
 
-      <div class="hidden name"><code>overview.Rmd</code></div>
-
+      <div class="d-none name"><code>overview.Rmd</code></div>
     </div>
 
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">MultiOpt</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://herz6627.github.io/MultiOpt/">MultiOpt</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="basics-of-simulated-annealing">Basics of simulated annealing<a class="anchor" aria-label="anchor" href="#basics-of-simulated-annealing"></a>
 </h2>
@@ -193,8 +181,14 @@ simple mean, we dont need to supply any other arguments</p>
 <h3 id="a-basic-analysis">A basic analysis<a class="anchor" aria-label="anchor" href="#a-basic-analysis"></a>
 </h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">n_t</span> <span class="op">=</span> <span class="fl">50</span> <span class="co"># how many "individuals" or samples we want in the final population</span></span>
-<span><span class="va">weights_max</span> <span class="op">=</span> <span class="fl">1</span> <span class="co"># maximum number of times an individual can be chosen in the population. Here we are selecting an individual a maximum time of 1. You could select an individual multiple times for example when taking cuttings or collecting seeds from a selfed individual.</span></span>
+<code class="sourceCode R"><span><span class="co"># how many "individuals" or samples we want in the final population</span></span>
+<span><span class="va">n_t</span> <span class="op">=</span> <span class="fl">50</span> </span>
+<span></span>
+<span><span class="co"># maximum number of times an individual can be chosen in the population. </span></span>
+<span><span class="co"># Here we are selecting an individual a maximum time of 1. </span></span>
+<span><span class="co"># You could select an individual multiple times for example when taking cuttings or collecting seeds from a selfed individual.</span></span>
+<span><span class="va">weights_max</span> <span class="op">=</span> <span class="fl">1</span> </span>
+<span></span>
 <span><span class="co"># initial_weights = sample(c(rep(1, n_t), rep(0, n-n_t))) # if you have an idea of what individuals are going to be best you can start the simulation off with those. There we are just picking the first `n_t` individuals. This argument isnt needed if specifying n_t.</span></span></code></pre></div>
 <p>And with that we can start a simulation:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -236,7 +230,7 @@ sense in the setup we provided.</p>
 <p>We can also back transform the output to make the results a bit more
 interpretable.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out_unscaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unscale_output.html">unscale_output</a></span><span class="op">(</span>trait_list <span class="op">=</span> <span class="va">trait_list</span>, multiopt_output <span class="op">=</span> <span class="va">out</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">out_unscaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unscale_multiopt.html">unscale_multiopt</a></span><span class="op">(</span>trait_list <span class="op">=</span> <span class="va">trait_list</span>, multiopt_output <span class="op">=</span> <span class="va">out</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">out_unscaled</span><span class="op">$</span><span class="va">chain</span><span class="op">$</span><span class="va">values</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span> <span class="co"># trait x</span></span></code></pre></div>
 <p><img src="overview_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
@@ -249,65 +243,340 @@ interpretable.</p>
 </div>
 </div>
 <div class="section level3">
+<h3 id="understanding-what-parameter-settings-are-doing">Understanding what parameter settings are doing<a class="anchor" aria-label="anchor" href="#understanding-what-parameter-settings-are-doing"></a>
+</h3>
+<p>One of the limitations with simulated annealing is that you will need
+to modify the starting parameters for each new combination of data and
+objective, as the analysis can be quite sensitive to each of the
+settings</p>
+<p>temperature (min and max) iterations (max_steps)</p>
+</div>
+<div class="section level3">
 <h3 id="a-more-complicated-analysis">A more complicated analysis<a class="anchor" aria-label="anchor" href="#a-more-complicated-analysis"></a>
 </h3>
 <div class="section level4">
 <h4 id="randomizations">Randomizations<a class="anchor" aria-label="anchor" href="#randomizations"></a>
 </h4>
+<p>Simulated annealing, by definition, is a stochastic optimizer. As
+such, it is almost certain that results of each simulated annealing run
+will result in slightly different final results. As such, it would be
+good practice to run the process a few times to confirm the general
+range of expected values. Replication will also allow you to see which
+individuals are more frequently selected for the final populaiton mix,
+allowing you to prioritize which individuals to select for your
+goals.</p>
+<p>MultiOpt has a wrapper for <code>multiopt_sa</code> that allows for
+replication of simulated annealing with a simplified output of the
+results, making it easier to get a nice list of replicated results:
+<code>rand_multiopt``. Parameters are virtually the same between</code>multiopt_sa<code>and</code>rand_multiopt<code>since they are doing the same task. The only additional information</code>rand_multiopt<code>needs is how many times you want to repeat the analysis (</code>n_runs<code>), and if you want to run the repeats in parallel (</code>parallel`).
+Note that it probably isn’t necessary to run analyses in parallel unless
+you are doing a lot of replicates or very long simulations.</p>
+<p>Using the same data and settings we generated earlier, the setup is
+very similar:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># arguments for simulated annealing need to go into a named list</span></span>
+<span><span class="va">sa_args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  trait_list <span class="op">=</span> <span class="va">trait_list_scaled</span>,</span>
+<span>  measure_list <span class="op">=</span> <span class="va">measure_list</span>,</span>
+<span>  measure_args_list <span class="op">=</span> <span class="va">args_list</span>,</span>
+<span>  n_t <span class="op">=</span> <span class="va">n_t</span>, </span>
+<span>  weights_max <span class="op">=</span> <span class="va">weights_max</span>,</span>
+<span>  max_t <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  max_steps <span class="op">=</span> <span class="fl">5000</span>, <span class="co"># this should be increased when running an actual analysis</span></span>
+<span>  nda <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  nd_samples <span class="op">=</span> <span class="fl">500</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">multi_out</span> <span class="op">=</span> <span class="fu"><a href="../reference/rand_multiopt.html">rand_multiopt</a></span><span class="op">(</span>n_runs <span class="op">=</span> <span class="fl">5</span>, multiopt_args <span class="op">=</span> <span class="va">sa_args</span>, parallel <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Starting simulation at 2026-06-19 09:44:07.050032</span></span>
+<span><span class="co">#&gt; Work completed in 0.35 minutes</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">multi_out</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ measure_summaries: num [1:5, 1:3] 0.655 0.667 0.656 0.664 0.627 ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">#&gt;   .. ..$ : NULL</span></span>
+<span><span class="co">#&gt;   .. ..$ : chr [1:3] "x" "y" "z"</span></span>
+<span><span class="co">#&gt;  $ individs_selected: num [1:5, 1:100] 1 1 1 0 1 1 1 1 0 1 ...</span></span>
+<span><span class="co">#&gt;  $ archive          :List of 2</span></span>
+<span><span class="co">#&gt;   ..$ archive_summary: num [1:4, 1:3] 0.665 0.669 0.673 0.678 0.668 ...</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : NULL</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:3] "x" "y" "z"</span></span>
+<span><span class="co">#&gt;   ..$ archive_weights: num [1:4, 1:100] 0 0 1 1 0 1 1 0 1 1 ...</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:4] "" "" "" ""</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : NULL</span></span></code></pre></div>
+<p>To run in parallel you simply need to set up the session and specify
+<code>parallel = T</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'future' was built under R version 4.5.3</span></span>
+<span></span>
+<span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="co"># multisession indicates this is run on current machine</span></span>
+<span><span class="va">multi_out</span> <span class="op">=</span> <span class="fu"><a href="../reference/rand_multiopt.html">rand_multiopt</a></span><span class="op">(</span>n_runs <span class="op">=</span> <span class="fl">5</span>, multiopt_args <span class="op">=</span> <span class="va">sa_args</span>, parallel <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Starting simulation at 2026-06-19 09:44:29.280168</span></span>
+<span><span class="co">#&gt; Warning: package 'future' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'future' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'future' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'future' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Work completed in 0.24 minutes</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">multi_out</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ measure_summaries: num [1:5, 1:3] 0.672 0.634 0.654 0.655 0.663 ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">#&gt;   .. ..$ : NULL</span></span>
+<span><span class="co">#&gt;   .. ..$ : chr [1:3] "x" "y" "z"</span></span>
+<span><span class="co">#&gt;  $ individs_selected: num [1:5, 1:100] 1 1 1 1 1 0 1 1 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ archive          :List of 2</span></span>
+<span><span class="co">#&gt;   ..$ archive_summary: num [1:2, 1:3] 0.683 0.675 0.664 0.667 -0.622 ...</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : NULL</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:3] "x" "y" "z"</span></span>
+<span><span class="co">#&gt;   ..$ archive_weights: num [1:2, 1:100] 1 1 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "" ""</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : NULL</span></span></code></pre></div>
+<p>And let’s look at the results for the first two objectives
+(traits):</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">multi_out</span><span class="op">$</span><span class="va">measure_summaries</span><span class="op">)</span></span></code></pre></div>
+<p><img src="overview_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="700"></p>
+<p>As you can see, results are similar for each iteration but not quite
+the same.</p>
 </div>
 <div class="section level4">
 <h4 id="exploring-the-pareto-front-further">Exploring the Pareto Front further<a class="anchor" aria-label="anchor" href="#exploring-the-pareto-front-further"></a>
 </h4>
-<div class="section level5">
-<h5 id="adding-to-the-front">adding to the front<a class="anchor" aria-label="anchor" href="#adding-to-the-front"></a>
-</h5>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># test = explore_pareto(</span></span>
-<span><span class="co">#   out$archive,</span></span>
-<span><span class="co">#   trait_list = trait_list_scaled,</span></span>
-<span><span class="co">#   measure_list = measure_list,</span></span>
-<span><span class="co">#   measure_args_list = args_list,</span></span>
-<span><span class="co">#   n_t = n_t,</span></span>
-<span><span class="co">#   weights_max = weights_max,</span></span>
-<span><span class="co">#   max_steps = 5000, # dont need as many step since we are not aiming for optimized result</span></span>
-<span><span class="co">#   nd_samples = 500, # want maximum nd_samples</span></span>
-<span><span class="co">#   verbose = F</span></span>
-<span><span class="co"># )</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # just returns the archive values.</span></span>
-<span><span class="co"># # Here are the first two traits</span></span>
-<span><span class="co"># plot(test$archive_summary)</span></span></code></pre></div>
-</div>
+<p>While the final solutions from simulated annealing are informative,
+we are also interested in trade offs between our objectives are, or the
+Pareto Front. The Pareto front are the solutions found during the
+simulated annealing run that are “non-dominated”, or the best choices
+given multiple conflicting goals. A solution (an option in the simulated
+annealing chain) is non-dominated if you cannot improve an objective
+without sacrificing performance in at least one other objective.</p>
+<p>In short, the Pareto Front shows us what the best-case solutions are
+when there are trade-offs. The collection of these non-dominated
+solutions are the Pareto Front, or the “archive.” An archive can be
+generated by both <code>multiopt_sa</code> and
+<code>rand_multiopt</code> with the setting <code>nda</code>. all the
+archive values generated by each run in <code>rand_multiopt</code> are
+combined into a single archive, which is helpful to give a more complete
+idea of what the tradeoffs are. If you wish to try and get more values
+for your archive you can use <code>expplor_pareto</code>, which uses the
+already generated Pareto Front as a starting point to keep looking for
+non-dominated solutions.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">pareto_out</span> <span class="op">=</span> <span class="fu"><a href="../reference/explore_pareto.html">explore_pareto</a></span><span class="op">(</span></span>
+<span>  <span class="va">multi_out</span><span class="op">$</span><span class="va">archive</span>,</span>
+<span>  trait_list <span class="op">=</span> <span class="va">trait_list_scaled</span>,</span>
+<span>  measure_list <span class="op">=</span> <span class="va">measure_list</span>,</span>
+<span>  measure_args_list <span class="op">=</span> <span class="va">args_list</span>,</span>
+<span>  n_t <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  weights_max <span class="op">=</span> <span class="va">weights_max</span>,</span>
+<span>  max_t <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  nd_samples <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">F</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pareto_out</span><span class="op">$</span><span class="va">archive_summary</span><span class="op">)</span></span></code></pre></div>
+<p><img src="overview_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="700"></p>
 <div class="section level5">
 <h5 id="comparing-multi-objective-to-single-objective">comparing multi-objective to single objective<a class="anchor" aria-label="anchor" href="#comparing-multi-objective-to-single-objective"></a>
 </h5>
+<p>In addition to the Pareto Front, it can be helpful to look at the
+trade offs when looking at a single objective vs multi-objective goals.
+If there is a small tradeoff between two objectives, you don’t really
+need to even measure both of them.</p>
+<p><code>singleopt_context</code> runs single-objective simulated
+annealing for each of the provided traits and calculates the resulting
+measures for each of the other traits. This analysis, in combination
+with the Pareto Front gives a fairly complete view of the trade-offs
+between objectives.</p>
+<p>Here is a full analysis in one swoop:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">500</span> <span class="co"># how many individuals to generate trait data for</span></span>
+<span></span>
+<span><span class="co"># strongly + correlated</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">120</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">4</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">z</span> <span class="op">=</span> <span class="va">y</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dat_strong_p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, z <span class="op">=</span> <span class="va">z</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">trait_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat_strong_p</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat_strong_p</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>,</span>
+<span>  z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat_strong_p</span><span class="op">$</span><span class="va">z</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">trait_list_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scale_traits.html">scale_traits</a></span><span class="op">(</span><span class="va">trait_list</span><span class="op">)</span> <span class="co"># scale trait data</span></span>
+<span></span>
+<span><span class="va">measure_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">weighted_mean_of_vector</span>,</span>
+<span>  y <span class="op">=</span> <span class="va">weighted_mean_of_vector</span>,</span>
+<span>  z <span class="op">=</span> <span class="va">weighted_mean_of_vector</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">args_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">n_t</span> <span class="op">=</span> <span class="fl">50</span></span>
+<span><span class="va">weights_max</span> <span class="op">=</span> <span class="fl">1</span></span>
+<span></span>
+<span><span class="va">sa_args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  trait_list <span class="op">=</span> <span class="va">trait_list_scaled</span>,</span>
+<span>  measure_list <span class="op">=</span> <span class="va">measure_list</span>,</span>
+<span>  measure_args_list <span class="op">=</span> <span class="va">args_list</span>,</span>
+<span>  n_t <span class="op">=</span> <span class="fl">50</span>, weights_max <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  max_t <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  max_steps <span class="op">=</span> <span class="fl">5000</span>, <span class="co"># this is quite short, but will give a general idea</span></span>
+<span>  nda <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  nd_samples <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">F</span></span>
+<span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">multi_out</span> <span class="op">=</span> <span class="fu"><a href="../reference/rand_multiopt.html">rand_multiopt</a></span><span class="op">(</span>n_runs <span class="op">=</span> <span class="fl">10</span>, multiopt_args <span class="op">=</span> <span class="va">sa_args</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Starting simulation at 2026-06-19 09:44:44.949139</span></span>
+<span><span class="co">#&gt; Work completed in 0.10 minutes</span></span>
+<span></span>
+<span><span class="co"># run multiple rounds of SA</span></span>
+<span><span class="va">multi_out_unscaled</span> <span class="op">=</span> <span class="fu"><a href="../reference/unscale_rand_multiopt.html">unscale_rand_multiopt</a></span><span class="op">(</span><span class="va">trait_list</span>, <span class="va">multi_out</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># explore pareto more</span></span>
+<span><span class="va">pareto_out</span> <span class="op">=</span> <span class="fu"><a href="../reference/explore_pareto.html">explore_pareto</a></span><span class="op">(</span></span>
+<span>  <span class="va">multi_out</span><span class="op">$</span><span class="va">archive</span>,</span>
+<span>  trait_list <span class="op">=</span> <span class="va">trait_list_scaled</span>,</span>
+<span>  measure_list <span class="op">=</span> <span class="va">measure_list</span>,</span>
+<span>  measure_args_list <span class="op">=</span> <span class="va">args_list</span>,</span>
+<span>  n_t <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  weights_max <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  max_t <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  max_steps <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>  nd_samples <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">F</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pareto_unscaled</span> <span class="op">=</span> <span class="fu"><a href="../reference/unscale_archive.html">unscale_archive</a></span><span class="op">(</span><span class="va">trait_list</span>, <span class="va">pareto_out</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># compare to single objective</span></span>
+<span><span class="va">single_out</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/singleopt_context.html">singleopt_context</a></span><span class="op">(</span></span>
+<span>    trait_list <span class="op">=</span> <span class="va">trait_list_scaled</span>,</span>
+<span>    measure_list <span class="op">=</span> <span class="va">measure_list</span>,</span>
+<span>    measure_args_list <span class="op">=</span> <span class="va">args_list</span>,</span>
+<span>    n_t <span class="op">=</span> <span class="va">n_t</span>,</span>
+<span>    n_runs <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    verbose <span class="op">=</span> <span class="cn">F</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">single_out_unscaled</span> <span class="op">=</span> <span class="fu"><a href="../reference/unscale_singleopt.html">unscale_singleopt</a></span><span class="op">(</span><span class="va">trait_list</span>, <span class="va">single_out</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plot</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'tibble' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'tidyr' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'readr' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'purrr' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'dplyr' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'stringr' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'forcats' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; Warning: package 'lubridate' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching core tidyverse packages</span> ──────────────────────── tidyverse 2.0.0 ──</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr    </span> 1.2.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr    </span> 2.2.0</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.6.0</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 4.0.2     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.3.1</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">lubridate</span> 1.9.5     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr    </span> 1.3.2</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr    </span> 1.2.2</span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use the conflicted package (<span style="color: #0000BB; font-style: italic;">&lt;http://conflicted.r-lib.org/&gt;</span>) to force all conflicts to become errors</span></span>
+<span></span>
+<span><span class="co"># pareto front</span></span>
+<span><span class="va">test_single_df</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">single_out_unscaled</span>, .id <span class="op">=</span> <span class="st">"trait"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># single objectives</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">test_single_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">trait</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">multi_out_unscaled</span><span class="op">$</span><span class="va">measure_summaries</span>, color <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># multi-objective</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pareto_unscaled</span><span class="op">$</span><span class="va">archive_summary</span><span class="op">)</span> <span class="op">+</span> <span class="co"># pareto front</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="overview_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">test_single_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">y</span>, y <span class="op">=</span> <span class="va">z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">trait</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">multi_out_unscaled</span><span class="op">$</span><span class="va">measure_summaries</span>, color <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># multi-objective</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pareto_unscaled</span><span class="op">$</span><span class="va">archive_summary</span><span class="op">)</span> <span class="op">+</span> <span class="co"># pareto front</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="overview_files/figure-html/unnamed-chunk-15-2.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">test_single_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">trait</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">multi_out_unscaled</span><span class="op">$</span><span class="va">measure_summaries</span>, color <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># multi-objective</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pareto_unscaled</span><span class="op">$</span><span class="va">archive_summary</span><span class="op">)</span> <span class="op">+</span> <span class="co"># pareto front</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="overview_files/figure-html/unnamed-chunk-15-3.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># 3d plot of pareto front</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://plotly-r.com" class="external-link">plotly</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'plotly' was built under R version 4.5.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'plotly'</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:ggplot2':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     last_plot</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:graphics':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     layout</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">~</span><span class="va">x</span>, y <span class="op">=</span> <span class="op">~</span><span class="va">y</span>, z <span class="op">=</span> <span class="op">~</span><span class="va">z</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html" class="external-link">add_markers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">test_single_df</span>, color <span class="op">=</span> <span class="op">~</span><span class="va">trait</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html" class="external-link">add_markers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">multi_out_unscaled</span><span class="op">$</span><span class="va">measure_summaries</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"multi"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/add_trace.html" class="external-link">add_markers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pareto_unscaled</span><span class="op">$</span><span class="va">archive_summary</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"Pareto"</span><span class="op">)</span></span></code></pre></div>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:700px;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"visdat":{"5c8c412d6c7b":["function () ","plotlyVisDat"],"5c8c801d8c":["function () ","data"],"5c8c234722f1":["function () ","data"],"5c8c591c48":["function () ","data"]},"cur_data":"5c8c591c48","attrs":{"5c8c801d8c":{"x":{},"y":{},"z":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","color":{},"inherit":true},"5c8c234722f1":{"x":{},"y":{},"z":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","color":"multi","inherit":true},"5c8c591c48":{"x":{},"y":{},"z":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","color":"Pareto","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"x"},"yaxis":{"title":"y"},"zaxis":{"title":"z"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[124.96749337498888,125.00530132591408,124.76667846602192,124.82024880764098,124.9949939799935,124.80349576269276,124.84575459259565,124.7933531367257,124.71684732189364,124.73598135956445],"y":[501.63945328321711,503.20404450925179,500.74166552699785,501.89043551834118,504.18741313004,499.73278305685068,501.21961624841578,500.44800852209363,499.04579928635917,499.96570986575011],"z":[1004.7627060670558,1007.5313742413422,1004.3072022132407,1004.1018890603976,1008.8388493911677,1003.3738496922044,1004.8887349425247,1004.098705583262,1000.6791325620054,1001.935543248448],"type":"scatter3d","mode":"markers","name":"x","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"frame":null},{"x":[116.11079723422255,115.57104899964592,115.96852457586434,115.83116084255553,115.75421557378318,115.92540404140006,115.85146014286948,115.85014663041234,116.10932793065135,116.19362159417676],"y":[458.95449860656072,457.16914495178997,458.73746012415791,458.06739600144141,458.07354084260555,458.19298666652094,458.16050918603327,459.57740525552282,458.98285026279206,458.78366136880709],"z":[912.46046937716699,908.73141644030204,912.49014399315263,911.49098288121911,913.33492456755039,912.49430011399841,912.77911819791257,916.8675151726992,913.52201686780415,912.844661379596],"type":"scatter3d","mode":"markers","name":"y","marker":{"color":"rgba(231,138,195,1)","line":{"color":"rgba(231,138,195,1)"}},"textfont":{"color":"rgba(231,138,195,1)"},"error_y":{"color":"rgba(231,138,195,1)"},"error_x":{"color":"rgba(231,138,195,1)"},"line":{"color":"rgba(231,138,195,1)"},"frame":null},{"x":[124.6342320447131,124.09535862074897,124.20483401119274,124.11495238840637,124.20262681072695,124.6333717764287,124.32547156620245,124.41699826237259,124.13188792311635,124.14053848643705],"y":[506.10953987158473,501.80133689700415,501.5029677653896,502.98519129758699,502.41558137626009,503.28598312892848,502.1252696135171,505.0213663276615,503.92549569223138,502.07392357410299],"z":[1013.4929564706606,1006.8407580842039,1004.9980443817017,1007.9943076504054,1009.9835741957842,1010.9517950579251,1006.6387401294414,1010.5320777411686,1010.4886515808184,1006.7382058243295],"type":"scatter3d","mode":"markers","name":"z","marker":{"color":"rgba(166,216,84,1)","line":{"color":"rgba(166,216,84,1)"}},"textfont":{"color":"rgba(166,216,84,1)"},"error_y":{"color":"rgba(166,216,84,1)"},"error_x":{"color":"rgba(166,216,84,1)"},"line":{"color":"rgba(166,216,84,1)"},"frame":null},{"x":[120.29910243462727,120.13994396008646,120.67846977562769,120.81711365341863,120.93967218284683,120.65745662653499,120.67798255160564,120.75722971813266,121.09546848677098,120.97988423093594],"y":[480.01675783598199,481.34889441573739,483.30150409326922,484.87143148446654,484.56764332256705,481.96938947164949,484.30861865328296,484.66121850914283,484.35203521178533,482.96171521168247],"z":[960.01206001880473,963.57150005390611,967.03968487336635,969.4300050327322,969.3547138843212,964.33238413020774,968.97754751835987,969.55663267087562,969.71872402293695,965.86343132842273],"type":"scatter3d","mode":"markers","name":"multi","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"frame":null},{"x":[121.37074957333968,121.58790294918445,121.61000592340052,121.53144499422359,121.55366511412215,121.60670023110045,121.61114521222075,121.40315237410428,121.45596863161626,121.36387970475077,121.49879736216106,121.73962955821824,121.73933992225957,121.6802389873354,121.36977104072001,121.94772185294896,121.98539682930507,122.25761119727484,122.12815030536552,122.21368756284554,122.23988820584491,122.11980851293929,122.13230454475871,122.28043105686361,122.2319611473248,122.10728864404102,122.15788266008363,122.14470935659473,122.20531216870863,122.28502058484214,122.28045331542192,122.28838792138328,122.30222075070179,122.39942958476175,122.32204203811051,122.37154591532955,122.31993808432495,122.31386334262891,122.29259021243924,122.333542173708,122.35787041119453,121.0406818988684,121.71454834081425,121.83440141558803,121.89690012883021,121.80760799649426,121.75359879610107,121.75505177255228,121.87305468696314,121.77502088001253,121.89009688204565,121.94464971363124,121.88539430080775,121.81266071849913,121.81824494732358,121.81696992109886,121.68289488424502,121.7786909036339,120.36696132239724,120.80667863838619,120.84636644043898,120.78641309707443,120.87199089847392,120.92203739741213,120.92413457063198,120.97787996144859,120.84029181016902,120.93032052718306,120.98348099933372,120.86136983689464,120.45626941184241,120.65613948025153,120.34324828698045,121.38593418578603,120.74303674349058,120.62248207115724,120.70601107419805,120.30666958455529,120.19019635119933,120.19625159706078,120.11702985981341,120.0928689035221,120.15822589669303,120.23400550778898,120.20310370099591,120.27069962270812,120.18553716331039,120.27508149950111,120.35851278814683,121.17132241435694,121.19827532444883,121.19090267657397,121.18941144743967,121.18918219611939,121.17020439418893,121.15881853202309,121.01525778983979,121.13505852379291,120.99875004003582,121.12648693541081,121.19493343381382,121.26379012862279,121.18501941565923,121.14197663307591,121.13577576196379,121.25491332517538,121.29782830152683,121.20400941389039,121.95480858256738],"y":[483.32678724855521,484.02680726287076,484.26177686179597,483.85796827044737,483.90864395520913,484.09003279647413,484.29356535648134,483.49546068151477,483.573751006218,483.09908344238494,483.71594649640855,484.84756314361681,484.71147030291957,484.38610072587664,483.27914864356461,486.50929538125047,486.59306139221951,487.3298830610442,486.69916825038342,486.97978216522301,487.2870138860435,486.67908346326476,486.75616662135189,487.41689885070087,487.08787758394584,486.62199575182808,486.84598882984028,486.79813539586024,486.85846382089358,487.75315154437288,487.59639080125726,487.75762792000728,487.8378881897878,488.37221305433565,487.99677283894567,488.16921328282137,487.97809967959211,487.89913366486439,487.8026161897107,488.06789620745894,488.10208229535448,481.71874225476665,484.53051140910259,485.3197817050974,485.84012689035774,485.13506071960757,484.8542623120278,484.96170241154255,485.46169445160149,485.09938073400724,485.80958809853701,486.04060017101568,485.64532815394733,485.19324672377638,485.2719857437263,485.22269864984582,484.51210570365782,485.10092930229325,479.03190956309078,480.27549517503616,480.4357078611373,480.13692181484657,480.53696613449807,480.54048255041806,480.88168949399255,481.02770576362815,480.2924681734371,480.93473841899663,481.26002206775678,480.49859371584836,479.1589653527584,479.71198786933553,478.8411112752824,483.39850981874048,480.03840150613257,479.30536579580308,479.78788108675718,478.82166762400129,478.20126312933826,478.24783330803587,477.72206007414559,477.43912268635512,477.92963169849247,478.46466827258615,478.4113403050535,478.70021152735455,478.14012748793351,478.80763211380224,478.97512170968537,482.31080971750316,482.60086901691511,482.45873384343071,482.4334087159483,482.41910573551968,482.27764155471334,482.26763271710627,481.68596580194406,481.91081805067847,481.52819327953932,481.83011342745374,482.55121884203913,482.86259089761592,482.37901089624518,482.20538289909018,481.98127707415182,482.73068362348818,483.08932532407295,482.67596922527804,486.57039542673624],"z":[968.70735852512496,970.13566287214462,970.67321719150607,969.85481380107558,970.19815342874506,970.43616150505954,970.85144976965728,969.26611176355766,967.95321974616991,967.1477872704121,968.87509872383237,971.72359844428388,971.18547075143533,970.59342551166401,967.53155982743488,974.72953894853208,975.32717731944786,977.12062756024102,976.02524498717094,976.28609968357659,977.16321986284345,975.31495124014509,975.76945516399803,977.0762487011458,976.43002816809985,975.4097177434777,976.02457801980358,975.90853562114739,975.84350231618339,977.86823551022167,977.53781803562322,977.52629663211758,978.32301659666621,978.71490706553789,977.80283995976845,978.41818060841865,977.97504287539891,977.67431173733019,977.56355978649697,978.01112891640071,978.03433645782911,963.61891463723191,970.71679923108672,972.11316732444243,973.13808515353435,971.89793530057239,971.37018351230392,971.41802669476783,972.39129071953664,971.7828149467781,973.15997035813643,973.44122222073781,972.76258175958606,972.01896161127388,972.0502652691024,971.88078904566112,970.71336983063611,971.32534624062168,956.80669571776355,959.42469373561005,959.8594220222235,959.11066256724337,959.99768898623017,959.942483877379,960.50847000714668,960.94860433242206,959.07714521765854,960.51444414048967,961.26024703907319,959.86637068245761,957.64914733782189,958.06796099614849,956.53611933333684,968.48271925427866,958.18079888538171,956.80733772276346,957.63211125352655,957.69395870275901,956.28374948664339,956.30991578840508,955.1088968890225,954.42541068997616,955.41865310806918,956.27176120368676,956.1798890037727,956.59284515672528,955.55690140416618,956.88754031750113,957.19787291222087,966.17274739336892,965.69165946621115,965.46476283097968,965.65841873459806,965.75930740079389,965.43154383420654,965.53021656877343,964.04201159469858,964.70151182097675,963.84397695021698,964.49937927535836,966.1719755177096,966.97189472708919,965.63722691078829,965.25448629665266,964.71716814154104,966.39793492172532,967.2287447003489,966.63875032258909,973.65585965059768],"type":"scatter3d","mode":"markers","name":"Pareto","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-      </div>
-
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Sarah Herzog.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Sarah Herzog.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
-
 
 
 
