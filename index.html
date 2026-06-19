@@ -58,11 +58,7 @@
 <blockquote>
 <p>Author A, Author B, and Author C. (Year). <em>Title of manuscript</em>. Journal Name. DOI: xxx</p>
 </blockquote>
-<p>Website: <a href="https://herz6627.github.io/MultiOpt/reference/multiopt_sa.html" class="uri">https://herz6627.github.io/MultiOpt/reference/multiopt_sa.html</a></p>
-</div>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
+<p>Website: <a href="https://herz6627.github.io/MultiOpt/index.html">Here</a> ## Installation</p>
 <div class="section level3">
 <h3 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h3>
@@ -79,51 +75,48 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://herz6627.github.io/MultiOpt/">MultiOpt</a></span><span class="op">)</span></span></code></pre></div>
 <p>Basic example:</p>
+<p>Generate some trait data to use</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># generate some trait data to use</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">120</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">3</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
-<span><span class="va">dat</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># format trait data to a list of matrices</span></span>
-<span><span class="va">trait_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span><span class="va">dat</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
+<p>Format trait data to a list of matrices</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">trait_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">y</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># here is where we specify how we want to measure success. This needs to be a list of functions as listed in ?multiopt_sa(). Full details are can be found in the XXXX vignette. </span></span>
-<span><span class="va">measure_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Here is where we specify how we want to measure success. This needs to be a list of functions as listed in ?multiopt_sa(). Full details are can be found in the XXXX vignette.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">measure_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span> x <span class="op">=</span> <span class="va">weighted_mean_of_vector</span>,</span>
 <span> y <span class="op">=</span> <span class="va">weighted_mean_of_vector</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># And we can specify and additional arguments to the selected functions in `measure_list`. Some of the functions require these additional arguments, which can be found in the respective function descriptions, but a key thing to note is that this is the location to specify which direction you want to optimize (maximize or minimize). By default, MultiOpt maximizes a trait (direction = 1). Use direction = -1 to get the minimum instead as we do here for trait `y`.</span></span>
-<span><span class="va">args_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>And we can specify and additional arguments to the selected functions in <code>measure_list</code>. Some of the functions require these additional arguments, which can be found in the respective function descriptions, but a key thing to note is that this is the location to specify which direction you want to optimize (maximize or minimize). By default, MultiOpt maximizes a trait (direction = 1). Use direction = -1 to get the minimum instead as we do here for trait <code>y</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">args_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span> x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span> y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Note: across these three lists, all trait names need to match for list elements.</span></span>
-<span></span>
-<span><span class="co"># It is important for simulated annealing that all traits being optimized are on the same scale. If trait values are not scaled, larger values will be prioritized by the algorithm.</span></span>
-<span><span class="co"># trait_list_scaled() will scale all provided traits to 0-1.</span></span>
-<span><span class="va">trait_list_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scale_traits.html">scale_traits</a></span><span class="op">(</span><span class="va">trait_list</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Simulated annealing is a stochastic algorithm. As such, it is good to run the algorithm a few times to get an idea of how stable the results are, which we can do with `rand_multiopt()` which requires a list of inputs to specify our simulated annealing parameters. `multiopt_sa()` will run a single round of simulated annealing and has slightly different formatting. </span></span>
-<span><span class="va">sa_args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Note: across these three lists, all trait names need to match for list elements.</p>
+<p>It is important for simulated annealing that all traits being optimized are on the same scale. If trait values are not scaled, larger values will be prioritized by the algorithm. trait_list_scaled() will scale all provided traits to 0-1.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">trait_list_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scale_traits.html">scale_traits</a></span><span class="op">(</span><span class="va">trait_list</span><span class="op">)</span></span></code></pre></div>
+<p>Simulated annealing is a stochastic algorithm. As such, it is good to run the algorithm a few times to get an idea of how stable the results are, which we can do with <code><a href="reference/rand_multiopt.html">rand_multiopt()</a></code> which requires a list of inputs to specify our simulated annealing parameters. <code><a href="reference/multiopt_sa.html">multiopt_sa()</a></code> will run a single round of simulated annealing and has slightly different formatting.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sa_args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>trait_list <span class="op">=</span> <span class="va">trait_list_scaled</span>, <span class="co"># our list of traits</span></span>
 <span>measure_list <span class="op">=</span> <span class="va">measure_list</span>, <span class="co"># our list of measures</span></span>
 <span>measure_args_list <span class="op">=</span> <span class="va">args_list</span>, <span class="co"># our list of arguments for each measure</span></span>
 <span>n_t <span class="op">=</span> <span class="fl">10</span>, <span class="co"># how many individuals we want in our final population</span></span>
 <span>weights_max <span class="op">=</span> <span class="fl">1</span>, <span class="co"># the maximum number of times an individual can be selected</span></span>
 <span>max_steps <span class="op">=</span> <span class="fl">5000</span> <span class="co"># how many time steps to run each simulated annealing</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># And now we can run simulated annealing</span></span>
-<span><span class="va">test</span> <span class="op">=</span> <span class="fu"><a href="reference/rand_multiopt.html">rand_multiopt</a></span><span class="op">(</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>And now we can run simulated annealing</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">test</span> <span class="op">=</span> <span class="fu"><a href="reference/rand_multiopt.html">rand_multiopt</a></span><span class="op">(</span></span>
 <span>n_runs <span class="op">=</span> <span class="fl">5</span>, <span class="co"># how many times to replicate the algorithm</span></span>
 <span>multiopt_args <span class="op">=</span> <span class="va">sa_args</span><span class="co"># all of our arguments</span></span>
 <span><span class="op">)</span></span>
