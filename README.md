@@ -12,7 +12,7 @@ The package was developed to support analyses presented in:
 ### Development version
 
 ```r
-install.packages("devtools")
+install.packages("remotes")
 
 remotes::install_github("herz6627/MultiOpt")
 
