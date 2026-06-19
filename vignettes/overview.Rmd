@@ -347,7 +347,8 @@ single_out <-
 single_out_unscaled = unscale_singleopt(trait_list, single_out)
 
 # plot
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 
 # pareto front
 test_single_df <- dplyr::bind_rows(single_out_unscaled, .id = "trait") %>% # single objectives

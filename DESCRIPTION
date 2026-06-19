@@ -10,7 +10,8 @@ Description: This package is modeled after the R package OptGenMix, with
 License: MIT + file LICENSE
 Imports: 
     future,
-    future.apply
+    future.apply,
+    plotly
 Suggests: 
     dplyr,
     ggplot2,
