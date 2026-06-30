@@ -415,12 +415,17 @@ plot_selection_single <- function(
           ) +
           ggplot2::labs(
             fill = "Numer of times\nselected in\nreplicates",
-            title = paste("Optimization for", names(individs_selected)[x])
+            # title = paste("Optimization for", names(individs_selected)[x])
           )
 
       })
 
-      patchwork::wrap_plots(plot_list) +  patchwork::plot_layout(guides = "collect") & ggplot2::theme(legend.position = "bottom")
+      patchwork::wrap_plots(plot_list) +
+        patchwork::plot_layout(guides = "collect") &
+        ggplot2::theme(legend.position = "bottom") +
+        patchwork::plot_annotation(
+          title = paste("Optimization for", names(individs_selected)[x])
+        )
 
     })
 
