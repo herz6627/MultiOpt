@@ -200,8 +200,8 @@ plot_selection <- function(
       trait_dat |>
         ggplot2::ggplot(
           ggplot2::aes(
-            x = .data[[vars[[1]]]],
-            y = .data[[vars[[2]]]],
+            x = .data[[vars[1]]],
+            y = .data[[vars[2]]],
             fill = n_selected
           )) +
         ggplot2::geom_point(alpha = 0.5, size = 3, shape = 21, color = "gray30") +

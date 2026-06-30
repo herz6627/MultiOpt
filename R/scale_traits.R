@@ -253,7 +253,7 @@ unscale_singleopt <- function(trait_list, singleopt_output){
   n_traits <- length(trait_list)
 
   # check everything lines up (this check is not comprehensive)
-  if(!all(names(trait_list) %in% names(singleopt_output))) stop("Original trait names don't line up with multiopt output.")
+  if(!all(names(trait_list) %in% names(singleopt_output$measure_summaries))) stop("Original trait names don't line up with multiopt output.")
 
   if (is.null(singleopt_output)) stop("Archive is NULL")
 
@@ -264,9 +264,9 @@ unscale_singleopt <- function(trait_list, singleopt_output){
   for (i in seq(n_traits)) { # for each trait element
     for (z in seq(n_traits)) { # for each trait col within the element
 
-      new_out[[i]][,z] <-
+      new_out$measure_summaries[[i]][,z] <-
         min_max_unscale(
-          x_scaled = abs(singleopt_output[[i]][,z]),
+          x_scaled = abs(singleopt_output$measure_summaries[[i]][,z]),
           x_unscaled = trait_list[[z]]
         )
     }
