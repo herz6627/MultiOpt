@@ -527,12 +527,13 @@ plot_pareto <- function(
   ## If single-objective outputs are provided --------------------------------
   if (!is.null(single_list)) {
 
-    single_dat[["measure_summaries"]] <-
-      single_list |>
+    single_dat <-
+      single_list$measure_summaries |>
       dplyr::bind_rows(.id = "trait") |>
-      dplyr::as_tibble()
-
-    single_dat$group <- single_dat$trait # for legend
+      dplyr::as_tibble() |>
+      dplyr::mutate(
+        group = trait # for legend
+      )
 
   }
 
