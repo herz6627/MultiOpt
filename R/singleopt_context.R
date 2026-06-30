@@ -73,28 +73,13 @@ singleopt_context <- function(
 ){
 
   # checks
-  if(!n_runs%%1 == 0 | n_runs < 0) stop("`n_runs` must be positive and an integer.")
+  if(n_runs <= 0 || n_runs %% 1 != 0) stop("`n_runs` must be positive and an integer.")
 
   # run multi_opt for a single trait ----------------------------------------
 
   if (n_runs == 1) {
 
     # single run --------------------------------------------------------------
-    sim_out <-  multiopt_sa(
-      trait_list,
-      measure_list,
-      measure_args_list,
-      n_t = n_t,
-      weights_max = weights_max,
-      weights_min = weights_min,
-      initial_weights = initial_weights,
-      max_t = max_t,
-      p_depends_delta = p_depends_delta,
-      acceptance_multipliers = acceptance_multipliers,
-      nda = F, # cant have an nda with only 1 trait
-      save_chain = F, # not storing chain information
-      verbose = verbose
-    )
 
     # loop over each list element for a single-objective simulated annealing
     sim_out <- Map(
@@ -109,6 +94,7 @@ singleopt_context <- function(
           weights_min = weights_min,
           initial_weights = initial_weights,
           max_t = max_t,
+          max_steps = max_steps,
           p_depends_delta = p_depends_delta,
           acceptance_multipliers = acceptance_multipliers,
           nda = F, # cant have an nda with only 1 trait
@@ -147,21 +133,6 @@ singleopt_context <- function(
   } else {
 
     # multiple runs -----------------------------------------------------------
-    rand_args = list(
-      trait_list,
-      measure_list,
-      measure_args_list,
-      n_t = n_t,
-      weights_max = weights_max,
-      weights_min = weights_min,
-      initial_weights = initial_weights,
-      max_t = max_t,
-      p_depends_delta = p_depends_delta,
-      acceptance_multipliers = acceptance_multipliers,
-      nda = F,
-      save_chain = F,
-      verbose = verbose
-    )
 
     # loop over each list element for a single-objective simulated annealing
     sim_out <- Map(
@@ -169,14 +140,15 @@ singleopt_context <- function(
       f = function(trait, measure, measure_args, nm) {
 
         rand_args <- list(
-          trait_list = setNames(list(trait), nm),
-          measure_list = setNames(list(measure), nm),
-          measure_args_list = setNames(list(measure_args), nm),
+          trait_list = stats::setNames(list(trait), nm),
+          measure_list = stats::setNames(list(measure), nm),
+          measure_args_list = stats::setNames(list(measure_args), nm),
           n_t = n_t,
           weights_max = weights_max,
           weights_min = weights_min,
           initial_weights = initial_weights,
           max_t = max_t,
+          max_steps = max_steps,
           p_depends_delta = p_depends_delta,
           acceptance_multipliers = acceptance_multipliers,
           nda = FALSE,
