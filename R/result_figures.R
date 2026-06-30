@@ -126,12 +126,14 @@ plot_selection <- function(
     )
   }
 
-  if (!requireNamespace("patchwork", quietly = TRUE)) {
+  if (!requireNamespace("patchwork", version = , quietly = TRUE)) {
     stop(
       "Package 'patchwork' is required for this function.",
       call. = FALSE
     )
   }
+
+  stopifnot(utils::packageVersion("patchwork") >= "1.3.0")
 
   if(any(lapply(trait_list, ncol) != 1)) stop("Trait data should only have 1 column for each trait. If you are attempting to use a pairwise matrix, this is not supported.")
 
@@ -219,7 +221,9 @@ plot_selection <- function(
     }
     )
 
-    patchwork::wrap_plots(plot_list) +  patchwork::plot_layout(guides = "collect") & ggplot2::theme(legend.position = "bottom")
+    patchwork::wrap_plots(plot_list) +
+      patchwork::plot_layout(guides = "collect") &
+      ggplot2::theme(legend.position = "bottom")
 
   }
 

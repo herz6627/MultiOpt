@@ -16,7 +16,7 @@ Suggests:
     dplyr,
     ggplot2,
     knitr,
-    patchwork,
+    patchwork (>= 1.3.0),
     rmarkdown
 VignetteBuilder: 
     knitr
