@@ -226,6 +226,213 @@ plot_selection <- function(
 }
 
 
+
+#' Visualize trait values of selected individuals
+#'
+#' Produces plots showing how frequently individuals are selected across
+#' optimization replicates in relation to their (and other) trait values.
+#' This is similar to `plot_selection` except input values are formatted
+#' for `singleopt_context` output.
+#'
+#' For each individual, selection frequency is computed as the number of
+#' replicates in which the individual was selected (ignoring selection
+#' weights).
+#'
+#' @param individs_selected A named list of matrices indicating selected
+#'   individuals across replicates (e.g. `out$individs_selected` returned by
+#'   `singleopt_context`). Each element represents the results from a different
+#'   optimization scenario.
+#' @param trait_list Named list of trait data frames, each containing a
+#'   single column of trait values. This data does not need to be the same
+#'   data supplied to `singleopt_context`; in many cases it is preferable to use
+#'   unscaled or raw trait values for visualization. Trait values must be in
+#'   the same individual order as `individs_selected`. Pairwise matrices or
+#'   multi-column objects are not supported.
+#'
+#' @return A named list of plots, with one plot per optimization scenario.
+#'   For a single trait, each element is a ggplot2 bar plot. For multiple
+#'   traits, each element is a patchwork object containing all pairwise
+#'   trait scatterplots.
+#'
+#' @details
+#' The function operates in two modes:
+#'
+#' **Single trait case**
+#' \itemize{
+#'   \item Combines trait values with selection frequency.
+#'   \item Orders individuals by trait value.
+#'   \item Produces a bar plot of trait values.
+#'   \item Bar fill indicates the number of replicates in which each
+#'         individual was selected.
+#' }
+#'
+#' **Multi-trait case**
+#' \itemize{
+#'   \item Combines all trait values into a single data frame.
+#'   \item Computes selection frequency for each individual.
+#'   \item Generates scatterplots for all pairwise combinations of traits.
+#'   \item Point fill indicates the number of replicates in which each
+#'         individual was selected.
+#'   \item Pairwise plots are combined into a single figure using
+#'         `patchwork`.
+#' }
+#'
+#' Selection frequency is computed as the number of replicates in which an
+#' individual has a nonzero selection weight.
+#'
+#' @import ggplot2
+#' @import dplyr
+#' @import patchwork
+#' @export
+plot_selection_single <- function(
+    individs_selected,
+    trait_list # a  list of trait data. Does not have to be the same as used in multiopt, in fact, in some cases it is better to not use the same data, as we are more interested in raw trait data than in pairwise data (genomic or otherwise) or scaled variables.
+){
+
+  # checks -----------------------------------------------------------
+
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop(
+      "Package 'ggplot2' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    stop(
+      "Package 'dplyr' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+  if (!requireNamespace("patchwork", quietly = TRUE)) {
+    stop(
+      "Package 'patchwork' is required for this function.",
+      call. = FALSE
+    )
+  }
+
+  if(any(lapply(trait_list, ncol) != 1)) stop("Trait data should only have 1 column for each trait. If you are attempting to use a pairwise matrix, this is not supported.")
+
+  # loop through traits if needed -------------------------------------------
+
+  if(length(trait_list) == 1) { # only 1 trait
+
+    # get data table put together
+    # for each set of weights provided in individs selected, make a table of trait value and weights
+    trait_dat = lapply(individs_selected, function(x){
+
+      temp = cbind(
+        trait_list[[1]],
+        colSums(x > 0) # how many times an individual was selected across replicates (ignores weights)
+      )
+
+      colnames(temp) <- c("trait", "n_selected")
+
+      return(temp)
+    })
+
+
+    # put plot together
+    plot_out <- lapply(trait_dat, function(x){
+
+      x |>
+        as.data.frame() |>
+        dplyr::mutate(id = dplyr::row_number()) |>
+        ggplot2::ggplot(ggplot2::aes(
+          x = stats::reorder(id, -trait),
+          y = trait,
+          fill = n_selected
+        )) +
+        ggplot2::geom_bar(stat = "identity") +
+        ggplot2::theme_classic() +
+        ggplot2::scale_fill_gradientn(
+          colours = rev(
+            grDevices::hcl.colors(
+              300,
+              palette = "Purple-Yellow"
+            )
+          )
+        ) +
+        ggplot2::labs(
+          x = "Individual",
+          y = names(trait_list),
+          fill = "Numer of times\nselected in\nreplicates") +
+        ggplot2::theme(
+          axis.text.x = ggplot2::element_blank(),
+          axis.ticks = ggplot2::element_blank()
+        ) +
+        ggplot2::scale_y_continuous(expand = c(0, 0))
+
+    })
+
+
+  } else {
+
+    # multiple traits
+
+    # format data
+    trait_names = names(trait_list)
+
+    trait_dat = lapply(individs_selected, function(x){
+
+      trait_df = as.data.frame(trait_list)
+
+      temp = cbind(
+        trait_df,
+        colSums(x > 0) # how many times an individual was selected across replicates (ignores weights)
+      )
+
+      colnames(temp) <- c(colnames(trait_df), "n_selected")
+
+      return(temp)
+
+    })
+
+    # All pairwise combinations
+    pairs <- combn(trait_names, 2, simplify = FALSE)
+
+    plot_out <- lapply(seq_along(individs_selected), function(x){
+
+      plot_list <- lapply(pairs, function(vars){
+
+        trait_dat[[x]] |>
+          ggplot2::ggplot(
+            ggplot2::aes(
+              x = .data[[vars[[1]]]],
+              y = .data[[vars[[2]]]],
+              fill = n_selected
+            )) +
+          ggplot2::geom_point(alpha = 0.5, size = 3, shape = 21, color = "gray30") +
+          ggplot2::theme_bw() +
+          ggplot2::scale_fill_gradientn(
+            colours = rev(
+              grDevices::hcl.colors(
+                300,
+                palette = "Purple-Yellow"
+              )
+            )
+          ) +
+          ggplot2::labs(
+            fill = "Numer of times\nselected in\nreplicates",
+            title = paste("Optimization for", names(individs_selected)[x])
+          )
+
+      })
+
+      patchwork::wrap_plots(plot_list) +  patchwork::plot_layout(guides = "collect") & ggplot2::theme(legend.position = "bottom")
+
+    })
+
+    names(plot_out) <- names(individs_selected)
+
+  }
+
+  return(plot_out)
+
+}
+
+
 #' Visualize pairwise Pareto trade-offs
 #'
 #' Generates a grid of pairwise scatterplots showing trade-offs among
@@ -310,7 +517,7 @@ plot_pareto <- function(
   ## If single-objective outputs are provided --------------------------------
   if (!is.null(single_list)) {
 
-    single_dat <-
+    single_dat[["measure_summaries"]] <-
       single_list |>
       dplyr::bind_rows(.id = "trait") |>
       dplyr::as_tibble()
@@ -400,7 +607,7 @@ plot_pareto <- function(
         )) +
       ggplot2::labs(
         color = NULL
-        )
+      )
 
   })
 

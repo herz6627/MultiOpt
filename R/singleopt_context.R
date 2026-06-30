@@ -97,7 +97,7 @@ singleopt_context <- function(
           max_steps = max_steps,
           p_depends_delta = p_depends_delta,
           acceptance_multipliers = acceptance_multipliers,
-          nda = F, # cant have an nda with only 1 trait
+          nda = F,        # cant have an nda with only 1 trait
           save_chain = F, # not storing chain information
           verbose = verbose
         )
@@ -109,6 +109,11 @@ singleopt_context <- function(
       names(trait_list) # helps with re-naming the list
     )
 
+    # save weights
+    individs_selected <- lapply(
+      sim_out,
+      function(x) x$final_selection$individs_selected
+    )
 
     ## get measures for non-target trait ---------------------------------------
 
@@ -123,7 +128,11 @@ singleopt_context <- function(
           w = x$final_selection$individs_selected
         ))
 
+        # make into df
         z = data.frame(t(as.matrix(z)))
+
+        # add weights
+        # list(z, x$final_selection$individs_selected)
       })
 
     # quick check that everything makes sense
@@ -170,6 +179,12 @@ singleopt_context <- function(
       measure_args_list,
       names(trait_list) # helps with re-naming the list
 
+    )
+
+    # save weights
+    individs_selected <- lapply(
+      sim_out,
+      function(x) x$individs_selected
     )
 
     ## get measures for non-target trait ---------------------------------------
@@ -222,7 +237,12 @@ singleopt_context <- function(
 
   }
 
-  return(sum_out)
+  return(list(
+    measure_summaries = sum_out,
+    individs_selected = individs_selected
+  ))
+
+  # return(sum_out)
 }
 
 
