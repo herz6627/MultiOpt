@@ -61,7 +61,7 @@ singleopt_context <- function(
     measure_args_list,
     n_t = NULL,
     weights_min = NULL,
-    weights_max = NULL,
+    weights_max = 1,
     initial_weights = NULL,
     max_steps = 10000,
     max_t = 1,
