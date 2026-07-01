@@ -103,6 +103,6 @@ accept_reject <- function(
 
   out <- runif(1) < p_accept_worse # stochastic acceptance. Standard to Metropolis algorithm method.
 
-  if (is.na(out)) stop("Acceptance value is NA.")
+  if (is.na(out) || is.null(out)) stop("Acceptance value is NA or NULL.")
 
 }
