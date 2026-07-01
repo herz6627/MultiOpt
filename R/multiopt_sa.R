@@ -183,6 +183,8 @@ multiopt_sa <- function(
       c_all = acceptance_multiplier_all_worse
     )
 
+    if(is.null(acceptance) || is.na(acceptance))
+
     if (nda) { # this deviates from OptGenMix: moved this outside of accept_proposal so that we can explore un-accepted front space
 
       archive <- clean_archive(measure_mod, weights_mod, archive)
