@@ -24,28 +24,26 @@ accept_reject <- function(
   proposal <- unlist(proposal_summary, use.names = FALSE)
 
   # checks
-  if (length(current) != length(proposal)) {
-    stop("'summary' and 'proposal_summary' must have equal length.")
-  }
+  if (length(current) != length(proposal)) stop("'summary' and 'proposal_summary' must have equal length.")
 
-  if (anyNA(current) || anyNA(proposal)) {
-    stop("NA detected in current or proposal measure values.")
-  }
+  if (anyNA(current))  stop("NA detected in current measure values.")
+  if (anyNA(proposal)) stop("NA detected in proposed measure values.")
 
-  if (!is.numeric(current) || !is.numeric(proposal)) {
-    stop("All summary values must be numeric")
-  }
+  if (!is.numeric(current) || !is.numeric(proposal)) stop("All summary values must be numeric")
 
   if(c_all != 1 && !is.numeric(c_all)) stop("c_all must be a single numeric value.")
 
-  # recycle scalar penalties
-  if (length(c) == 1) {
-    c <- rep(c, length(current))
+  if (!is.finite(t)) stop("t is invalid: ", t)
+
+  if (t == 0) {
+    warning("Temperature is zero. Adding a small value (10^-10) to allow for calculation.")
+    t = 10^-10
   }
 
-  if (length(c) != length(current)) {
-    stop("'c' must have length 1 or number of objectives.")
-  }
+  # recycle scalar penalties
+  if (length(c) == 1) c <- rep(c, length(current))
+
+  if (length(c) != length(current)) stop("'c' must have length 1 or number of objectives.")
 
   # check improvement
   better <- proposal > current
