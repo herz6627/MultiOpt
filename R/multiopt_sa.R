@@ -171,7 +171,7 @@ multiopt_sa <- function(
     # and see what they measure
     measure_mod = calculate_measure(trait_list, measure_list, measure_args_list, w = weights_mod)
 
-    if (is.na(measure_mod) || is.null(measure_mod)) stop("Proposed measure value is NA or NULL.")
+    if (any(is.null(measure_mod)) || anyNA(measure_mod)) stop("Proposed measure value is NA or NULL.")
 
     # test if we accept the new mix
     acceptance = accept_reject(
