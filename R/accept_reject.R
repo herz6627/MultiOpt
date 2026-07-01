@@ -105,4 +105,5 @@ accept_reject <- function(
 
   if (is.null(out) || is.na(out)) stop("Acceptance value is NA or NULL.")
 
+  return(out)
 }
