@@ -124,7 +124,7 @@ multiopt_sa <- function(
   # get initial measure values
   measure_out = calculate_measure(trait_list, measure_list, measure_args_list, w = initial_weights)
 
-  if (is.na(measure_out) || is.null(measure_out)) stop("Initial measure value is NA or NULL.")
+  if (anyNA(measure_out) || any(is.null(measure_out))) stop("Initial measure value is NA or NULL.")
 
   # begin simulated annealing ----------------------------------------------
 
