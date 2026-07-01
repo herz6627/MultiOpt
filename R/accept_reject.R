@@ -28,6 +28,10 @@ accept_reject <- function(
     stop("'summary' and 'proposal_summary' must have equal length.")
   }
 
+  if (anyNA(current) || anyNA(proposal)) {
+    stop("NA detected in current or proposal measure values.")
+  }
+
   if (!is.numeric(current) || !is.numeric(proposal)) {
     stop("All summary values must be numeric")
   }
@@ -97,5 +101,8 @@ accept_reject <- function(
   # acceptance probability
   p_accept_worse <- exp(-numerator / t)
 
-  runif(1) < p_accept_worse # stochastic acceptance. Standard to Metropolis algorithm method.
+  out <- runif(1) < p_accept_worse # stochastic acceptance. Standard to Metropolis algorithm method.
+
+  if (is.na(out)) stop("Acceptance value is NA.")
+
 }
