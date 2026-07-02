@@ -3,8 +3,10 @@ title: "overview"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{overview}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
   
 ```{r, include = FALSE}
@@ -356,7 +358,6 @@ we can look at the Pareto Front using plot_pareto().
 library(dplyr)
 library(ggplot2)
 
-# pareto front
 plot_pareto(
   archive_list = pareto_unscaled,
   multi_list = multi_out_unscaled, # optional
