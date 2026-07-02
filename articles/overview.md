@@ -266,7 +266,7 @@ sa_args = list(
 )
 
 multi_out = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = F)
-#> Starting simulation at 2026-07-02 14:48:39.15763
+#> Starting simulation at 2026-07-02 18:51:40.86052
 #> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
 #> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 #> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
@@ -277,7 +277,7 @@ multi_out = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = F)
 #> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 #> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
 #> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
-#> Work completed in 0.61 minutes
+#> Work completed in 0.60 minutes
 
 str(multi_out)
 #> List of 3
@@ -306,7 +306,7 @@ library(future)
 
 future::plan(multisession, workers = 4) # multisession indicates this is run on current machine
 multi_out = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = T)
-#> Starting simulation at 2026-07-02 14:49:16.8112
+#> Starting simulation at 2026-07-02 18:52:17.614636
 #> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
 #> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 #> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
@@ -315,7 +315,7 @@ multi_out = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = T)
 #> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 #> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
 #> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
-#> Work completed in 0.46 minutes
+#> Work completed in 0.44 minutes
 
 str(multi_out)
 #> List of 3
@@ -452,8 +452,8 @@ sa_args = list(
 )
 
 multi_out = rand_multiopt(n_runs = 10, multiopt_args = sa_args)
-#> Starting simulation at 2026-07-02 14:49:46.600498
-#> Work completed in 0.16 minutes
+#> Starting simulation at 2026-07-02 18:52:45.926474
+#> Work completed in 0.15 minutes
 
 # run multiple rounds of SA
 multi_out_unscaled = unscale_rand_multiopt(trait_list, multi_out)
@@ -595,7 +595,6 @@ library(dplyr)
 #>     intersect, setdiff, setequal, union
 library(ggplot2)
 
-# pareto front
 plot_pareto(
   archive_list = pareto_unscaled,
   multi_list = multi_out_unscaled, # optional

@@ -2,8 +2,9 @@ pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
+  Measures: Measures.html
   overview: overview.html
-last_built: 2026-07-02T14:47Z
+last_built: 2026-07-02T18:50Z
 urls:
   reference: https://herz6627.github.io/MultiOpt/reference
   article: https://herz6627.github.io/MultiOpt/articles
