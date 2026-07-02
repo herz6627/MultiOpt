@@ -35,11 +35,6 @@ accept_reject <- function(
 
   if (!is.finite(t)) stop("t is invalid: ", t)
 
-  if (t == 0) {
-    warning("Temperature is zero. Adding a small value (10^-10) to allow for calculation.")
-    t = 10^-10
-  }
-
   # recycle scalar penalties
   if (length(c) == 1) c <- rep(c, length(current))
 
@@ -97,6 +92,11 @@ accept_reject <- function(
   }
 
   # acceptance probability
+  if (t == 0) {
+    warning("Temperature is zero. Adding a small value (10^-10) to allow for calculation.")
+    t = 10^-10
+  }
+
   p_accept_worse <- exp(-numerator / t)
 
   out <- runif(1) < p_accept_worse # stochastic acceptance. Standard to Metropolis algorithm method.

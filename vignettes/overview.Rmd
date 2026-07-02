@@ -345,38 +345,50 @@ single_out <-
   )
 
 single_out_unscaled = unscale_singleopt(trait_list, single_out)
+```
 
+
+MultiOpt has a couple helper functions to make some quick summary plots. Here
+we can look at the Pareto Front using plot_pareto().
+
+```{r, fig.width=10}
 # plot
 library(dplyr)
 library(ggplot2)
 
 # pareto front
-test_single_df <- dplyr::bind_rows(single_out_unscaled, .id = "trait") %>% # single objectives
-  dplyr::as_tibble()
+plot_pareto(
+  archive_list = pareto_unscaled,
+  multi_list = multi_out_unscaled, # optional
+  single_list = single_out_unscaled # optional
+)
 
-test_single_df %>%
-  ggplot(aes(x = x, y = y)) +
-  geom_point(aes(color = trait)) +
-  geom_point(data = multi_out_unscaled$measure_summaries, color = "hotpink") + # multi-objective
-  geom_point(data = pareto_unscaled$archive_summary) + # pareto front
-  theme_minimal()
+```
 
-test_single_df %>%
-  ggplot(aes(x = y, y = z)) +
-  geom_point(aes(color = trait)) +
-  geom_point(data = multi_out_unscaled$measure_summaries, color = "hotpink") + # multi-objective
-  geom_point(data = pareto_unscaled$archive_summary) + # pareto front
-  theme_minimal()
+We can also plot which individuals were selected in each iteration.
+```{r, fig.width=10}
+plot_selection(multi_out_unscaled$individs_selected, trait_list = trait_list)
 
-test_single_df %>%
-  ggplot(aes(x = x, y = z)) +
-  geom_point(aes(color = trait)) +
-  geom_point(data = multi_out_unscaled$measure_summaries, color = "hotpink") + # multi-objective
-  geom_point(data = pareto_unscaled$archive_summary) + # pareto front
-  theme_minimal()
+# and for the single objective optimization results, we can look at who was 
+# selected in the context of the other traits
+plot_selection_single(single_out_unscaled$individs_selected, trait_list = trait_list)
+```
 
-# 3d plot of pareto front
+
+
+And there is even a function to help make pretty chain plots all in one go.
+```{r, fig.width=10}
+plot_chain(out_unscaled$chain)
+```
+
+
+
+We can also take a look at a 3d plot of pareto front using Plotly.
+```{r}
 library(plotly)
+
+test_single_df <- dplyr::bind_rows(single_out_unscaled$measure_summaries, .id = "trait") %>% # single objectives
+  dplyr::as_tibble()
 
 plot_ly(x = ~x, y = ~y, z = ~z) %>%
   add_markers(data = test_single_df, color = ~trait) %>%
