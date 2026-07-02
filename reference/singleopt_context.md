@@ -148,13 +148,29 @@ singleopt_context(
  n_t = 10,
  verbose = F
 )
-#> $x
-#>          x          y
-#> 1 1.069805 -0.8702706
+#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> $measure_summaries
+#> $measure_summaries$x
+#>           x          y
+#> 1 0.9198013 -0.6206074
 #> 
-#> $y
-#>           x             y
-#> 1 0.1308124 -0.0001829056
+#> $measure_summaries$y
+#>           x           y
+#> 1 0.3933631 -0.07418448
+#> 
+#> 
+#> $individs_selected
+#> $individs_selected$x
+#>   [1] 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0
+#>  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+#>  [75] 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 1 0 0 0 0 1 0 0
+#> 
+#> $individs_selected$y
+#>   [1] 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0
+#>  [38] 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+#>  [75] 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+#> 
 #> 
 
 ```

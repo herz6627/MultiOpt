@@ -150,6 +150,8 @@ out <- multiopt_sa(
   weights_max = weights_max,
   verbose = F
 )
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 ```
 
 #### Take a look at the results
@@ -264,8 +266,18 @@ sa_args = list(
 )
 
 multi_out = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = F)
-#> Starting simulation at 2026-06-30 14:33:07.69028
-#> Work completed in 0.58 minutes
+#> Starting simulation at 2026-07-02 14:48:39.15763
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Work completed in 0.61 minutes
 
 str(multi_out)
 #> List of 3
@@ -294,7 +306,15 @@ library(future)
 
 future::plan(multisession, workers = 4) # multisession indicates this is run on current machine
 multi_out = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = T)
-#> Starting simulation at 2026-06-30 14:33:43.394705
+#> Starting simulation at 2026-07-02 14:49:16.8112
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 #> Work completed in 0.46 minutes
 
 str(multi_out)
@@ -432,8 +452,8 @@ sa_args = list(
 )
 
 multi_out = rand_multiopt(n_runs = 10, multiopt_args = sa_args)
-#> Starting simulation at 2026-06-30 14:34:13.355585
-#> Work completed in 0.15 minutes
+#> Starting simulation at 2026-07-02 14:49:46.600498
+#> Work completed in 0.16 minutes
 
 # run multiple rounds of SA
 multi_out_unscaled = unscale_rand_multiopt(trait_list, multi_out)
@@ -451,6 +471,36 @@ pareto_out = explore_pareto(
   nd_samples = 500,
   verbose = F
 )
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 
 pareto_unscaled = unscale_archive(trait_list, pareto_out)
 
@@ -464,8 +514,74 @@ single_out <-
     n_runs = 10,
     verbose = F
   )
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
+#> Warning in accept_reject(summary = measure_out, proposal_summary = measure_mod,
+#> : Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 
 single_out_unscaled = unscale_singleopt(trait_list, single_out)
+```
+
+MultiOpt has a couple helper functions to make some quick summary plots.
+Here we can look at the Pareto Front using plot_pareto().
+
+``` r
 
 # plot
 library(dplyr)
@@ -480,49 +596,59 @@ library(dplyr)
 library(ggplot2)
 
 # pareto front
-test_single_df <- dplyr::bind_rows(single_out_unscaled, .id = "trait") %>% # single objectives
-  dplyr::as_tibble()
-
-test_single_df %>%
-  ggplot(aes(x = x, y = y)) +
-  geom_point(aes(color = trait)) +
-  geom_point(data = multi_out_unscaled$measure_summaries, color = "hotpink") + # multi-objective
-  geom_point(data = pareto_unscaled$archive_summary) + # pareto front
-  theme_minimal()
+plot_pareto(
+  archive_list = pareto_unscaled,
+  multi_list = multi_out_unscaled, # optional
+  single_list = single_out_unscaled # optional
+)
 ```
 
-![](overview_files/figure-html/unnamed-chunk-15-1.png)
+![](overview_files/figure-html/unnamed-chunk-16-1.png)
+
+We can also plot which individuals were selected in each iteration.
+
+``` r
+
+plot_selection(multi_out_unscaled$individs_selected, trait_list = trait_list)
+```
+
+![](overview_files/figure-html/unnamed-chunk-17-1.png)
 
 ``` r
 
 
-test_single_df %>%
-  ggplot(aes(x = y, y = z)) +
-  geom_point(aes(color = trait)) +
-  geom_point(data = multi_out_unscaled$measure_summaries, color = "hotpink") + # multi-objective
-  geom_point(data = pareto_unscaled$archive_summary) + # pareto front
-  theme_minimal()
+# and for the single objective optimization results, we can look at who was 
+# selected in the context of the other traits
+plot_selection_single(single_out_unscaled$individs_selected, trait_list = trait_list)
+#> $x
 ```
 
-![](overview_files/figure-html/unnamed-chunk-15-2.png)
+![](overview_files/figure-html/unnamed-chunk-17-2.png)
+
+    #> 
+    #> $y
+
+![](overview_files/figure-html/unnamed-chunk-17-3.png)
+
+    #> 
+    #> $z
+
+![](overview_files/figure-html/unnamed-chunk-17-4.png)
+
+And there is even a function to help make pretty chain plots all in one
+go.
 
 ``` r
 
-
-test_single_df %>%
-  ggplot(aes(x = x, y = z)) +
-  geom_point(aes(color = trait)) +
-  geom_point(data = multi_out_unscaled$measure_summaries, color = "hotpink") + # multi-objective
-  geom_point(data = pareto_unscaled$archive_summary) + # pareto front
-  theme_minimal()
+plot_chain(out_unscaled$chain)
 ```
 
-![](overview_files/figure-html/unnamed-chunk-15-3.png)
+![](overview_files/figure-html/unnamed-chunk-18-1.png)
+
+We can also take a look at a 3d plot of pareto front using Plotly.
 
 ``` r
 
-
-# 3d plot of pareto front
 library(plotly)
 #> 
 #> Attaching package: 'plotly'
@@ -535,6 +661,9 @@ library(plotly)
 #> The following object is masked from 'package:graphics':
 #> 
 #>     layout
+
+test_single_df <- dplyr::bind_rows(single_out_unscaled$measure_summaries, .id = "trait") %>% # single objectives
+  dplyr::as_tibble()
 
 plot_ly(x = ~x, y = ~y, z = ~z) %>%
   add_markers(data = test_single_df, color = ~trait) %>%

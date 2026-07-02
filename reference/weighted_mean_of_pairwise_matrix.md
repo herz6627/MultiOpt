@@ -51,5 +51,5 @@ v <- matrix(runif(16), 4, 4)
 diag(v) <- 0
 w <- c(1, 2, 0, 1)
 weighted_mean_of_pairwise_matrix(v, w)
-#> [1] 0.2904113
+#> [1] 0.6407953
 ```

@@ -164,6 +164,8 @@ str(test)
   : Visualize pairwise Pareto trade-offs
 - [`plot_selection()`](https://herz6627.github.io/MultiOpt/reference/plot_selection.md)
   : Visualize selection frequency across individuals and traits
+- [`plot_selection_single()`](https://herz6627.github.io/MultiOpt/reference/plot_selection_single.md)
+  : Visualize trait values of selected individuals
 - [`propose_initial_weights()`](https://herz6627.github.io/MultiOpt/reference/propose_initial_weights.md)
   : Generate initial weights
 - [`rand_multiopt()`](https://herz6627.github.io/MultiOpt/reference/rand_multiopt.md)
