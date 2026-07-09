@@ -14,7 +14,6 @@ Website:
 [Here](https://herz6627.github.io/MultiOpt/index.html)
 
 
-## Installation
 
 This R package is very similar to and utilizes the core functionality of the 
 R package OptGenMix (jasongbragg/OptGenMix). MultiOpt expands OptGenMix to allow
@@ -27,6 +26,11 @@ publications OptGenMix has been used in include:
 > Dimon, Richard J., et al. "Integrating Genomic and Climate Data to Design Representative Seed Production Areas: A Pragmatic Workflow for Climate‐Adjusted Provenancing." Ecology and Evolution 16.1 (2026): e72658.
 
 > Bragg, Jason G., et al. "Conserving the genetic diversity of condemned populations: Optimizing collections and translocation." Evolutionary Applications 14.5 (2021): 1225-1238.
+
+
+
+
+## Installation
 
 
 ### Development version
