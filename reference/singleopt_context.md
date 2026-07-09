@@ -148,8 +148,6 @@ singleopt_context(
  n_t = 10,
  verbose = F
 )
-#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
-#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
 #> $measure_summaries
 #> $measure_summaries$x
 #>           x          y

@@ -1,15 +1,39 @@
 ## Overview
 
 `MultiOpt` is an R package for running simulated annealing to select
-individuals best suited to the users priorities..
+individuals best suited to the users priorities. This package has been
+designed as a tool for ex situ conservation collections (seed banks,
+living collections, introductions, etc.) but is applicable across many
+different fields.
 
 The package was developed to support analyses presented in:
 
 > Author A, Author B, and Author C. (Year). *Title of manuscript*.
 > Journal Name. DOI: xxx
 
-Website: [Here](https://herz6627.github.io/MultiOpt/index.html) \##
-Installation
+Website: [Here](https://herz6627.github.io/MultiOpt/index.html)
+
+## Installation
+
+This R package is very similar to and utilizes the core functionality of
+the R package OptGenMix (jasongbragg/OptGenMix). MultiOpt expands
+OptGenMix to allow for more than two traits to be considered at once,
+which can be helpful when considering multiple forms of variation for
+your ex situ collection. Some of the publications OptGenMix has been
+used in include:
+
+> Bragg, Jason G., et al. “Optimizing the genetic composition of a
+> translocation population: Incorporating constraints and conflicting
+> objectives.” Molecular Ecology Resources 20.1 (2020): 54-65.
+
+> Dimon, Richard J., et al. “Integrating Genomic and Climate Data to
+> Design Representative Seed Production Areas: A Pragmatic Workflow for
+> Climate‐Adjusted Provenancing.” Ecology and Evolution 16.1 (2026):
+> e72658.
+
+> Bragg, Jason G., et al. “Conserving the genetic diversity of condemned
+> populations: Optimizing collections and translocation.” Evolutionary
+> Applications 14.5 (2021): 1225-1238.
 
 ### Development version
 
@@ -54,7 +78,7 @@ y = as.matrix(dat$y)
 
 Here is where we specify how we want to measure success. This needs to
 be a list of functions as listed in ?multiopt_sa(). Full details are can
-be found in the XXXX vignette.
+be found in the Measures vignette.
 
 ``` r
 

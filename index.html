@@ -54,12 +54,26 @@
   <main id="main" class="col-md-9"><div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><code>MultiOpt</code> is an R package for running simulated annealing to select individuals best suited to the users priorities..</p>
+<p><code>MultiOpt</code> is an R package for running simulated annealing to select individuals best suited to the users priorities. This package has been designed as a tool for ex situ conservation collections (seed banks, living collections, introductions, etc.) but is applicable across many different fields.</p>
 <p>The package was developed to support analyses presented in:</p>
 <blockquote>
 <p>Author A, Author B, and Author C. (Year). <em>Title of manuscript</em>. Journal Name. DOI: xxx</p>
 </blockquote>
-<p>Website: <a href="https://herz6627.github.io/MultiOpt/index.html">Here</a> ## Installation</p>
+<p>Website: <a href="https://herz6627.github.io/MultiOpt/index.html">Here</a></p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>This R package is very similar to and utilizes the core functionality of the R package OptGenMix (jasongbragg/OptGenMix). MultiOpt expands OptGenMix to allow for more than two traits to be considered at once, which can be helpful when considering multiple forms of variation for your ex situ collection. Some of the publications OptGenMix has been used in include:</p>
+<blockquote>
+<p>Bragg, Jason G., et al. “Optimizing the genetic composition of a translocation population: Incorporating constraints and conflicting objectives.” Molecular Ecology Resources 20.1 (2020): 54-65.</p>
+</blockquote>
+<blockquote>
+<p>Dimon, Richard J., et al. “Integrating Genomic and Climate Data to Design Representative Seed Production Areas: A Pragmatic Workflow for Climate‐Adjusted Provenancing.” Ecology and Evolution 16.1 (2026): e72658.</p>
+</blockquote>
+<blockquote>
+<p>Bragg, Jason G., et al. “Conserving the genetic diversity of condemned populations: Optimizing collections and translocation.” Evolutionary Applications 14.5 (2021): 1225-1238.</p>
+</blockquote>
 <div class="section level3">
 <h3 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h3>
@@ -89,7 +103,7 @@
 <span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Here is where we specify how we want to measure success. This needs to be a list of functions as listed in ?multiopt_sa(). Full details are can be found in the XXXX vignette.</p>
+<p>Here is where we specify how we want to measure success. This needs to be a list of functions as listed in ?multiopt_sa(). Full details are can be found in the Measures vignette.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">measure_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span> x <span class="op">=</span> <span class="va">weighted_mean_of_vector</span>,</span>
@@ -159,7 +173,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

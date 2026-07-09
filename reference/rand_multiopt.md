@@ -94,13 +94,8 @@ nd_samples = 500
 )
 
 test = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = T)
-#> Starting simulation at 2026-07-02 18:50:54.716512 
-#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
-#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
-#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
-#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
-#> Warning: Temperature is zero. Adding a small value (10^-10) to allow for calculation.
-#> Work completed in 0.63 minutes
+#> Starting simulation at 2026-07-09 18:03:53.647677 
+#> Work completed in 0.65 minutes
 str(test)
 #> List of 3
 #>  $ measure_summaries: num [1:5, 1:2] 0.755 0.794 0.764 0.744 0.594 ...
