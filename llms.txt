@@ -13,8 +13,6 @@ The package was developed to support analyses presented in:
 
 Website: [Here](https://herz6627.github.io/MultiOpt/index.html)
 
-## Installation
-
 This R package is very similar to and utilizes the core functionality of
 the R package OptGenMix (jasongbragg/OptGenMix). MultiOpt expands
 OptGenMix to allow for more than two traits to be considered at once,
@@ -34,6 +32,8 @@ used in include:
 > Bragg, Jason G., et al. “Conserving the genetic diversity of condemned
 > populations: Optimizing collections and translocation.” Evolutionary
 > Applications 14.5 (2021): 1225-1238.
+
+## Installation
 
 ### Development version
 
