@@ -16,7 +16,8 @@ accept_reject <- function(
     t,
     p_depends_delta = FALSE,
     c = 1,
-    c_all = 1
+    c_all = 1,
+    verbose = T
 ) {
 
   # convert lists to numeric vectors
@@ -93,7 +94,9 @@ accept_reject <- function(
 
   # acceptance probability
   if (t == 0) {
-    warning("Temperature is zero. Adding a small value (10^-10) to allow for calculation.")
+
+    if(verbose) warning("Temperature is zero. Adding a small value (10^-10) to allow for calculation.")
+
     t = 10^-10
   }
 

@@ -180,7 +180,8 @@ multiopt_sa <- function(
       t = temp,
       p_depends_delta = p_depends_delta,
       c = acceptance_multipliers,
-      c_all = acceptance_multiplier_all_worse
+      c_all = acceptance_multiplier_all_worse,
+      verbose = verbose
     )
 
     if(is.null(acceptance) || is.na(acceptance)) stop("Acceptance is NULL or NA")
