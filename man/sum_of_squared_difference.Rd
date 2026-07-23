@@ -14,7 +14,8 @@ sum_of_squared_difference(v, w, disp = 0, direction = 1)
 \item{disp}{Numeric scalar target value to compare the weighted mean against. Defaults to 0.}
 
 \item{direction}{numeric scalar. Multiplier applied to the final metric value
-to control orientation. Use 1 for default direction, -1 to invert the sign.}
+to control orientation for simulated annealing. Use 1 for default direction
+(maximize trait value), -1 to invert the sign (minimize trait value).}
 }
 \value{
 A single numeric value representing the weighted sum of squared
