@@ -11,7 +11,8 @@ accept_reject(
   t,
   p_depends_delta = FALSE,
   c = 1,
-  c_all = 1
+  c_all = 1,
+  verbose = T
 )
 ```
 

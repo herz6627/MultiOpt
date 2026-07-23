@@ -30,8 +30,9 @@ weighted_mean_of_vector(v, w, disp = 0, direction = 1)
 - direction:
 
   numeric scalar. Multiplier applied to the final metric value to
-  control orientation. Use 1 for default direction, -1 to invert the
-  sign.
+  control orientation for simulated annealing. Use 1 for default
+  direction (maximize trait value), -1 to invert the sign (minimize
+  trait value).
 
 ## Value
 

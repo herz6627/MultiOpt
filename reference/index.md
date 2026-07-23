@@ -28,6 +28,8 @@
   : Multi-objective simulated annealing optimization
 - [`nei_diversity()`](https://herz6627.github.io/MultiOpt/reference/nei_diversity.md)
   : Nei diversity
+- [`pareto_shape_index()`](https://herz6627.github.io/MultiOpt/reference/pareto_shape_index.md)
+  : Pareto Shape Index (PSI)
 - [`plot_chain()`](https://herz6627.github.io/MultiOpt/reference/plot_chain.md)
   : Plot trait value chains over iterations
 - [`plot_pareto()`](https://herz6627.github.io/MultiOpt/reference/plot_pareto.md)
