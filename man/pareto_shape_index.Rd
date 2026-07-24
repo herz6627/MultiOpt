@@ -57,8 +57,8 @@ Yij = (Si,k * Sj,l - Si,l * Sj,k) /
 }
 
 where \eqn{S_{i,k}} and \eqn{S_{i,l}} are the normalized objective values
-for solution \eqn{i}. Objectives should be normalized to the interval
-[0, 1] and transformed to a common optimization direction prior to
+for solution \eqn{i}. Trait values should be normalized to the interval
+[0, 1] and transformed to a common optimization direction (minimizing or maximizing) prior to
 computing the index.
 
 The signed distance of each intersection from the center of the normalized

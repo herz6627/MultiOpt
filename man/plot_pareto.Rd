@@ -4,7 +4,12 @@
 \alias{plot_pareto}
 \title{Visualize pairwise Pareto trade-offs}
 \usage{
-plot_pareto(archive_list, multi_list = NULL, single_list = NULL)
+plot_pareto(
+  archive_list,
+  multi_list = NULL,
+  single_list = NULL,
+  measure_type = NULL
+)
 }
 \arguments{
 \item{archive_list}{A list containing Pareto archive output,
@@ -17,6 +22,10 @@ results from `rand_multiopt` or `multiopt_sa`. Must include either `measure_summ
 
 \item{single_list}{Optional list of single-objective optimization
 results from `singleopt_context`.}
+
+\item{measure_type}{Optional list of direction of optimization.
+List elements should have the same names as traits in archive_list and
+values should be `"minimize"`, `"maximize"`, or `"diversify"`.}
 }
 \value{
 A patchwork object consisting of multiple ggplot2
@@ -29,4 +38,79 @@ multi-objective and single-objective optimization runs for comparison.
 }
 \details{
 Required packages: ggplot2, dplyr, patchwork.
+
+Note that simulated annealing as used here is trying to maximize values.
+Therefore, raw output from MultiOpt SA simulations will be maximizing.
+If you back transform trait values to their original scale then you will
+be possibly maximizing, minimizing, or diversifying.
+}
+\examples{
+
+# simulate data
+set.seed(12345)
+n = 100
+x = rnorm(n = n, mean = 120, sd = 2)
+y = x * 3 + rnorm(n = n, mean = 0, sd = 20)
+dat = data.frame(x = x, y = y)
+
+trait_list = list(
+x = as.matrix(dat$x),
+y = as.matrix(dat$y)
+)
+
+measure_list = list(
+ x = weighted_mean_of_vector,
+ y = weighted_mean_of_vector
+)
+
+args_list = list(
+ x = NULL,
+ y = list(direction = -1)
+)
+
+# scale data
+trait_list_scaled <- scale_traits(trait_list)
+
+sa_args = list(
+trait_list = trait_list_scaled,
+measure_list = measure_list,
+measure_args_list = args_list,
+n_t = 10, # select 10 individuals
+weights_max = 1, # individuals can only be selected once
+nda = T
+)
+
+test = rand_multiopt(n_runs = 5, multiopt_args = sa_args)
+
+# plot the pareto front
+plot_pareto(archive_list = test$archive)
+
+# You can also add multi- and single- objective outputs
+
+# single objective simulation
+single_out <-
+ singleopt_context(
+   trait_list = trait_list_scaled,
+   measure_list = measure_list,
+   measure_args_list = args_list,
+   n_t = n_t,
+   n_runs = 10,
+   verbose = F
+ )
+
+ plot_pareto(archive_list = test$archive,
+  multi_list = test,
+  single_list = single_out
+ )
+
+# and you can additionally add some arrows which helps viewer's remember what
+direction we are trying to optimize.
+
+ plot_pareto(archive_list = test$archive,
+  multi_list = test,
+  single_list = single_out,
+  measure_type = list(x = "maximize", y = "maximize")
+ )
+
+
 }

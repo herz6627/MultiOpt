@@ -457,6 +457,9 @@ plot_selection_single <- function(
 #'   `final_selection$measure_summary`.
 #' @param single_list Optional list of single-objective optimization
 #'   results from `singleopt_context`.
+#' @param measure_type Optional list of direction of optimization.
+#'   List elements should have the same names as traits in archive_list and
+#'   values should be `"minimize"`, `"maximize"`, or `"diversify"`.
 #'
 #' @return A patchwork object consisting of multiple ggplot2
 #'   pairwise scatterplots with shared legends.
@@ -465,15 +468,89 @@ plot_selection_single <- function(
 #'
 #' Required packages: ggplot2, dplyr, patchwork.
 #'
+#'Note that simulated annealing as used here is trying to maximize values.
+#'Therefore, raw output from MultiOpt SA simulations will be maximizing.
+#'If you back transform trait values to their original scale then you will
+#'be possibly maximizing, minimizing, or diversifying.
+#'
 #' @import ggplot2
 #' @import dplyr
 #' @import patchwork
+#'
+#' @examples
+#'
+#' # simulate data
+#' set.seed(12345)
+#' n = 100
+#' x = rnorm(n = n, mean = 120, sd = 2)
+#' y = x * 3 + rnorm(n = n, mean = 0, sd = 20)
+#' dat = data.frame(x = x, y = y)
+#'
+#' trait_list = list(
+#'x = as.matrix(dat$x),
+#'y = as.matrix(dat$y)
+#')
+#'
+#'measure_list = list(
+#'  x = weighted_mean_of_vector,
+#'  y = weighted_mean_of_vector
+#')
+#'
+#'args_list = list(
+#'  x = NULL,
+#'  y = list(direction = -1)
+#')
+#'
+#'# scale data
+#' trait_list_scaled <- scale_traits(trait_list)
+#'
+#' sa_args = list(
+#'trait_list = trait_list_scaled,
+#'measure_list = measure_list,
+#'measure_args_list = args_list,
+#'n_t = 10, # select 10 individuals
+#'weights_max = 1, # individuals can only be selected once
+#'nda = T
+#')
+#'
+#'test = rand_multiopt(n_runs = 5, multiopt_args = sa_args)
+#'
+#' # plot the pareto front
+#' plot_pareto(archive_list = test$archive)
+#'
+#'# You can also add multi- and single- objective outputs
+#'
+#' # single objective simulation
+#'single_out <-
+#'  singleopt_context(
+#'    trait_list = trait_list_scaled,
+#'    measure_list = measure_list,
+#'    measure_args_list = args_list,
+#'    n_t = n_t,
+#'    n_runs = 10,
+#'    verbose = F
+#'  )
+#'
+#'  plot_pareto(archive_list = test$archive,
+#'   multi_list = test,
+#'   single_list = single_out
+#'  )
+#'
+#'# and you can additionally add some arrows which helps viewer's remember what
+#'direction we are trying to optimize.
+#'
+#'  plot_pareto(archive_list = test$archive,
+#'   multi_list = test,
+#'   single_list = single_out,
+#'   measure_type = list(x = "maximize", y = "maximize")
+#'  )
+#'
+#'
 #' @export
 plot_pareto <- function(
     archive_list,
     multi_list = NULL, # optional for multi-objective; rand_multiopt or multiopt_sa
     single_list = NULL, # optional for single-objective output from singleopt_context
-
     measure_type = NULL # optional list of what direction SA was optimizing
 ) {
 
