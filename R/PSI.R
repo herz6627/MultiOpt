@@ -102,7 +102,7 @@ pareto_shape_index <- function(pareto_front) {
 
   pareto_front <- as.matrix(pareto_front)
 
-  if(any(pareto_front > 1) | any(pareto_front < 0)) stop("Pareto values should be using scaled [0-1] trait data.")
+  if(any(pareto_front > 1) | any(pareto_front < -1)) stop("Pareto values should be using scaled [0-1] trait data.")
 
   if (ncol(pareto_front) != 2) {
     stop("Pareto Shape Index is defined for two objectives.")
