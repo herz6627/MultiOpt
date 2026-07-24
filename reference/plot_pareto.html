@@ -48,7 +48,12 @@ multi-objective and single-objective optimization runs for comparison.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_pareto</span><span class="op">(</span><span class="va">archive_list</span>, multi_list <span class="op">=</span> <span class="cn">NULL</span>, single_list <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_pareto</span><span class="op">(</span></span>
+<span>  <span class="va">archive_list</span>,</span>
+<span>  multi_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  single_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  measure_type <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -71,6 +76,12 @@ results from `rand_multiopt` or `multiopt_sa`. Must include either `measure_summ
 <dd><p>Optional list of single-objective optimization
 results from `singleopt_context`.</p></dd>
 
+
+<dt id="arg-measure-type">measure_type<a class="anchor" aria-label="anchor" href="#arg-measure-type"></a></dt>
+<dd><p>Optional list of direction of optimization.
+List elements should have the same names as traits in archive_list and
+values should be `"minimize"`, `"maximize"`, or `"diversify"`.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -80,8 +91,16 @@ results from `singleopt_context`.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Required packages: ggplot2, dplyr, patchwork.</p>
+<p>Note that simulated annealing as used here is trying to maximize values.
+Therefore, raw output from MultiOpt SA simulations will be maximizing.
+If you back transform trait values to their original scale then you will
+be possibly maximizing, minimizing, or diversifying.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -56,7 +56,7 @@ iteratively modified to improve one or more objective functions.</p>
 <span>  <span class="va">measure_list</span>,</span>
 <span>  <span class="va">measure_args_list</span>,</span>
 <span>  n_t <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  weights_max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weights_max <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  weights_min <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  initial_weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_steps <span class="op">=</span> <span class="fl">10000</span>,</span>
@@ -83,7 +83,11 @@ individuals in rows and trait values in columns.</p></dd>
 
 <dt id="arg-measure-list">measure_list<a class="anchor" aria-label="anchor" href="#arg-measure-list"></a></dt>
 <dd><p>List of objective functions corresponding to each
-element of `trait_list`. Possible functions include: `nei_diversity`, `shannon_diversity`, `allele_enrichment`, `weighted_mean_of_vector`, `sum_of_squared_difference`, `weighted_mean_of_absolute_difference`, `weighted_mean_of_pairwise_matrix`</p></dd>
+element of `trait_list`. Possible functions include: `nei_diversity`,
+`shannon_diversity`, `allele_enrichment`, `weighted_mean_of_vector`,
+`sum_of_squared_difference`, `weighted_mean_of_absolute_difference`,
+`weighted_mean_of_pairwise_matrix`. See function descriptions for specific
+details and required arguments.</p></dd>
 
 
 <dt id="arg-measure-args-list">measure_args_list<a class="anchor" aria-label="anchor" href="#arg-measure-args-list"></a></dt>
@@ -99,7 +103,8 @@ to select.</p></dd>
 <dt id="arg-weights-max">weights_max<a class="anchor" aria-label="anchor" href="#arg-weights-max"></a></dt>
 <dd><p>Optional maximum allowable value(s) for weights.
 Either a single numeric value or a vector with length equal to the
-number of individuals.</p></dd>
+number of individuals. Automatically set to 1, individuals can only
+be selected once.</p></dd>
 
 
 <dt id="arg-weights-min">weights_min<a class="anchor" aria-label="anchor" href="#arg-weights-min"></a></dt>
@@ -182,6 +187,51 @@ specified acceptance parameters.</p>
 <p>Optionally, a non-dominated archive can be maintained during the search.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># generate some strongly positively correlated data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">500</span> <span class="co"># how many individuals</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">120</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">4</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat_strong_p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># format trait data</span></span></span>
+<span class="r-in"><span><span class="va">trait_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat_weak_p</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dat_weak_p</span><span class="op">$</span><span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'dat_weak_p' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># here is where we specify how we want to measure the traits.</span></span></span>
+<span class="r-in"><span><span class="co"># taking the mean for both traits here.</span></span></span>
+<span class="r-in"><span><span class="co"># note that these are functions, not character values.</span></span></span>
+<span class="r-in"><span><span class="va">measure_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span> x <span class="op">=</span> <span class="va">weighted_mean_of_vector</span>,</span></span>
+<span class="r-in"><span> y <span class="op">=</span> <span class="va">weighted_mean_of_vector</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># any additional arguments the measure functions need.</span></span></span>
+<span class="r-in"><span><span class="va">args_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span> x <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># trait measures automatically maximize, so no need to specify anything here.</span></span></span>
+<span class="r-in"><span> y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="co"># here I am specifying i want to minimize this trait</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">multiopt_sa</span><span class="op">(</span></span></span>
+<span class="r-in"><span> trait_list <span class="op">=</span> <span class="va">trait_list</span>,</span></span>
+<span class="r-in"><span> measure_list <span class="op">=</span> <span class="va">measure_list</span>,</span></span>
+<span class="r-in"><span> measure_args_list <span class="op">=</span> <span class="va">args_list</span>,</span></span>
+<span class="r-in"><span> n_t <span class="op">=</span> <span class="fl">50</span>, <span class="co"># select 50 individuals out of our simulated n individuals.</span></span></span>
+<span class="r-in"><span> weights_max <span class="op">=</span> <span class="fl">1</span>, <span class="co"># only select an indivdual a maximum of 1 time</span></span></span>
+<span class="r-in"><span> <span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'trait_list' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

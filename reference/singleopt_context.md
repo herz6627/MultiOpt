@@ -41,7 +41,8 @@ singleopt_context(
   \`shannon_diversity\`, \`allele_enrichment\`,
   \`weighted_mean_of_vector\`, \`sum_of_squared_difference\`,
   \`weighted_mean_of_absolute_difference\`,
-  \`weighted_mean_of_pairwise_matrix\`
+  \`weighted_mean_of_pairwise_matrix\`. See function descriptions for
+  specific details and required arguments.
 
 - measure_args_list:
 
@@ -61,7 +62,8 @@ singleopt_context(
 
   Optional maximum allowable value(s) for weights. Either a single
   numeric value or a vector with length equal to the number of
-  individuals.
+  individuals. Automatically set to 1, individuals can only be selected
+  once.
 
 - initial_weights:
 

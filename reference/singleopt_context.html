@@ -80,7 +80,11 @@ individuals in rows and trait values in columns.</p></dd>
 
 <dt id="arg-measure-list">measure_list<a class="anchor" aria-label="anchor" href="#arg-measure-list"></a></dt>
 <dd><p>List of objective functions corresponding to each
-element of `trait_list`. Possible functions include: `nei_diversity`, `shannon_diversity`, `allele_enrichment`, `weighted_mean_of_vector`, `sum_of_squared_difference`, `weighted_mean_of_absolute_difference`, `weighted_mean_of_pairwise_matrix`</p></dd>
+element of `trait_list`. Possible functions include: `nei_diversity`,
+`shannon_diversity`, `allele_enrichment`, `weighted_mean_of_vector`,
+`sum_of_squared_difference`, `weighted_mean_of_absolute_difference`,
+`weighted_mean_of_pairwise_matrix`. See function descriptions for specific
+details and required arguments.</p></dd>
 
 
 <dt id="arg-measure-args-list">measure_args_list<a class="anchor" aria-label="anchor" href="#arg-measure-args-list"></a></dt>
@@ -100,7 +104,8 @@ to select.</p></dd>
 <dt id="arg-weights-max">weights_max<a class="anchor" aria-label="anchor" href="#arg-weights-max"></a></dt>
 <dd><p>Optional maximum allowable value(s) for weights.
 Either a single numeric value or a vector with length equal to the
-number of individuals.</p></dd>
+number of individuals. Automatically set to 1, individuals can only
+be selected once.</p></dd>
 
 
 <dt id="arg-initial-weights">initial_weights<a class="anchor" aria-label="anchor" href="#arg-initial-weights"></a></dt>

@@ -7,7 +7,12 @@ multi-objective and single-objective optimization runs for comparison.
 ## Usage
 
 ``` r
-plot_pareto(archive_list, multi_list = NULL, single_list = NULL)
+plot_pareto(
+  archive_list,
+  multi_list = NULL,
+  single_list = NULL,
+  measure_type = NULL
+)
 ```
 
 ## Arguments
@@ -29,6 +34,12 @@ plot_pareto(archive_list, multi_list = NULL, single_list = NULL)
   Optional list of single-objective optimization results from
   \`singleopt_context\`.
 
+- measure_type:
+
+  Optional list of direction of optimization. List elements should have
+  the same names as traits in archive_list and values should be
+  \`"minimize"\`, \`"maximize"\`, or \`"diversify"\`.
+
 ## Value
 
 A patchwork object consisting of multiple ggplot2 pairwise scatterplots
@@ -37,3 +48,10 @@ with shared legends.
 ## Details
 
 Required packages: ggplot2, dplyr, patchwork.
+
+Note that simulated annealing as used here is trying to maximize values.
+Therefore, raw output from MultiOpt SA simulations will be maximizing.
+If you back transform trait values to their original scale then you will
+be possibly maximizing, minimizing, or diversifying.
+
+## Examples
