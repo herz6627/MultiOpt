@@ -525,3 +525,62 @@ weighted_mean_of_pairwise_matrix <- function(v, w, direction = 1) {
 
   }
 }
+
+
+#' Calculate the Wasserstein Distance for use in simulated annealing
+#'
+#' Uses the \code{wasserstein()} to calculate the Wasserstein distance (\eqn{W_p}) between
+#' the original trait data distribution and the proposed subset of individuals.
+#' Assumes that v provides the total population distribution of trait variation.
+#'
+#' As `MultiOpt` aims to maximize measures, but smaller \eqn{W_p} are
+#' better, we multiply the \eqn{W_p} by -1 to allow for minimizing
+#' the differences in distributions.
+#'
+#' @param v single-column matrix of numeric values. Will be coerced to a vector.
+#' @param w Numeric vector of individual weights with same length as `v`.
+#' @param ... Optional additional arguments. See \code{?wasserstein} for specific
+#' options.
+#'
+#' @returns A single numeric value representing the p-Wasserstein distance multiplied
+#' by -1.
+#' @export
+#'
+#' @examples
+#' v <- as.matrix(c(1, 2, 3))
+#' w <- c(0, 1, 1)
+#' wasserstein_measure(v, w)
+wasserstein_measure <- function(v, w, ...) {
+
+  # run checks
+  if (!is.matrix(v)) stop("v must be a matrix.")
+  if (nrow(v) <= 1) stop("v should have only 1 row.")
+  # if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
+
+  # force into vector
+  vs_vec <- as.numeric(v)
+
+  # check lengths
+  if (length(vs_vec) != length(w)) {
+    stop("`v` and `w` must have the same length.")
+  }
+
+  # replicate each observed value w times (weights of 0 will get dropped).
+  v_sub <- rep(vs_vec, w)
+
+  # Get W
+  wass <- wasserstein(
+    observations_a = vs_vec,
+    observations_b = v_sub,
+    ...
+  )
+
+  # since we are trying to maximize values in SA but smaller Wasserstein values
+  # are better, we'll just multiply the distance value by -1
+  return(wass * -1)
+
+}
+
+
+
+
