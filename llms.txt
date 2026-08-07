@@ -215,6 +215,11 @@ str(test)
   : Back transform output to original scale
 - [`unscale_singleopt()`](https://herz6627.github.io/MultiOpt/reference/unscale_singleopt.md)
   : Back transform output to original scale
+- [`wasserstein()`](https://herz6627.github.io/MultiOpt/reference/wasserstein.md)
+  : Calculate the Wasserstein Distance Between Two Empirical
+  Distributions
+- [`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md)
+  : Calculate the Wasserstein Distance for use in simulated annealing
 - [`weighted_mean_of_absolute_difference()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_absolute_difference.md)
   : Compute weighted mean absolute deviation from a target value
 - [`weighted_mean_of_pairwise_matrix()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_pairwise_matrix.md)
