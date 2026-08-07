@@ -193,9 +193,9 @@ plot_selection <- function(
 
 
     # All pairwise combinations
-    pairs <- combn(trait_names, 2, simplify = FALSE)
+    trait_pairs <- combn(trait_names, 2, simplify = FALSE)
 
-    plot_list <- lapply(pairs, function(vars){
+    plot_list <- lapply(trait_pairs, function(vars){
 
       trait_dat |>
         ggplot2::ggplot(
@@ -394,11 +394,11 @@ plot_selection_single <- function(
     })
 
     # All pairwise combinations
-    pairs <- combn(trait_names, 2, simplify = FALSE)
+    trait_pairs <- combn(trait_names, 2, simplify = FALSE)
 
     plot_out <- lapply(seq_along(individs_selected), function(x){
 
-      plot_list <- lapply(pairs, function(vars){
+      plot_list <- lapply(trait_pairs, function(vars){
 
         trait_dat[[x]] |>
           ggplot2::ggplot(
@@ -457,6 +457,9 @@ plot_selection_single <- function(
 #'   `final_selection$measure_summary`.
 #' @param single_list Optional list of single-objective optimization
 #'   results from `singleopt_context`.
+#' @param measure_type Optional list of direction of optimization.
+#'   List elements should have the same names as traits in archive_list and
+#'   values should be `"minimize"`, `"maximize"`, or `"diversify"`.
 #'
 #' @return A patchwork object consisting of multiple ggplot2
 #'   pairwise scatterplots with shared legends.
@@ -465,14 +468,90 @@ plot_selection_single <- function(
 #'
 #' Required packages: ggplot2, dplyr, patchwork.
 #'
+#'Note that simulated annealing as used here is trying to maximize values.
+#'Therefore, raw output from MultiOpt SA simulations will be maximizing.
+#'If you back transform trait values to their original scale then you will
+#'be possibly maximizing, minimizing, or diversifying.
+#'
 #' @import ggplot2
 #' @import dplyr
 #' @import patchwork
+#'
+#' @examples
+#'
+#' # simulate data
+#' set.seed(12345)
+#' n = 100
+#' x = rnorm(n = n, mean = 120, sd = 2)
+#' y = x * 3 + rnorm(n = n, mean = 0, sd = 20)
+#' dat = data.frame(x = x, y = y)
+#'
+#' trait_list = list(
+#'x = as.matrix(dat$x),
+#'y = as.matrix(dat$y)
+#')
+#'
+#'measure_list = list(
+#'  x = weighted_mean_of_vector,
+#'  y = weighted_mean_of_vector
+#')
+#'
+#'args_list = list(
+#'  x = NULL,
+#'  y = list(direction = -1)
+#')
+#'
+#'# scale data
+#' trait_list_scaled <- scale_traits(trait_list)
+#'
+#' sa_args = list(
+#'trait_list = trait_list_scaled,
+#'measure_list = measure_list,
+#'measure_args_list = args_list,
+#'n_t = 10, # select 10 individuals
+#'weights_max = 1, # individuals can only be selected once
+#'nda = T
+#')
+#'
+#'test = rand_multiopt(n_runs = 5, multiopt_args = sa_args)
+#'
+#' # plot the pareto front
+#' plot_pareto(archive_list = test$archive)
+#'
+#'# You can also add multi- and single- objective outputs
+#'
+#' # single objective simulation
+#'single_out <-
+#'  singleopt_context(
+#'    trait_list = trait_list_scaled,
+#'    measure_list = measure_list,
+#'    measure_args_list = args_list,
+#'    n_t = n_t,
+#'    n_runs = 10,
+#'    verbose = F
+#'  )
+#'
+#'  plot_pareto(archive_list = test$archive,
+#'   multi_list = test,
+#'   single_list = single_out
+#'  )
+#'
+#'# and you can additionally add some arrows which helps viewer's remember what
+#'direction we are trying to optimize.
+#'
+#'  plot_pareto(archive_list = test$archive,
+#'   multi_list = test,
+#'   single_list = single_out,
+#'   measure_type = list(x = "maximize", y = "maximize")
+#'  )
+#'
+#'
 #' @export
 plot_pareto <- function(
     archive_list,
     multi_list = NULL, # optional for multi-objective; rand_multiopt or multiopt_sa
-    single_list = NULL # optional for single-objective output from singleopt_context
+    single_list = NULL, # optional for single-objective output from singleopt_context
+    measure_type = NULL # optional list of what direction SA was optimizing
 ) {
 
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
@@ -501,7 +580,7 @@ plot_pareto <- function(
   trait_names = names(archive_dat)
 
   # all pairwise combinations
-  pairs <- combn(trait_names, 2, simplify = FALSE)
+  trait_pairs <- combn(trait_names, 2, simplify = FALSE)
 
   archive_dat$group <- "archive" # for legend
 
@@ -537,9 +616,38 @@ plot_pareto <- function(
 
   }
 
+  ## if measure information is provided --------------------------------------
+  if (!is.null(measure_type)) {
+
+    # measure_type should specify the direction of each trait
+    # check inputs
+
+    if(!all(measure_type %in% c("maximize", "minimize", "diversify"))) {
+      stop("measure_type list must contain only values of `maximize`, `minimize`, or `diversify`")
+    }
+
+    if(!setequal(names(measure_type), colnames(archive_list$archive_summary))) {
+      stop("List names for measure_type do not match names in archive_list")
+    }
+
+    # set arrow direction. This will be the argument for arrow(type = )
+    arrow_directions = lapply(measure_type, function(z) {
+
+      lookup <- c(maximize = "last",
+                  minimize = "first",
+                  diversify = "both")
+
+      temp <- unname(lookup[z])
+
+      return(temp)
+    })
+
+  }
+
+
   # make plot -------------------------------------------------------
 
-  plot_list <- lapply(pairs, function(vars){
+  plot_list <- lapply(trait_pairs, function(vars){
 
     p <- archive_dat |>
       ggplot2::ggplot(
@@ -553,7 +661,7 @@ plot_pareto <- function(
         alpha = 0.5,
         size = 3
       ) +
-      ggplot2::theme_minimal()
+      ggplot2::theme_bw()
 
     # add multi-objective if needed
     if (!is.null(multi_list)) {
@@ -606,7 +714,76 @@ plot_pareto <- function(
 
     }
 
-    p +
+    # add objective direction if specified
+    if(!is.null(measure_type)) {
+
+      # get information about the plot so far
+      p_info <- ggplot2::ggplot_build(p)
+
+      # X-axis limits
+      x_lims = p_info$layout$panel_params[[1]]$x$get_limits()
+
+      # Y-axis limits
+      y_lims = p_info$layout$panel_params[[1]]$y$get_limits()
+
+      # desired length of arrow as a % of axis length
+      arrow_length <- 0.15
+
+      # Build arrow along x-axis
+      x_arrow <- data.frame(
+        x = x_lims[1] + 0.01 * diff(x_lims),
+        xend = x_lims[1] + (0.01 + arrow_length) * diff(x_lims),
+        y = y_lims[1],
+        yend =  y_lims[1]
+      )
+
+      # Build arrow along y-axis
+      y_arrow <- data.frame(
+        x = x_lims[1],
+        xend = x_lims[1],
+        y = y_lims[1] + 0.01 * diff(y_lims),
+        yend = y_lims[1] + (0.01 + arrow_length) * diff(y_lims)
+      )
+
+      # add arrows to plot
+      p <- p +
+        geom_segment(
+          data = x_arrow,
+          aes(x = x, xend = xend, y = y, yend = yend),
+          inherit.aes = FALSE,
+          linewidth = 1,
+          lineend = "butt", # this makes the arrow sharp rather than smoothed
+          linejoin = "mitre", # this makes the arrow sharp rather than smoothed
+          arrow = arrow(
+            ends = arrow_directions[[vars[1]]],
+            type = "closed",
+            angle = 25, # width of arrow
+            length = unit(0.2, "cm")
+          )
+        ) +
+
+        geom_segment(
+          data = y_arrow,
+          aes(x = x, xend = xend, y = y, yend = yend),
+          inherit.aes = FALSE,
+          linewidth = 1,
+          lineend = "butt",
+          linejoin = "mitre",
+          arrow = arrow(
+            ends = arrow_directions[[vars[2]]],
+            type = "closed",
+            angle = 25,
+            length = unit(0.2, "cm")
+          )
+        ) +
+        coord_cartesian(clip = "off") +
+        theme(aspect.ratio = 1) # Forces the plot canvas to be square which helps make the arrows the same length
+
+    }
+
+
+    # scale front and final results
+    p <-  p +
       ggplot2::scale_color_manual(
         values = c(
           "black", # Pareto front
@@ -620,6 +797,7 @@ plot_pareto <- function(
         color = NULL
       )
 
+    return(p)
   })
 
   final_plot <- patchwork::wrap_plots(plot_list) +

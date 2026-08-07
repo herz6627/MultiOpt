@@ -16,7 +16,8 @@ accept_reject <- function(
     t,
     p_depends_delta = FALSE,
     c = 1,
-    c_all = 1
+    c_all = 1,
+    verbose = T
 ) {
 
   # convert lists to numeric vectors
@@ -24,24 +25,21 @@ accept_reject <- function(
   proposal <- unlist(proposal_summary, use.names = FALSE)
 
   # checks
-  if (length(current) != length(proposal)) {
-    stop("'summary' and 'proposal_summary' must have equal length.")
-  }
+  if (length(current) != length(proposal)) stop("'summary' and 'proposal_summary' must have equal length.")
 
-  if (!is.numeric(current) || !is.numeric(proposal)) {
-    stop("All summary values must be numeric")
-  }
+  if (anyNA(current))  stop("NA detected in current measure values.")
+  if (anyNA(proposal)) stop("NA detected in proposed measure values.")
+
+  if (!is.numeric(current) || !is.numeric(proposal)) stop("All summary values must be numeric")
 
   if(c_all != 1 && !is.numeric(c_all)) stop("c_all must be a single numeric value.")
 
-  # recycle scalar penalties
-  if (length(c) == 1) {
-    c <- rep(c, length(current))
-  }
+  if (!is.finite(t)) stop("t is invalid: ", t)
 
-  if (length(c) != length(current)) {
-    stop("'c' must have length 1 or number of objectives.")
-  }
+  # recycle scalar penalties
+  if (length(c) == 1) c <- rep(c, length(current))
+
+  if (length(c) != length(current)) stop("'c' must have length 1 or number of objectives.")
 
   # check improvement
   better <- proposal > current
@@ -95,7 +93,18 @@ accept_reject <- function(
   }
 
   # acceptance probability
+  if (t == 0) {
+
+    if(verbose) warning("Temperature is zero. Adding a small value (10^-10) to allow for calculation.")
+
+    t = 10^-10
+  }
+
   p_accept_worse <- exp(-numerator / t)
 
-  runif(1) < p_accept_worse # stochastic acceptance. Standard to Metropolis algorithm method.
+  out <- runif(1) < p_accept_worse # stochastic acceptance. Standard to Metropolis algorithm method.
+
+  if (is.null(out) || is.na(out)) stop("Acceptance value is NA or NULL.")
+
+  return(out)
 }

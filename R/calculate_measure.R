@@ -317,7 +317,8 @@ allele_enrichment <- function(v, w = NULL, loc = NULL, rec = FALSE, direction = 
 #' @param w Numeric vector of individual weights with same length as `v`.
 #' @param disp Numeric scalar target value to compare the weighted mean against. Defaults to 0.
 #' @param direction numeric scalar. Multiplier applied to the final metric value
-#'   to control orientation. Use 1 for default direction, -1 to invert the sign.
+#'   to control orientation for simulated annealing. Use 1 for default direction
+#'   (maximize trait value), -1 to invert the sign (minimize trait value).
 #'
 #' @return A single numeric value representing the absolute deviation between
 #'         the weighted mean of `v` and `disp`.

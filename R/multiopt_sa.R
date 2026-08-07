@@ -16,14 +16,19 @@
 #' @param trait_list List of trait matrices. Each matrix should contain
 #'   individuals in rows and trait values in columns.
 #' @param measure_list List of objective functions corresponding to each
-#'   element of `trait_list`. Possible functions include: `nei_diversity`, `shannon_diversity`, `allele_enrichment`, `weighted_mean_of_vector`, `sum_of_squared_difference`, `weighted_mean_of_absolute_difference`, `weighted_mean_of_pairwise_matrix`
+#'   element of `trait_list`. Possible functions include: `nei_diversity`,
+#'   `shannon_diversity`, `allele_enrichment`, `weighted_mean_of_vector`,
+#'   `sum_of_squared_difference`, `weighted_mean_of_absolute_difference`,
+#'   `weighted_mean_of_pairwise_matrix`. See function descriptions for specific
+#'   details and required arguments.
 #' @param measure_args_list List containing additional arguments supplied
 #'   to each measure function.
 #' @param n_t Integer giving the total number or total weight of individuals
 #'   to select.
 #' @param weights_max Optional maximum allowable value(s) for weights.
 #'   Either a single numeric value or a vector with length equal to the
-#'   number of individuals.
+#'   number of individuals. Automatically set to 1, individuals can only
+#'   be selected once.
 #' @param weights_min Optional minimum allowable value(s) for weights.
 #' @param initial_weights Optional vector of starting weights for the
 #'   optimization.
@@ -43,6 +48,47 @@
 #' @param save_chain Logical; Whether to save the chain of results. Helpful to set to FALSE if trying to save storage.
 #' @param verbose If TRUE, prints status updates in the console.
 #'
+#'
+#' @examples
+#'
+#' # generate some strongly positively correlated data
+#' set.seed(12345)
+#' n <- 500 # how many individuals
+#' x = rnorm(n = n, mean = 120, sd = 2)
+#' y = x * 4 + rnorm(n = n, mean = 0, sd = 5)
+#'
+#' dat_strong_p = data.frame(x = x, y = y)
+#'
+#' # format trait data
+#' trait_list = list(
+#'x = as.matrix(dat_weak_p$x),
+#'y = as.matrix(dat_weak_p$y)
+#')
+#'
+#'# here is where we specify how we want to measure the traits.
+#'# taking the mean for both traits here.
+#'# note that these are functions, not character values.
+#'measure_list = list(
+#'  x = weighted_mean_of_vector,
+#'  y = weighted_mean_of_vector
+#')
+#'
+#'# any additional arguments the measure functions need.
+#'args_list = list(
+#'  x = NULL, # trait measures automatically maximize, so no need to specify anything here.
+#'  y = list(direction = -1) # here I am specifying i want to minimize this trait
+#')
+#'
+#'
+#'multiopt_sa(
+#'  trait_list = trait_list,
+#'  measure_list = measure_list,
+#'  measure_args_list = args_list,
+#'  n_t = 50, # select 50 individuals out of our simulated n individuals.
+#'  weights_max = 1, # only select an indivdual a maximum of 1 time
+#'  )
+#'
+#'
 #' @return A list containing:
 #' \describe{
 #'   \item{final_selection}{List containing the final objective values
@@ -59,7 +105,7 @@ multiopt_sa <- function(
     measure_list,
     measure_args_list,
     n_t = NULL,
-    weights_max = NULL,
+    weights_max = 1,
     weights_min = NULL,
     initial_weights = NULL,
     max_steps = 10000,
@@ -124,6 +170,8 @@ multiopt_sa <- function(
   # get initial measure values
   measure_out = calculate_measure(trait_list, measure_list, measure_args_list, w = initial_weights)
 
+  if (anyNA(measure_out) || any(is.null(measure_out))) stop("Initial measure value is NA or NULL.")
+
   # begin simulated annealing ----------------------------------------------
 
   if (save_chain) {
@@ -169,6 +217,8 @@ multiopt_sa <- function(
     # and see what they measure
     measure_mod = calculate_measure(trait_list, measure_list, measure_args_list, w = weights_mod)
 
+    if (any(is.null(measure_mod)) || anyNA(measure_mod)) stop("Proposed measure value is NA or NULL.")
+
     # test if we accept the new mix
     acceptance = accept_reject(
       summary = measure_out,
@@ -176,8 +226,11 @@ multiopt_sa <- function(
       t = temp,
       p_depends_delta = p_depends_delta,
       c = acceptance_multipliers,
-      c_all = acceptance_multiplier_all_worse
+      c_all = acceptance_multiplier_all_worse,
+      verbose = verbose
     )
+
+    if(is.null(acceptance) || is.na(acceptance)) stop("Acceptance is NULL or NA")
 
     if (nda) { # this deviates from OptGenMix: moved this outside of accept_proposal so that we can explore un-accepted front space
 
