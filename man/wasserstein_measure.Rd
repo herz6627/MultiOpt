@@ -19,17 +19,22 @@ A single numeric value representing the p-Wasserstein distance multiplied
 by -1.
 }
 \description{
-Uses the \code{?wasserstein} to calculate the Wasserstein distance (\eqn{W_p}) between
+Uses the \code{wasserstein()} to calculate the Wasserstein distance (\eqn{W_p}) between
 the original trait data distribution and the proposed subset of individuals.
 Assumes that v provides the total population distribution of trait variation.
 }
 \details{
-As `MultiOpt` aims to maximize measures but smaller \eqn{W_p} are
+As `MultiOpt` aims to maximize measures, but smaller \eqn{W_p} are
 better, we multiply the \eqn{W_p} by -1 to allow for minimizing
 the differences in distributions.
+
+
+This function examines how well distributions match. If you are more interested
+in checking the full range of trait data is captured in the subset,
+\code{trait_coverage()} would be a better fit.
 }
 \examples{
-v <- c(1, 2, 3)
+v <- as.matrix(c(1, 2, 3))
 w <- c(0, 1, 1)
 wasserstein_measure(v, w)
 }

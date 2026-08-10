@@ -16,11 +16,13 @@
 #' @param trait_list List of trait matrices. Each matrix should contain
 #'   individuals in rows and trait values in columns.
 #' @param measure_list List of objective functions corresponding to each
-#'   element of `trait_list`. Possible functions include: `nei_diversity`,
-#'   `shannon_diversity`, `allele_enrichment`, `weighted_mean_of_vector`,
-#'   `sum_of_squared_difference`, `weighted_mean_of_absolute_difference`,
-#'   `weighted_mean_of_pairwise_matrix`. See function descriptions for specific
-#'   details and required arguments.
+#' element of trait_list. Possible functions include:
+#' [nei_diversity()], [shannon_diversity()], [allele_enrichment()],
+#' [weighted_mean_of_vector()], [sum_of_squared_difference()],
+#' [weighted_mean_of_absolute_difference()],
+#' [weighted_mean_of_pairwise_matrix()], [wasserstein_measure()], or
+#' [trait_coverage()]. See function descriptions for specific details and
+#' required arguments.
 #' @param measure_args_list List containing additional arguments supplied
 #'   to each measure function.
 #' @param n_t Integer giving the total number or total weight of individuals
@@ -88,6 +90,12 @@
 #'  weights_max = 1, # only select an indivdual a maximum of 1 time
 #'  )
 #'
+#' @seealso
+#' [nei_diversity()], [shannon_diversity()], [allele_enrichment()],
+#' [weighted_mean_of_vector()], [sum_of_squared_difference()],
+#' [weighted_mean_of_absolute_difference()],
+#' [weighted_mean_of_pairwise_matrix()], [wasserstein_measure()],
+#' [trait_coverage()]
 #'
 #' @return A list containing:
 #' \describe{

@@ -28,8 +28,8 @@
 #'
 #'
 #' @details
-#' For one-dimensional distributions, the p-Wasserstein distance is calculated
-#' as:
+#' For one-dimensional distributions (\code{p = 1}), the p-Wasserstein distance is calculated
+#' from the quantile functions of the two distributions:
 #'
 #' \deqn{
 #' W_p(F,G) =
@@ -39,10 +39,35 @@
 #' where \eqn{Q_F} and \eqn{Q_G} are the quantile functions of distributions
 #' \eqn{F} and \eqn{G}, respectively.
 #'
+#'
+#' For equally weighted distributions with the same number of observations,
+#' this simplifies to the mean p-th powered difference between corresponding
+#' ordered observations:
+#'
+#' \deqn{
+#' W_p =
+#' \left[
+#' \frac{1}{n}\sum_{i=1}^{n}
+#' |x_{(i)}-y_{(i)}|^p
+#' \right]^{1/p}.
+#' }
+#'
+#'
 #' When \code{p = 1}, the metric represents the average distance that trait
-#' values must be moved for one distribution to match the other. This makes it
-#' particularly interpretable for evaluating phenotypic representation in
-#' conservation collections.
+#' values must be moved for one distribution to match the other.
+#' The equation also simplifies to:
+#'
+#' \deqn{
+#' W_p =
+#' \left[
+#' \frac{1}{n}\sum_{i=1}^{n}
+#' |x_{(i)}-y_{(i)}|
+#' \right].
+#' }
+#'
+#'
+#' This metric can be sensitive to outliers because it tracks raw displacements
+#' rather than overlap.
 #'
 #' @examples
 #' # Compare a population trait distribution to a selected collection
@@ -109,6 +134,10 @@ wasserstein <- function(observations_a,
   # Wp = [ mean(|x(i)-y(i)|^p) ]^(1/p)
   #
   # where x(i) and y(i) are sorted observations.
+  #
+  # When p = 1 the equation simplifies to
+  # Wp = [ mean(|x(i)-y(i)| ]
+
 
   if (length(observations_a) == length(observations_b) &&
       is.null(weights_a) &&

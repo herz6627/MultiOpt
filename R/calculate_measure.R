@@ -534,14 +534,21 @@ weighted_mean_of_pairwise_matrix <- function(v, w, direction = 1) {
 #' the original trait data distribution and the proposed subset of individuals.
 #' Assumes that v provides the total population distribution of trait variation.
 #'
-#' As `MultiOpt` aims to maximize measures, but smaller \eqn{W_p} are
-#' better, we multiply the \eqn{W_p} by -1 to allow for minimizing
-#' the differences in distributions.
-#'
 #' @param v single-column matrix of numeric values. Will be coerced to a vector.
 #' @param w Numeric vector of individual weights with same length as `v`.
 #' @param ... Optional additional arguments. See \code{?wasserstein} for specific
 #' options.
+#'
+#' @details
+#' As `MultiOpt` aims to maximize measures, but smaller \eqn{W_p} are
+#' better, we multiply the \eqn{W_p} by -1 to allow for minimizing
+#' the differences in distributions.
+#'
+#'
+#' This function examines how well distributions match. If you are more interested
+#' in checking the full range of trait data is captured in the subset,
+#' \code{trait_coverage()} would be a better fit.
+#'
 #'
 #' @returns A single numeric value representing the p-Wasserstein distance multiplied
 #' by -1.
@@ -555,8 +562,14 @@ wasserstein_measure <- function(v, w, ...) {
 
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
+
   if (nrow(v) <= 1) stop("v should have only 1 row.")
+
   # if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
+
+  if (any(w < 0) || any(w != floor(w))) {
+    stop("`w` must contain non-negative integer selection counts.")
+  }
 
   # force into vector
   vs_vec <- as.numeric(v)
@@ -583,5 +596,91 @@ wasserstein_measure <- function(v, w, ...) {
 }
 
 
+#' Calculate Trait Coverage
+#'
+#' Calculates the proportion of trait-value bins represented in a selected
+#' subset relative to the bins represented in the full dataset.
+#'
+#' The range of trait values in v is divided into n_bins equally spaced
+#' bins. The function counts how many bins contain observations in the full
+#' dataset and how many contain observations in the selected subset, defined
+#' by the selection counts in w. The returned value is the proportion of
+#' occupied bins in the subset relative to the full dataset.
+#'
+#' @param v single-column matrix of numeric values. Will be coerced to a vector.
+#' @param w Numeric vector of individual weights with same length as `v`.
+#' to the observations in v. Values with a count of zero are excluded
+#' from the selected subset.
+#' @param n_bins The number of equally spaced bins used to divide the trait
+#' range.
+#'
+#' @return A numeric value representing the proportion of trait-value bins
+#' covered by the selected subset. A value of 1 indicates that the subset
+#' covers all bins represented in the full dataset.
+#'
+#' @details
+#' This function does not measure how well the proposed subset matches the
+#' distribution of trait data. For this type of measurement,
+#' \code{wasserstein_measure()} would be a better fit.
+#'
+#' @examples
+#' v <- as.matrix(c(1, 2, 3))
+#' w <- c(0, 1, 2)
+#'
+#' trait_coverage(v, w, n_bins = 10)
+trait_coverage <- function(v, w, n_bins = 10) {
+
+  # run checks
+  if (!is.matrix(v)) stop("v must be a matrix.")
+
+  if (nrow(v) <= 1) stop("v should have only 1 row.")
+
+  if (any(w < 0) || any(w != floor(w))) {
+    stop("`w` must contain non-negative integer selection counts.")
+  }
+
+  if(n_bins > length(v)) warning("n_bins > length(v), check that this makes sense.")
+
+  # force into vector
+  v_vec <- as.numeric(v)
+
+  # for proposed solution:
+  # replicate each observed value w times (weights of 0 will get dropped).
+  v_sub <- rep(v_vec, w)
+
+  # define breakpoints using the full dataset
+  breakpoints <- seq(
+
+    from = min(v_vec),          # should be 0 if data is scaled
+    to = max(v_vec),            # should be 1 if data is scaled
+    length.out = n_bins + 1     # length.out will be how many edges we have
+                                # (so breakpoints-1 is how many bins we will have)
+    )
+
+  # categorize full dataset into intervals
+  intervals_all <- table(cut(v_vec, breaks = breakpoints, include.lowest = TRUE)) # table() makes the frequency table
+  # barplot(intervals)
+
+  freqs_all <- as.data.frame(intervals_all) # format to df
+
+  # now categorize for the subset data
+  intervals_sub <- table(cut(v_sub, breaks = breakpoints, include.lowest = TRUE))
+
+  freqs_sub <- as.data.frame(intervals_sub)
+
+  # total bins filled in the full dataset (if we have some outliers we could have a few blanks)
+  filled_bins_all <- sum(freqs_all$Freq > 0)
+  filled_bins_sub <- sum(freqs_sub$Freq > 0)
+
+  # proportion bins filled.
+  # making a proportion fits in with the scales of the SA algorithm
+  # and also adjusts for missing bins in the _all dataset
+  # (and is more interpretable across bin sizes)
+  prop_filled <- filled_bins_sub / filled_bins_all
+
+  if(prop_filled > 1) warning("Proportion is >1. This may be an issue.")
+
+  return(prop_filled)
+}
 
 
