@@ -50,18 +50,30 @@ indicate distributions are more similar.
 
 ## Details
 
-For one-dimensional distributions, the p-Wasserstein distance is
-calculated as:
+For one-dimensional distributions (`p = 1`), the p-Wasserstein distance
+is calculated from the quantile functions of the two distributions:
 
 \$\$ W_p(F,G) = \left(\int_0^1 \|Q_F(u)-Q_G(u)\|^p du\right)^{1/p} \$\$
 
 where \\Q_F\\ and \\Q_G\\ are the quantile functions of distributions
 \\F\\ and \\G\\, respectively.
 
+For equally weighted distributions with the same number of observations,
+this simplifies to the mean p-th powered difference between
+corresponding ordered observations:
+
+\$\$ W_p = \left\[ \frac{1}{n}\sum\_{i=1}^{n} \|x\_{(i)}-y\_{(i)}\|^p
+\right\]^{1/p}. \$\$
+
 When `p = 1`, the metric represents the average distance that trait
-values must be moved for one distribution to match the other. This makes
-it particularly interpretable for evaluating phenotypic representation
-in conservation collections.
+values must be moved for one distribution to match the other. The
+equation also simplifies to:
+
+\$\$ W_p = \left\[ \frac{1}{n}\sum\_{i=1}^{n} \|x\_{(i)}-y\_{(i)}\|
+\right\]. \$\$
+
+This metric can be sensitive to outliers because it tracks raw
+displacements rather than overlap.
 
 ## References
 

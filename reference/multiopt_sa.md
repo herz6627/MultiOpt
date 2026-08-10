@@ -40,12 +40,13 @@ multiopt_sa(
 - measure_list:
 
   List of objective functions corresponding to each element of
-  \`trait_list\`. Possible functions include: \`nei_diversity\`,
-  \`shannon_diversity\`, \`allele_enrichment\`,
-  \`weighted_mean_of_vector\`, \`sum_of_squared_difference\`,
-  \`weighted_mean_of_absolute_difference\`,
-  \`weighted_mean_of_pairwise_matrix\`. See function descriptions for
-  specific details and required arguments.
+  trait_list. Possible functions include: \[nei_diversity()\],
+  \[shannon_diversity()\], \[allele_enrichment()\],
+  \[weighted_mean_of_vector()\], \[sum_of_squared_difference()\],
+  \[weighted_mean_of_absolute_difference()\],
+  \[weighted_mean_of_pairwise_matrix()\], \[wasserstein_measure()\], or
+  \[trait_coverage()\]. See function descriptions for specific details
+  and required arguments.
 
 - measure_args_list:
 
@@ -149,6 +150,14 @@ specified acceptance parameters.
 
 Optionally, a non-dominated archive can be maintained during the search.
 
+## See also
+
+\[nei_diversity()\], \[shannon_diversity()\], \[allele_enrichment()\],
+\[weighted_mean_of_vector()\], \[sum_of_squared_difference()\],
+\[weighted_mean_of_absolute_difference()\],
+\[weighted_mean_of_pairwise_matrix()\], \[wasserstein_measure()\],
+\[trait_coverage()\]
+
 ## Examples
 
 ``` r
@@ -191,5 +200,4 @@ multiopt_sa(
  weights_max = 1, # only select an indivdual a maximum of 1 time
  )
 #> Error: object 'trait_list' not found
-
 ```

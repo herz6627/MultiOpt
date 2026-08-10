@@ -95,18 +95,39 @@ indicate distributions are more similar.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>For one-dimensional distributions, the p-Wasserstein distance is calculated
-as:</p>
+    <p>For one-dimensional distributions (<code>p = 1</code>), the p-Wasserstein distance is calculated
+from the quantile functions of the two distributions:</p>
 <p>$$
 W_p(F,G) =
 \left(\int_0^1 |Q_F(u)-Q_G(u)|^p du\right)^{1/p}
 $$</p>
 <p>where \(Q_F\) and \(Q_G\) are the quantile functions of distributions
 \(F\) and \(G\), respectively.</p>
+
+<p>For equally weighted distributions with the same number of observations,
+this simplifies to the mean p-th powered difference between corresponding
+ordered observations:</p>
+<p>$$
+W_p =
+\left[
+\frac{1}{n}\sum_{i=1}^{n}
+|x_{(i)}-y_{(i)}|^p
+\right]^{1/p}.
+$$</p>
+
 <p>When <code>p = 1</code>, the metric represents the average distance that trait
-values must be moved for one distribution to match the other. This makes it
-particularly interpretable for evaluating phenotypic representation in
-conservation collections.</p>
+values must be moved for one distribution to match the other.
+The equation also simplifies to:</p>
+<p>$$
+W_p =
+\left[
+\frac{1}{n}\sum_{i=1}^{n}
+|x_{(i)}-y_{(i)}|
+\right].
+$$</p>
+
+<p>This metric can be sensitive to outliers because it tracks raw displacements
+rather than overlap.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

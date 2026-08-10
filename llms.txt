@@ -207,6 +207,8 @@ str(test)
   : \#' Compute weighted sum of squared deviations from a target value
 - [`temp_scheduler()`](https://herz6627.github.io/MultiOpt/reference/temp_scheduler.md)
   : Determine annealing temperature
+- [`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md)
+  : Calculate Trait Coverage
 - [`unscale_archive()`](https://herz6627.github.io/MultiOpt/reference/unscale_archive.md)
   : Back transform output to original scale
 - [`unscale_multiopt()`](https://herz6627.github.io/MultiOpt/reference/unscale_multiopt.md)

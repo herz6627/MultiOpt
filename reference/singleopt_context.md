@@ -37,12 +37,13 @@ singleopt_context(
 - measure_list:
 
   List of objective functions corresponding to each element of
-  \`trait_list\`. Possible functions include: \`nei_diversity\`,
-  \`shannon_diversity\`, \`allele_enrichment\`,
-  \`weighted_mean_of_vector\`, \`sum_of_squared_difference\`,
-  \`weighted_mean_of_absolute_difference\`,
-  \`weighted_mean_of_pairwise_matrix\`. See function descriptions for
-  specific details and required arguments.
+  trait_list. Possible functions include: \[nei_diversity()\],
+  \[shannon_diversity()\], \[allele_enrichment()\],
+  \[weighted_mean_of_vector()\], \[sum_of_squared_difference()\],
+  \[weighted_mean_of_absolute_difference()\],
+  \[weighted_mean_of_pairwise_matrix()\], \[wasserstein_measure()\], or
+  \[trait_coverage()\]. See function descriptions for specific details
+  and required arguments.
 
 - measure_args_list:
 
