@@ -74,6 +74,8 @@ calculate_measure(
 | [`sum_of_squared_difference()`](https://herz6627.github.io/MultiOpt/reference/sum_of_squared_difference.md) | Single continuous trait | Weighted squared deviation | Penalize large deviations |
 | [`weighted_mean_of_absolute_difference()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_absolute_difference.md) | Single continuous trait | Mean absolute deviation | Minimize average deviation |
 | [`weighted_mean_of_pairwise_matrix()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_pairwise_matrix.md) | Pairwise similarity or distance matrix | Mean pairwise value | Maximize or minimize similarity |
+| [`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md) | Single continuous trait | Negative p-Wasserstein distance | Match trait distribution |
+| [`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md) | Single continuous trait | Proportion of trait-value bins covered | Maximize trait-value coverage |
 
 ------------------------------------------------------------------------
 
@@ -234,6 +236,48 @@ Unlike squared deviation, all deviations contribute linearly.
 #### Advantages
 
 Less sensitive to outliers than squared deviation.
+
+------------------------------------------------------------------------
+
+### Wasserstein distance
+
+#### Description
+
+[`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md)
+computes the negative Wasserstein distance (Earth mover’s distance), or
+how much “work” is needed to move one distribution to fit another
+distribution.
+
+This metric allows for the comparison between two trait vectors to see
+how much overlap their distributions show. Larger values of the
+Wasserstein distance indicates a larger deviation in the distributions
+(a bad match). If our traits are scaled from 0-1, then Wasserstein
+distance is also bounded 0-1. Wasserstein distance maintains the same
+units as the variable of interest.
+
+#### Required data
+
+- one-column matrix
+- vector of weights
+
+------------------------------------------------------------------------
+
+#### Trait coverage
+
+[`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md)
+calculates the total coverage of a subset dataset across a user
+specified number of bins. If we have a trait dataset and split it into N
+number of bins, how well does the subset data cover those bins? Whereas
+the Wasserstein distance is interested in *how* trait coverage is
+distributed, this metric is just interested that we have at least one
+representative for each of our bins. The user needs to decide what a
+meaninful bin number is.
+
+#### Required data
+
+- one-column matrix
+- vector of weights
+- number of bins
 
 ------------------------------------------------------------------------
 

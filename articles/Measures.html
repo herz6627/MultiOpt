@@ -185,6 +185,18 @@ using <code><a href="../reference/calculate_measure.html">calculate_measure()</a
 <td align="left">Mean pairwise value</td>
 <td align="left">Maximize or minimize similarity</td>
 </tr>
+<tr class="even">
+<td align="left"><code><a href="../reference/wasserstein_measure.html">wasserstein_measure()</a></code></td>
+<td align="left">Single continuous trait</td>
+<td align="left">Negative p-Wasserstein distance</td>
+<td align="left">Match trait distribution</td>
+</tr>
+<tr class="odd">
+<td align="left"><code><a href="../reference/trait_coverage.html">trait_coverage()</a></code></td>
+<td align="left">Single continuous trait</td>
+<td align="left">Proportion of trait-value bins covered</td>
+<td align="left">Maximize trait-value coverage</td>
+</tr>
 </tbody>
 </table>
 <hr>
@@ -392,6 +404,53 @@ weighted average absolute deviation from a target.</p>
 <hr>
 </div>
 </div>
+<div class="section level3">
+<h3 id="wasserstein-distance">Wasserstein distance<a class="anchor" aria-label="anchor" href="#wasserstein-distance"></a>
+</h3>
+<div class="section level4">
+<h4 id="description-6">Description<a class="anchor" aria-label="anchor" href="#description-6"></a>
+</h4>
+<p><code><a href="../reference/wasserstein_measure.html">wasserstein_measure()</a></code> computes the negative Wasserstein
+distance (Earth mover’s distance), or how much “work” is needed to move
+one distribution to fit another distribution.</p>
+<p>This metric allows for the comparison between two trait vectors to
+see how much overlap their distributions show. Larger values of the
+Wasserstein distance indicates a larger deviation in the distributions
+(a bad match). If our traits are scaled from 0-1, then Wasserstein
+distance is also bounded 0-1. Wasserstein distance maintains the same
+units as the variable of interest.</p>
+</div>
+<div class="section level4">
+<h4 id="required-data-6">Required data<a class="anchor" aria-label="anchor" href="#required-data-6"></a>
+</h4>
+<ul>
+<li>one-column matrix</li>
+<li>vector of weights</li>
+</ul>
+<hr>
+</div>
+<div class="section level4">
+<h4 id="trait-coverage">Trait coverage<a class="anchor" aria-label="anchor" href="#trait-coverage"></a>
+</h4>
+<p><code><a href="../reference/trait_coverage.html">trait_coverage()</a></code> calculates the total coverage of a
+subset dataset across a user specified number of bins. If we have a
+trait dataset and split it into N number of bins, how well does the
+subset data cover those bins? Whereas the Wasserstein distance is
+interested in <em>how</em> trait coverage is distributed, this metric is
+just interested that we have at least one representative for each of our
+bins. The user needs to decide what a meaninful bin number is.</p>
+</div>
+<div class="section level4">
+<h4 id="required-data-7">Required data<a class="anchor" aria-label="anchor" href="#required-data-7"></a>
+</h4>
+<ul>
+<li>one-column matrix</li>
+<li>vector of weights</li>
+<li>number of bins</li>
+</ul>
+<hr>
+</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="pairwise-matrix-measures">Pairwise Matrix Measures<a class="anchor" aria-label="anchor" href="#pairwise-matrix-measures"></a>
@@ -400,7 +459,7 @@ weighted average absolute deviation from a target.</p>
 <h3 id="weighted-mean-of-pairwise-matrix">Weighted Mean of Pairwise Matrix<a class="anchor" aria-label="anchor" href="#weighted-mean-of-pairwise-matrix"></a>
 </h3>
 <div class="section level4">
-<h4 id="description-6">Description<a class="anchor" aria-label="anchor" href="#description-6"></a>
+<h4 id="description-7">Description<a class="anchor" aria-label="anchor" href="#description-7"></a>
 </h4>
 <p><code><a href="../reference/weighted_mean_of_pairwise_matrix.html">weighted_mean_of_pairwise_matrix()</a></code> evaluates a candidate
 collection using an existing pairwise similarity or distance matrix.</p>
@@ -416,7 +475,7 @@ collection using an existing pairwise similarity or distance matrix.</p>
 <p>or any other pairwise relationship.</p>
 </div>
 <div class="section level4">
-<h4 id="required-data-6">Required data<a class="anchor" aria-label="anchor" href="#required-data-6"></a>
+<h4 id="required-data-8">Required data<a class="anchor" aria-label="anchor" href="#required-data-8"></a>
 </h4>
 <p>A square symmetric matrix with rows and columns corresponding to
 individuals.</p>

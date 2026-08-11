@@ -181,7 +181,7 @@ str(test)
 - [`multiopt_sa()`](https://herz6627.github.io/MultiOpt/reference/multiopt_sa.md)
   : Multi-objective simulated annealing optimization
 - [`nei_diversity()`](https://herz6627.github.io/MultiOpt/reference/nei_diversity.md)
-  : Nei diversity
+  : Nei's Genetic Diversity
 - [`pareto_shape_index()`](https://herz6627.github.io/MultiOpt/reference/pareto_shape_index.md)
   : Pareto Shape Index (PSI)
 - [`plot_chain()`](https://herz6627.github.io/MultiOpt/reference/plot_chain.md)
