@@ -76,64 +76,133 @@ calculate_measure <- function(
 }
 
 
-#' Nei diversity
+#' Nei's Genetic Diversity
 #'
-#' Calculates Nei genetic diversity from genotype data.
+#' Calculates Nei's genetic diversity (expected heterozygosity) across loci
+#' in a population. Allele frequencies are calculated from a genotype matrix,
+#' with the option to incorporate individual-level weights.
 #'
-#' @param v Genotype matrix (rows = individuals, columns = loci)
-#' @param w Optional vector of weights
-#' @param direction Numeric scalar. Must be 1 or -1. Applied as a multiplicative
-#'   factor to the computed metric to control its optimisation direction.
+#' @param v A genotype matrix with individuals in rows and loci in columns.
+#' Genotypes should be coded as the number of copies of an allele (e.g.,
+#' 0, 1, or 2).
+#' @param w An optional numeric vector of individual weights. If supplied,
+#' weighted allele frequencies are calculated.
+#' @param opt A character string specifying the calculation method.
+#' "speed" uses a vectorized calculation, while "storage" calculates
+#' diversity iteratively. Defaults to "speed".
+#'
+#' @return A numeric value representing the mean Nei's genetic diversity
+#' (expected heterozygosity) across loci.
 #'
 #' @details
-#' Direction is applied after metric computation and does not alter the
-#' underlying metric definition.
+#' For each locus, the frequency of the focal allele is calculated as the
+#' proportion of allele copies in the population. Nei's gene diversity is
+#' then calculated as the expected heterozygosity.
 #'
-#' @returns Numeric scalar of calculated Nei diversity.
-#' @note
+#' For each locus, the allele frequency is calculated as:
+#'
+#' \deqn{p_i = \frac{\sum_j g_{ji}}{2n}}
+#'
+#' where \eqn{g_{ji}} is the genotype of individual \eqn{j} at locus \eqn{i},
+#' and \eqn{n} is the number of individuals.
+#'
+#' When weights are provided, the weighted allele frequency is:
+#'
+#' \deqn{p_i = \frac{\sum_j w_j g_{ji}}{2\sum_j w_j}}
+#'
+#' Nei's gene diversity for each locus is calculated as:
+#'
+#' \deqn{H_i = 1 - p_i^2 - (1-p_i)^2 = 2p_i(1-p_i)}
+#'
+#' The final value is the mean diversity across all \eqn{L} loci:
+#'
+#' \deqn{H = \frac{1}{L}\sum_{i=1}^{L} H_i}
+#'
+#' Assumes loci are bi-allelic.
+#'
+#' The "speed" and "storage" options calculate the same quantity
+#' using different computational approaches.
+#'
+#'
+#' @examples
+#' # Create a small example genotype matrix.
+#' # Rows represent individuals and columns represent loci.
+#' # Genotypes are coded as the number of copies of the focal allele (0, 1, or 2).
+#' geno <- matrix(
+#' c(0, 1, 2,
+#' 1, 1, 0,
+#' 2, 0, 1,
+#' 1, 2, 1),
+#' nrow = 4,
+#' byrow = TRUE
+#' )
+#'
+#' # Calculate Nei's gene diversity.
+#' nei_diversity(geno)
+#'
+#' # Use the storage-oriented calculation.
+#' nei_diversity(geno, opt = "storage")
+#'
+#' # Calculate weighted Nei's gene diversity.
+#' weights <- c(1, 0.5, 1.5, 1)
+#' nei_diversity(geno, w = weights)
+#'
+#' @references
 #' Nei, M. (1973). Analysis of gene diversity in subdivided populations. Proceedings of the National Academy of Sciences of the United States of America, 70, 3321–3323.
+#'
+#'Based on code by Jason Bragg in the OptGenMix package (jasongbragg/OptGenMix)
+#'as used in these publications:
+#'
+#'Bragg, J. G., Cuneo, P., Sherieff, A., & Rossetto, M. (2020). Optimizing the genetic composition of a translocation population: Incorporating constraints and conflicting objectives. Molecular Ecology Resources, 20(1), 54–65. https://doi.org/10.1111/1755-0998.13074
+#'
+#'Bragg, J. G., Yap, J.-Y. S., Wilson, T., Lee, E., & Rossetto, M. (2021). Conserving the genetic diversity of condemned populations: Optimizing collections and translocation. Evolutionary Applications, 14(5), 1225–1238. https://doi.org/10.1111/eva.13192
+#'
 #' @export
-nei_diversity <- function(v, w=NULL, direction = 1) {
+nei_diversity <- function(v, w = NULL, opt = c("speed", "storage")){
 
-  # run checks
-  if (!is.matrix(v)) stop("v must be a matrix.")
-  if (nrow(v) <= 1 || ncol(v) <= 1) stop("v should have more than 1 row/col.")
-  if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
+  # automatically selects the first option if left blank
+  opt <- match.arg(opt)
 
-  # estimate allele frequencies
+  # calculate frequency of alleles across population (p)
   if (is.null(w)) {
 
-    p  <- colSums(v) / (nrow(v) *2)
+    p <- colSums(geno)/(nrow(geno) * 2)
 
   } else {
 
     if (nrow(v) == length(w)) {
 
-      wm <- matrix(rep(w, ncol(v)), ncol = ncol(v), byrow=FALSE)
-      p  <- colSums(v*wm) / (nrow(v)*2) / mean(w)
+      wm <- matrix(rep(w, ncol(v)), ncol = ncol(v), byrow = FALSE)
 
-    } else {
+      p <- colSums(v * wm)/(nrow(v) * 2)/mean(w)
 
-      stop("weights supplied: must have length equal to number of rows in v.")
+    } else stop("\nnrow(v) does not equal length(w).")
+
+  }
+
+  # calulate Nei diversity
+  if(opt == "speed") {
+
+    nei <- mean(2 * p * (1 - p))
+
+  } else {
+
+    if(opt == "storage") {
+
+      Hs <- 0
+
+      for (i in 1:ncol(v)) {
+        Hs <- Hs + (1 - (p[i])^2 - (1 - p[i])^2)
+      }
+
+      nei <- 1/ncol(v) * Hs
 
     }
-  }
-
-  # calculate diversity from frequencies
-  Hs <- 0
-
-  for (i in 1:ncol(v)) {
-
-    Hs <- Hs + ( 1-(p[i])^2 - (1-p[i])^2  )
 
   }
 
-  # finish and return
-  nei <- 1 / ncol(v) * Hs
-
-  return(direction * nei)
+  return(nei)
 }
-
 
 
 #' Shannon diversity
