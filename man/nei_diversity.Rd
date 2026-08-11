@@ -4,7 +4,7 @@
 \alias{nei_diversity}
 \title{Nei's Genetic Diversity}
 \usage{
-nei_diversity(v, w = NULL, opt = c("speed", "storage"))
+nei_diversity(v, w = NULL, opt = c("speed", "storage"), chunk_size = 10000)
 }
 \arguments{
 \item{v}{A genotype matrix with individuals in rows and loci in columns.
@@ -17,13 +17,16 @@ weighted allele frequencies are calculated.}
 \item{opt}{A character string specifying the calculation method.
 "speed" uses a vectorized calculation, while "storage" calculates
 diversity iteratively. Defaults to "speed".}
+
+\item{chunk_size}{Numeric value for how large (number of SNPs) to chunk large
+genotype datasets by. Only used if ncol(v) > 10,000.}
 }
 \value{
 A numeric value representing the mean Nei's genetic diversity
 (expected heterozygosity) across loci.
 }
 \description{
-Calculates Nei's gene diversity (expected heterozygosity) across loci
+Calculates Nei's genetic diversity (expected heterozygosity) across loci
 in a population. Allele frequencies are calculated from a genotype matrix,
 with the option to incorporate individual-level weights.
 }
@@ -70,14 +73,14 @@ byrow = TRUE
 )
 
 # Calculate Nei's gene diversity.
-test_nei(geno)
+nei_diversity(geno)
 
 # Use the storage-oriented calculation.
-test_nei(geno, opt = "storage")
+nei_diversity(geno, opt = "storage")
 
 # Calculate weighted Nei's gene diversity.
 weights <- c(1, 0.5, 1.5, 1)
-test_nei(geno, w = weights)
+nei_diversity(geno, w = weights)
 
 }
 \references{

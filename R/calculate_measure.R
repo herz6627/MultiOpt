@@ -87,9 +87,12 @@ calculate_measure <- function(
 #' 0, 1, or 2).
 #' @param w An optional numeric vector of individual weights. If supplied,
 #' weighted allele frequencies are calculated.
+#' @param chunk_size Numeric value for how large (number of SNPs) to chunk large
+#' genotype datasets by. Only used if ncol(v) > 10,000.
 #' @param opt A character string specifying the calculation method.
 #' "speed" uses a vectorized calculation, while "storage" calculates
-#' diversity iteratively. Defaults to "speed".
+#' diversity iteratively. Defaults to "speed". If you have a large genotype
+#' matrix, this setting wont make much difference.
 #'
 #' @return A numeric value representing the mean Nei's genetic diversity
 #' (expected heterozygosity) across loci.
@@ -123,6 +126,9 @@ calculate_measure <- function(
 #' The "speed" and "storage" options calculate the same quantity
 #' using different computational approaches.
 #'
+#' For extra large matrices, this function accepts BEDmatrix formats
+#' (BEDMatrix package). There are probably other options that will work. If the
+#' genotype matrix object runs with \code{colSums()}, it will probably work here.
 #'
 #' @examples
 #' # Create a small example genotype matrix.
@@ -150,35 +156,75 @@ calculate_measure <- function(
 #' @references
 #' Nei, M. (1973). Analysis of gene diversity in subdivided populations. Proceedings of the National Academy of Sciences of the United States of America, 70, 3321–3323.
 #'
-#'Based on code by Jason Bragg in the OptGenMix package (jasongbragg/OptGenMix)
-#'as used in these publications:
+#' Based on code by Jason Bragg in the OptGenMix package (jasongbragg/OptGenMix)
+#' as used in these publications:
 #'
-#'Bragg, J. G., Cuneo, P., Sherieff, A., & Rossetto, M. (2020). Optimizing the genetic composition of a translocation population: Incorporating constraints and conflicting objectives. Molecular Ecology Resources, 20(1), 54–65. https://doi.org/10.1111/1755-0998.13074
+#' Bragg, J. G., Cuneo, P., Sherieff, A., & Rossetto, M. (2020). Optimizing the genetic composition of a translocation population: Incorporating constraints and conflicting objectives. Molecular Ecology Resources, 20(1), 54–65. https://doi.org/10.1111/1755-0998.13074
 #'
-#'Bragg, J. G., Yap, J.-Y. S., Wilson, T., Lee, E., & Rossetto, M. (2021). Conserving the genetic diversity of condemned populations: Optimizing collections and translocation. Evolutionary Applications, 14(5), 1225–1238. https://doi.org/10.1111/eva.13192
+#' Bragg, J. G., Yap, J.-Y. S., Wilson, T., Lee, E., & Rossetto, M. (2021). Conserving the genetic diversity of condemned populations: Optimizing collections and translocation. Evolutionary Applications, 14(5), 1225–1238. https://doi.org/10.1111/eva.13192
 #'
 #' @export
-nei_diversity <- function(v, w = NULL, opt = c("speed", "storage")){
+nei_diversity <- function(v,
+                          w = NULL,
+                          opt = c("speed", "storage"),
+                          chunk_size = 10000
+){
 
   # automatically selects the first option if left blank
   opt <- match.arg(opt)
 
-  # calculate frequency of alleles across population (p)
-  if (is.null(w)) {
+  # get info
+  n_snps <- ncol(v) # number of snps
+  n_ind <- nrow(v) # number of individuals with snp data
 
-    p <- colSums(geno)/(nrow(geno) * 2)
+  if (!is.null(w) && n_ind != length(w)) stop("\nnrow(v) does not equal length(w).")
+
+
+  # calculate frequency of alleles across population (p)
+  calc_p <- function(v, w){
+
+    v <- as.matrix(v)
+
+    if (is.null(w)) {
+
+      p <- colSums(v)/(nrow(v) * 2)
+
+    } else {
+
+      if (nrow(v) == length(w)) {
+
+        wm <- matrix(rep(w, ncol(v)), ncol = ncol(v), byrow = FALSE)
+
+        p <- colSums(v * wm)/(nrow(v) * 2)/mean(w)
+
+      } else stop("\nnrow(v) does not equal length(w).")
+
+    }
+
+    return(p)
+
+  }
+
+  # for relatively small datasets, we can do a simpler calculation
+  if (n_snps < 10000) {
+
+    p <- calc_p(v, w)
 
   } else {
 
-    if (nrow(v) == length(w)) {
+    # but if we have a particularly large matrix, we need to chunk it up
 
-      wm <- matrix(rep(w, ncol(v)), ncol = ncol(v), byrow = FALSE)
+    p <- numeric(n_snps) # allocate storage
 
-      p <- colSums(v * wm)/(nrow(v) * 2)/mean(w)
+    for (start in seq(1, n_snps, by = chunk_size)) {
 
-    } else stop("\nnrow(v) does not equal length(w).")
+      end <- min(start + chunk_size - 1, n_snps)
 
+      p[start:end] <- calc_p(as.matrix(v[, start:end]), w)
+
+    }
   }
+
 
   # calulate Nei diversity
   if(opt == "speed") {
@@ -203,7 +249,6 @@ nei_diversity <- function(v, w = NULL, opt = c("speed", "storage")){
 
   return(nei)
 }
-
 
 #' Shannon diversity
 #'
