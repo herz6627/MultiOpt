@@ -1,13 +1,13 @@
 # Nei's Genetic Diversity
 
-Calculates Nei's gene diversity (expected heterozygosity) across loci in
-a population. Allele frequencies are calculated from a genotype matrix,
-with the option to incorporate individual-level weights.
+Calculates Nei's genetic diversity (expected heterozygosity) across loci
+in a population. Allele frequencies are calculated from a genotype
+matrix, with the option to incorporate individual-level weights.
 
 ## Usage
 
 ``` r
-nei_diversity(v, w = NULL, opt = c("speed", "storage"))
+nei_diversity(v, w = NULL, opt = c("speed", "storage"), chunk_size = 10000)
 ```
 
 ## Arguments
@@ -28,6 +28,11 @@ nei_diversity(v, w = NULL, opt = c("speed", "storage"))
   A character string specifying the calculation method. "speed" uses a
   vectorized calculation, while "storage" calculates diversity
   iteratively. Defaults to "speed".
+
+- chunk_size:
+
+  Numeric value for how large (number of SNPs) to chunk large genotype
+  datasets by. Only used if ncol(v) \> 10,000.
 
 ## Value
 
@@ -99,15 +104,15 @@ byrow = TRUE
 )
 
 # Calculate Nei's gene diversity.
-test_nei(geno)
-#> Error in test_nei(geno): could not find function "test_nei"
+nei_diversity(geno)
+#> [1] 0.5
 
 # Use the storage-oriented calculation.
-test_nei(geno, opt = "storage")
-#> Error in test_nei(geno, opt = "storage"): could not find function "test_nei"
+nei_diversity(geno, opt = "storage")
+#> [1] 0.5
 
 # Calculate weighted Nei's gene diversity.
 weights <- c(1, 0.5, 1.5, 1)
-test_nei(geno, w = weights)
-#> Error in test_nei(geno, w = weights): could not find function "test_nei"
+nei_diversity(geno, w = weights)
+#> [1] 0.4921875
 ```
