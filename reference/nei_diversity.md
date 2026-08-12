@@ -7,7 +7,7 @@ matrix, with the option to incorporate individual-level weights.
 ## Usage
 
 ``` r
-nei_diversity(v, w = NULL, opt = c("speed", "storage"), chunk_size = 10000)
+nei_diversity(v, w = NULL, chunk_size = 5000)
 ```
 
 ## Arguments
@@ -23,16 +23,10 @@ nei_diversity(v, w = NULL, opt = c("speed", "storage"), chunk_size = 10000)
   An optional numeric vector of individual weights. If supplied,
   weighted allele frequencies are calculated.
 
-- opt:
-
-  A character string specifying the calculation method. "speed" uses a
-  vectorized calculation, while "storage" calculates diversity
-  iteratively. Defaults to "speed".
-
 - chunk_size:
 
   Numeric value for how large (number of SNPs) to chunk large genotype
-  datasets by. Only used if ncol(v) \> 10,000.
+  datasets by. If value is larger than ncol(v), data is not chunked.
 
 ## Value
 
@@ -69,6 +63,12 @@ Assumes loci are bi-allelic.
 The "speed" and "storage" options calculate the same quantity using
 different computational approaches.
 
+For extra large matrices, this function accepts BEDmatrix formats
+(BEDMatrix package). There are probably other options that will work. If
+the genotype matrix object runs with
+[`colSums()`](https://rdrr.io/r/base/colSums.html), it will probably
+work here.
+
 ## References
 
 Nei, M. (1973). Analysis of gene diversity in subdivided populations.
@@ -95,21 +95,18 @@ collections and translocation. Evolutionary Applications, 14(5),
 # Rows represent individuals and columns represent loci.
 # Genotypes are coded as the number of copies of the focal allele (0, 1, or 2).
 geno <- matrix(
-c(0, 1, 2,
-1, 1, 0,
-2, 0, 1,
-1, 2, 1),
-nrow = 4,
-byrow = TRUE
+  c(0, 1, 2,
+    1, 1, 0,
+    2, 0, 1,
+    1, 2, 1),
+   nrow = 4,
+   byrow = TRUE
 )
 
 # Calculate Nei's gene diversity.
 nei_diversity(geno)
 #> [1] 0.5
 
-# Use the storage-oriented calculation.
-nei_diversity(geno, opt = "storage")
-#> [1] 0.5
 
 # Calculate weighted Nei's gene diversity.
 weights <- c(1, 0.5, 1.5, 1)

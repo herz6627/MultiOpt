@@ -48,7 +48,7 @@ with the option to incorporate individual-level weights.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nei_diversity</span><span class="op">(</span><span class="va">v</span>, w <span class="op">=</span> <span class="cn">NULL</span>, opt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"speed"</span>, <span class="st">"storage"</span><span class="op">)</span>, chunk_size <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nei_diversity</span><span class="op">(</span><span class="va">v</span>, w <span class="op">=</span> <span class="cn">NULL</span>, chunk_size <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,15 +66,9 @@ Genotypes should be coded as the number of copies of an allele (e.g.,
 weighted allele frequencies are calculated.</p></dd>
 
 
-<dt id="arg-opt">opt<a class="anchor" aria-label="anchor" href="#arg-opt"></a></dt>
-<dd><p>A character string specifying the calculation method.
-"speed" uses a vectorized calculation, while "storage" calculates
-diversity iteratively. Defaults to "speed".</p></dd>
-
-
 <dt id="arg-chunk-size">chunk_size<a class="anchor" aria-label="anchor" href="#arg-chunk-size"></a></dt>
 <dd><p>Numeric value for how large (number of SNPs) to chunk large
-genotype datasets by. Only used if ncol(v) &gt; 10,000.</p></dd>
+genotype datasets by. If value is larger than ncol(v), data is not chunked.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -100,6 +94,9 @@ and \(n\) is the number of individuals.</p>
 <p>Assumes loci are bi-allelic.</p>
 <p>The "speed" and "storage" options calculate the same quantity
 using different computational approaches.</p>
+<p>For extra large matrices, this function accepts BEDmatrix formats
+(BEDMatrix package). There are probably other options that will work. If the
+genotype matrix object runs with <code><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums()</a></code>, it will probably work here.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -116,21 +113,18 @@ as used in these publications:</p>
 <span class="r-in"><span><span class="co"># Rows represent individuals and columns represent loci.</span></span></span>
 <span class="r-in"><span><span class="co"># Genotypes are coded as the number of copies of the focal allele (0, 1, or 2).</span></span></span>
 <span class="r-in"><span><span class="va">geno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span></span>
-<span class="r-in"><span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>,</span></span>
-<span class="r-in"><span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span></span>
-<span class="r-in"><span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>nrow <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>byrow <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>    <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   nrow <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>   byrow <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate Nei's gene diversity.</span></span></span>
 <span class="r-in"><span><span class="fu">nei_diversity</span><span class="op">(</span><span class="va">geno</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Use the storage-oriented calculation.</span></span></span>
-<span class="r-in"><span><span class="fu">nei_diversity</span><span class="op">(</span><span class="va">geno</span>, opt <span class="op">=</span> <span class="st">"storage"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate weighted Nei's gene diversity.</span></span></span>
 <span class="r-in"><span><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1</span><span class="op">)</span></span></span>
