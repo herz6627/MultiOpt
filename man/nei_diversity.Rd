@@ -4,7 +4,7 @@
 \alias{nei_diversity}
 \title{Nei's Genetic Diversity}
 \usage{
-nei_diversity(v, w = NULL, opt = c("speed", "storage"), chunk_size = 10000)
+nei_diversity(v, w = NULL, chunk_size = 5000)
 }
 \arguments{
 \item{v}{A genotype matrix with individuals in rows and loci in columns.
@@ -14,12 +14,8 @@ Genotypes should be coded as the number of copies of an allele (e.g.,
 \item{w}{An optional numeric vector of individual weights. If supplied,
 weighted allele frequencies are calculated.}
 
-\item{opt}{A character string specifying the calculation method.
-"speed" uses a vectorized calculation, while "storage" calculates
-diversity iteratively. Defaults to "speed".}
-
 \item{chunk_size}{Numeric value for how large (number of SNPs) to chunk large
-genotype datasets by. Only used if ncol(v) > 10,000.}
+genotype datasets by. If value is larger than ncol(v), data is not chunked.}
 }
 \value{
 A numeric value representing the mean Nei's genetic diversity
@@ -58,25 +54,27 @@ Assumes loci are bi-allelic.
 
 The "speed" and "storage" options calculate the same quantity
 using different computational approaches.
+
+For extra large matrices, this function accepts BEDmatrix formats
+(BEDMatrix package). There are probably other options that will work. If the
+genotype matrix object runs with \code{colSums()}, it will probably work here.
 }
 \examples{
 # Create a small example genotype matrix.
 # Rows represent individuals and columns represent loci.
 # Genotypes are coded as the number of copies of the focal allele (0, 1, or 2).
 geno <- matrix(
-c(0, 1, 2,
-1, 1, 0,
-2, 0, 1,
-1, 2, 1),
-nrow = 4,
-byrow = TRUE
+  c(0, 1, 2,
+    1, 1, 0,
+    2, 0, 1,
+    1, 2, 1),
+   nrow = 4,
+   byrow = TRUE
 )
 
 # Calculate Nei's gene diversity.
 nei_diversity(geno)
 
-# Use the storage-oriented calculation.
-nei_diversity(geno, opt = "storage")
 
 # Calculate weighted Nei's gene diversity.
 weights <- c(1, 0.5, 1.5, 1)

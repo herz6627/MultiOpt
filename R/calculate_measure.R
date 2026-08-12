@@ -88,11 +88,7 @@ calculate_measure <- function(
 #' @param w An optional numeric vector of individual weights. If supplied,
 #' weighted allele frequencies are calculated.
 #' @param chunk_size Numeric value for how large (number of SNPs) to chunk large
-#' genotype datasets by. Only used if ncol(v) > 10,000.
-#' @param opt A character string specifying the calculation method.
-#' "speed" uses a vectorized calculation, while "storage" calculates
-#' diversity iteratively. Defaults to "speed". If you have a large genotype
-#' matrix, this setting wont make much difference.
+#' genotype datasets by. If value is larger than ncol(v), data is not chunked.
 #'
 #' @return A numeric value representing the mean Nei's genetic diversity
 #' (expected heterozygosity) across loci.
@@ -123,9 +119,6 @@ calculate_measure <- function(
 #'
 #' Assumes loci are bi-allelic.
 #'
-#' The "speed" and "storage" options calculate the same quantity
-#' using different computational approaches.
-#'
 #' For extra large matrices, this function accepts BEDmatrix formats
 #' (BEDMatrix package). There are probably other options that will work. If the
 #' genotype matrix object runs with \code{colSums()}, it will probably work here.
@@ -135,19 +128,17 @@ calculate_measure <- function(
 #' # Rows represent individuals and columns represent loci.
 #' # Genotypes are coded as the number of copies of the focal allele (0, 1, or 2).
 #' geno <- matrix(
-#' c(0, 1, 2,
-#' 1, 1, 0,
-#' 2, 0, 1,
-#' 1, 2, 1),
-#' nrow = 4,
-#' byrow = TRUE
-#' )
+#'   c(0, 1, 2,
+#'     1, 1, 0,
+#'     2, 0, 1,
+#'     1, 2, 1),
+#'    nrow = 4,
+#'    byrow = TRUE
+#')
 #'
 #' # Calculate Nei's gene diversity.
 #' nei_diversity(geno)
 #'
-#' # Use the storage-oriented calculation.
-#' nei_diversity(geno, opt = "storage")
 #'
 #' # Calculate weighted Nei's gene diversity.
 #' weights <- c(1, 0.5, 1.5, 1)
@@ -166,12 +157,8 @@ calculate_measure <- function(
 #' @export
 nei_diversity <- function(v,
                           w = NULL,
-                          opt = c("speed", "storage"),
-                          chunk_size = 10000
+                          chunk_size = 5000
 ){
-
-  # automatically selects the first option if left blank
-  opt <- match.arg(opt)
 
   # get info
   n_snps <- ncol(v) # number of snps
@@ -179,73 +166,34 @@ nei_diversity <- function(v,
 
   if (!is.null(w) && n_ind != length(w)) stop("\nnrow(v) does not equal length(w).")
 
+  # --- calculate frequency of alleles across population (p) ---
 
-  # calculate frequency of alleles across population (p)
-  calc_p <- function(v, w){
+  total <- 0
+  # to allow for large matrices without making huge vectors, we are chunking
+  # up the matrix and slowly adding up the p values, rather than making a large
+  # p vector which we would then sum.
 
-    v <- as.matrix(v)
+  for (start in seq(1, n_snps, by = chunk_size)) {
+
+    end <- min(start + chunk_size - 1, n_snps)
+
+    v_chunk = as.matrix(v[, start:end])
 
     if (is.null(w)) {
 
-      p <- colSums(v)/(nrow(v) * 2)
+      p <- colSums(v_chunk) / (2 * n_ind)
 
     } else {
 
-      if (nrow(v) == length(w)) {
-
-        wm <- matrix(rep(w, ncol(v)), ncol = ncol(v), byrow = FALSE)
-
-        p <- colSums(v * wm)/(nrow(v) * 2)/mean(w)
-
-      } else stop("\nnrow(v) does not equal length(w).")
-
+      p <- colSums(v_chunk * w) / (2 * sum(w)) # since our weights indicate if an individual is selected more than once, we use the weights, not number of individuals here.
     }
 
-    return(p)
+    total <- total + sum(2 * p * (1 - p))
 
   }
 
-  # for relatively small datasets, we can do a simpler calculation
-  if (n_snps < 10000) {
-
-    p <- calc_p(v, w)
-
-  } else {
-
-    # but if we have a particularly large matrix, we need to chunk it up
-
-    p <- numeric(n_snps) # allocate storage
-
-    for (start in seq(1, n_snps, by = chunk_size)) {
-
-      end <- min(start + chunk_size - 1, n_snps)
-
-      p[start:end] <- calc_p(as.matrix(v[, start:end]), w)
-
-    }
-  }
-
-
-  # calulate Nei diversity
-  if(opt == "speed") {
-
-    nei <- mean(2 * p * (1 - p))
-
-  } else {
-
-    if(opt == "storage") {
-
-      Hs <- 0
-
-      for (i in 1:ncol(v)) {
-        Hs <- Hs + (1 - (p[i])^2 - (1 - p[i])^2)
-      }
-
-      nei <- 1/ncol(v) * Hs
-
-    }
-
-  }
+  # --- calculate Nei ---
+  nei <- total / n_snps
 
   return(nei)
 }
@@ -768,8 +716,8 @@ trait_coverage <- function(v, w, n_bins = 10) {
     from = min(v_vec),          # should be 0 if data is scaled
     to = max(v_vec),            # should be 1 if data is scaled
     length.out = n_bins + 1     # length.out will be how many edges we have
-                                # (so breakpoints-1 is how many bins we will have)
-    )
+    # (so breakpoints-1 is how many bins we will have)
+  )
 
   # categorize full dataset into intervals
   intervals_all <- table(cut(v_vec, breaks = breakpoints, include.lowest = TRUE)) # table() makes the frequency table
