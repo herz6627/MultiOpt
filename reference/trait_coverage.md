@@ -52,5 +52,7 @@ w <- c(0, 1, 2)
 
 trait_coverage(v, w, n_bins = 10)
 #> Warning: n_bins > length(v), check that this makes sense.
+#> Warning: n_bins > sum(w), check that this makes sense,
+#>                               as output will be artifically low due to forced blank bins.
 #> [1] 0.6666667
 ```
