@@ -94,7 +94,7 @@ nd_samples = 500
 )
 
 test = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = T)
-#> Starting simulation at 2026-08-12 16:20:58.590386 
+#> Starting simulation at 2026-08-12 16:37:32.670687 
 #> Work completed in 0.73 minutes
 str(test)
 #> List of 3
