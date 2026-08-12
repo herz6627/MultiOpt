@@ -50,6 +50,7 @@ calculate_measure <- function(
 
   for (trait in names(list_of_trait_data)) {
 
+    # get the trait data and what function will be used
     x <- list_of_trait_data[[trait]]
     fun <- list_of_measures[[trait]]
 
@@ -400,7 +401,9 @@ weighted_mean_of_vector <- function(v, w, disp = 0, direction = 1) {
 
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
+
   if (nrow(v) <= 1) stop("v should have only 1 row.")
+
   if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
 
   # force into vector
@@ -706,6 +709,7 @@ trait_coverage <- function(v, w, n_bins = 10) {
   if(n_bins > sum(w)) warning("n_bins > sum(w), check that this makes sense,
                               as output will be artifically low due to forced blank bins.")
 
+  if (length(v) != length(w)) stop("length(v) ! = length(w)")
 
   # force into vector
   v_vec <- as.numeric(v)
