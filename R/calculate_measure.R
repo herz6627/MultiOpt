@@ -703,6 +703,10 @@ trait_coverage <- function(v, w, n_bins = 10) {
 
   if(n_bins > length(v)) warning("n_bins > length(v), check that this makes sense.")
 
+  if(n_bins > sum(w)) warning("n_bins > sum(w), check that this makes sense,
+                              as output will be artifically low due to forced blank bins.")
+
+
   # force into vector
   v_vec <- as.numeric(v)
 
