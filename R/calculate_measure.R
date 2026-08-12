@@ -698,7 +698,7 @@ trait_coverage <- function(v, w, n_bins = 10) {
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
 
-  if (nrow(v) <= 1) stop("v should have only 1 row.")
+  if (dim(v)[2] != 1) stop("v should have only 1 col.")
 
   if (any(w < 0) || any(w != floor(w))) {
     stop("`w` must contain non-negative integer selection counts.")
@@ -709,7 +709,7 @@ trait_coverage <- function(v, w, n_bins = 10) {
   if(n_bins > sum(w)) warning("n_bins > sum(w), check that this makes sense,
                               as output will be artifically low due to forced blank bins.")
 
-  if (length(v) != length(w)) stop("length(v) ! = length(w)")
+  if (length(v) != length(w)) stop("length(v) != length(w)")
 
   # force into vector
   v_vec <- as.numeric(v)
