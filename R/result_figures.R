@@ -138,7 +138,7 @@ plot_selection <- function(
   if(any(lapply(trait_list, ncol) != 1)) stop("Trait data should only have 1 column for each trait. If you are attempting to use a pairwise matrix, this is not supported.")
 
   # loop through traits if needed -------------------------------------------
-  dat <- as.data.frame(t(individs_selected))
+  dat <- as.data.frame(individs_selected)
 
   if(length(trait_list) == 1) { # only 1 trait
 
@@ -156,7 +156,9 @@ plot_selection <- function(
     trait_dat |>
       as.data.frame() |>
       dplyr::mutate(id = dplyr::row_number()) |>
-      ggplot2::ggplot(ggplot2::aes(x = reorder(id, -trait), y = trait, fill = n_selected)) +
+      ggplot2::ggplot(ggplot2::aes(x = reorder(id, -trait),
+                                   y = trait,
+                                   fill = n_selected)) +
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::theme_classic() +
       ggplot2::scale_fill_gradientn(
