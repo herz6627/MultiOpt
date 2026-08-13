@@ -427,9 +427,10 @@ plot_selection_single <- function(
       patchwork::wrap_plots(plot_list) +
         patchwork::plot_layout(guides = "collect") +
         patchwork::plot_annotation(
-          title = paste("Optimization for", names(individs_selected)[x])
-        ) &
-        ggplot2::theme(legend.position = "bottom")
+          title = paste("Optimization for", names(individs_selected)[x]),
+          theme = ggplot2::theme(legend.position = "bottom")
+        ) #&
+        # ggplot2::theme(legend.position = "bottom")
 
 
     })
