@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(MultiOpt)
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
 ```
 
 
@@ -68,8 +69,9 @@ measure_list <- list(
 )
 
 measure_args <- list(
-  climate = list(disp = 15),
-  kinship = list(direction = -1)
+  genetics = NULL
+  climate  = list(disp = 15),
+  kinship  = NULL
 )
 
 calculate_measure(
