@@ -138,9 +138,11 @@ plot_selection <- function(
   if(any(lapply(trait_list, ncol) != 1)) stop("Trait data should only have 1 column for each trait. If you are attempting to use a pairwise matrix, this is not supported.")
 
   # loop through traits if needed -------------------------------------------
-  dat <- as.data.frame(individs_selected)
+  # dat <- as.data.frame(individs_selected)
 
   if(length(trait_list) == 1) { # only 1 trait
+
+    dat <- as.data.frame(individs_selected)
 
     # get data table put together
     trait_dat = trait_list[[1]]
@@ -153,7 +155,7 @@ plot_selection <- function(
     colnames(trait_dat) <- c("trait", "n_selected")
 
     # put plot together
-    trait_dat |>
+    p_out <- trait_dat |>
       as.data.frame() |>
       dplyr::mutate(id = dplyr::row_number()) |>
       ggplot2::ggplot(ggplot2::aes(x = reorder(id, -trait),
@@ -182,6 +184,8 @@ plot_selection <- function(
   } else {
 
     # multiple traits
+
+    dat <- as.data.frame(t(individs_selected))
 
     # format data
     trait_names = names(trait_list)
@@ -223,12 +227,13 @@ plot_selection <- function(
     }
     )
 
-    patchwork::wrap_plots(plot_list) +
+    p_out <- patchwork::wrap_plots(plot_list) +
       patchwork::plot_layout(guides = "collect") &
       ggplot2::theme(legend.position = "bottom")
 
   }
 
+  return(p_out)
 }
 
 
