@@ -3,6 +3,16 @@
 ``` r
 
 library(MultiOpt)
+library(ggplot2)
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 ```
 
 ## Overview
@@ -37,7 +47,6 @@ Rather than calling each measure independently during optimization,
 [`calculate_measure()`](https://herz6627.github.io/MultiOpt/reference/calculate_measure.md).
 
 ``` r
-
 trait_data <- list(
   genetics = geno_matrix,
   climate  = climate_vector,
@@ -51,8 +60,9 @@ measure_list <- list(
 )
 
 measure_args <- list(
-  climate = list(disp = 15),
-  kinship = list(direction = -1)
+  genetics = NULL
+  climate  = list(disp = 15),
+  kinship  = NULL
 )
 
 calculate_measure(
@@ -255,14 +265,325 @@ Wasserstein distance indicates a larger deviation in the distributions
 distance is also bounded 0-1. Wasserstein distance maintains the same
 units as the variable of interest.
 
+Note that
+[`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md)
+is a wrapper around
+[`wasserstein()`](https://herz6627.github.io/MultiOpt/reference/wasserstein.md)
+to use in the simulated annealing algorithm.
+
 #### Required data
 
 - one-column matrix
 - vector of weights
 
+#### Example
+
+Say we have a continuous trait such as stem height (cm), of which we
+have data for 500 individuals:
+
+``` r
+
+n = 500 # number of individuals
+
+set.seed(123)
+pop_dat <- rnorm(n, mean = 100, sd = 10)
+
+hist(pop_dat)
+```
+
+![](Measures_files/figure-html/unnamed-chunk-4-1.png)
+
+When we build ex situ collections, we dont want to impose selection, so
+we want to match the natural populations as much as possible. The
+Wassersten distance allows us to quantify how close our collection
+matches the trait distribution of the natural population (assuming we
+have the trait data for all the individuals we are considering for the
+collection). Matching the distribution might be exessive for some
+collections and just making sure you are getting the full coverage of
+the distribution might be good enough, in which case
+[`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md)
+is probably a better fit.
+
+So let’s take a subset of for 20 individuals to put in an ex situ
+collections, as is done in simulated annealing.
+
+``` r
+
+# Randomly select unique values (without replacement)
+set.seed(123)
+sub_dat <- sample(pop_dat, size = 20)
+
+hist(sub_dat)
+```
+
+![](Measures_files/figure-html/unnamed-chunk-5-1.png)
+
+Now the question is: how does this match up to the entire population?
+
+Let’s take a look graphically.
+
+``` r
+
+dat <-  dplyr::bind_rows(
+  list("all" = data.frame(val = pop_dat), 
+       "subset" = data.frame(val = sub_dat)
+       ),
+  .id = "type")
+
+dat |> 
+  ggplot(aes(x = val, fill = type)) +
+  geom_histogram(alpha = 0.5, position = "identity") +
+  theme_classic() +
+  labs(x = "Trait value", y = "Count", fill = "Dataset")
+#> `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+```
+
+![](Measures_files/figure-html/unnamed-chunk-6-1.png)
+
+So we can clearly see we have fewer individuals in the subset (which
+makes sense). We are definately missing out on the tail ends of the full
+population’s trait values. If we convert to density plots it will be
+easier to compare.
+
+``` r
+
+dat |> 
+  ggplot(aes(x = val, fill = type)) +
+  geom_density(alpha = 0.5) +
+  theme_classic() +
+  labs(x = "Trait value", y = "Density", fill = "Dataset")
+```
+
+![](Measures_files/figure-html/unnamed-chunk-7-1.png)
+
+Looks like they are pretty close, minus missing some of the tail ends
+and have an over representation of the median values.
+
+We can calulate the Wasserstein distance using
+[`wasserstein()`](https://herz6627.github.io/MultiOpt/reference/wasserstein.md)
+(which is used by
+[`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md))
+to check our observations.
+
+``` r
+
+wasserstein(pop_dat, sub_dat)
+#> [1] 2.541335
+```
+
+To view how the Wasserstein distance is actually calculated we need to
+take a look at the cumulative distribution functions (CDFs) for each
+dataset.
+
+Get the CDFs
+
+``` r
+
+x <- seq(
+  min(c(pop_dat, sub_dat)),
+  max(c(pop_dat, sub_dat)),
+  length.out = 1000
+)
+
+df <- data.frame(
+  x = x,
+  pop_dat = ecdf(pop_dat)(x),
+  sub_dat = ecdf(sub_dat)(x)
+)
+
+df$lower <- pmin(df$pop_dat, df$sub_dat)
+df$upper <- pmax(df$pop_dat, df$sub_dat)
+```
+
+And let’s take a look at the CDFs on a graph:
+
+``` r
+
+ggplot(df, aes(x = x)) +
+  geom_ribbon(
+    aes(ymin = lower, ymax = upper),
+    alpha = 0.4
+  ) +
+  geom_line(
+    aes(y = pop_dat, linetype = "Population"),
+    linewidth = 1
+  ) +
+  geom_line(
+    aes(y = sub_dat, linetype = "Subset"),
+    linewidth = 1,
+    color = "red"
+  ) +
+  labs(
+    x = "Trait value",
+    y = "Cumulative probability",
+    linetype = NULL
+  ) +
+  theme_classic()
+```
+
+![](Measures_files/figure-html/unnamed-chunk-10-1.png)
+
+The gray area between the two CDFs is what Wasserstein is calculating.
+We can get an approximation of the Wasserstein we calculated earlier by
+adding up those shadded boxes.
+
+``` r
+
+# using our CDFs
+W_manual <- sum(
+     diff(df$x) *(head(df$upper, -1) - head(df$lower, -1))
+)
+
+# using the Wasserstein function
+W_func <- wasserstein(pop_dat, sub_dat)
+
+W_manual
+#> [1] 2.542039
+W_func
+#> [1] 2.541335
+```
+
+Of which the two values come in at very close to the same value.
+
+So for our subset population we have a wasserstein distance of
+2.5413353, or in the Earth Movers Distance terms, we would need to move
+2.5413353 trait units (here we are saying stem height) to match the
+original distribution.
+
+Let’s compare that to a subset distance that we know is very skewed.
+Let’s only include the largest trait values in our subset.
+
+``` r
+
+sub_dat_skewed <- sort(pop_dat, decreasing = TRUE)[1:20]
+
+hist(sub_dat_skewed)
+```
+
+![](Measures_files/figure-html/unnamed-chunk-12-1.png)
+
+Let’s take a look graphically.
+
+``` r
+
+dat <-  dplyr::bind_rows(
+  list("all" = data.frame(val = pop_dat), 
+       "subset" = data.frame(val = sub_dat_skewed)
+       ),
+  .id = "type")
+
+dat |> 
+  ggplot(aes(x = val, fill = type)) +
+  geom_histogram(alpha = 0.5, position = "identity") +
+  theme_classic() +
+  labs(x = "Trait value", y = "Count", fill = "Dataset")
+#> `stat_bin()` using `bins = 30`. Pick better value `binwidth`.
+```
+
+![](Measures_files/figure-html/unnamed-chunk-13-1.png)
+
+Again, we can clearly see we have fewer individuals in the subset. We
+have now very clearly deviated from the total population distribution.
+
+``` r
+
+dat |> 
+  ggplot(aes(x = val, fill = type)) +
+  geom_density(alpha = 0.5) +
+  theme_classic() +
+  labs(x = "Trait value", y = "Density", fill = "Dataset")
+```
+
+![](Measures_files/figure-html/unnamed-chunk-14-1.png)
+
+Now our density plots are notably different.
+
+So now lets calculate the Wasserstein distance.
+
+Get the CDFs
+
+``` r
+
+x <- seq(
+  min(c(pop_dat, sub_dat_skewed)),
+  max(c(pop_dat, sub_dat_skewed)),
+  length.out = 1000
+)
+
+df <- data.frame(
+  x = x,
+  pop_dat = ecdf(pop_dat)(x),
+  sub_dat_skewed = ecdf(sub_dat_skewed)(x)
+)
+
+df$lower <- pmin(df$pop_dat, df$sub_dat_skewed)
+df$upper <- pmax(df$pop_dat, df$sub_dat_skewed)
+```
+
+And let’s take a look at the CDFs on a graph:
+
+``` r
+
+ggplot(df, aes(x = x)) +
+  geom_ribbon(
+    aes(ymin = lower, ymax = upper),
+    alpha = 0.4
+  ) +
+  geom_line(
+    aes(y = pop_dat, linetype = "Population"),
+    linewidth = 1
+  ) +
+  geom_line(
+    aes(y = sub_dat_skewed, linetype = "Subset"),
+    linewidth = 1,
+    color = "red"
+  ) +
+  labs(
+    x = "Trait value",
+    y = "Cumulative probability",
+    linetype = NULL
+  ) +
+  theme_classic()
+```
+
+![](Measures_files/figure-html/unnamed-chunk-16-1.png)
+
+The gray area between the two CDFs (what Wasserstein is calculating) is
+way bigger.
+
+And the wasserstein distances:
+
+``` r
+
+W <- wasserstein(pop_dat, sub_dat)
+W_skewed <- wasserstein(pop_dat, sub_dat_skewed)
+
+W
+#> [1] 2.541335
+W_skewed
+#> [1] 21.27595
+```
+
+We now see a Wasserstein distance of 21.2759506. Which, if we look at
+the density plots shown earlier:
+
+``` r
+
+dat |> 
+  ggplot(aes(x = val, fill = type)) +
+  geom_density(alpha = 0.5) +
+  theme_classic() +
+  labs(x = "Trait value", y = "Density", fill = "Dataset")
+```
+
+![](Measures_files/figure-html/unnamed-chunk-18-1.png) We can see that
+the full population has a peak at ~100 and the subset data has a peak at
+~120, so a difference of ~20 which corresponds to our Wasserstein value
+of 21.2759506.
+
 ------------------------------------------------------------------------
 
-#### Trait coverage
+### Trait coverage
 
 [`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md)
 calculates the total coverage of a subset dataset across a user
@@ -278,6 +599,105 @@ meaninful bin number is.
 - one-column matrix
 - vector of weights
 - number of bins
+
+#### Example
+
+To help visualize how this function works, all we need is to look at a
+histogram.
+
+If we have a continuous trait:
+
+``` r
+
+n = 500 # number of individuals
+
+set.seed(123)
+pop_dat <- data.frame(val = rnorm(n, mean = 100, sd = 10))
+```
+
+We can consider it at many different resolutions:
+
+``` r
+
+n_bins = c(5, 10, 25, 50, 100)
+
+plots <- lapply(n_bins, function(nb) {
+  ggplot(pop_dat, 
+         aes(x = val)) +
+    geom_histogram(bins = nb) +
+    labs(
+      title = paste("Bins =", nb),
+      x = "Trait value",
+      y = "Count"
+    ) +
+    theme_minimal()
+})
+
+patchwork::wrap_plots(plots, ncol = 2)
+```
+
+![](Measures_files/figure-html/unnamed-chunk-20-1.png)
+
+Depending on our interests, binning trait data into a smaller number of
+bins might work just fine. However, if we are interested in making an ex
+situ collection that has a certain coverage of a trait, we may want to
+have more resolution (more bins), such as if we are interested in
+capturing the tails of a trait which would otherwise get lost.
+
+[`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md)
+simply looks at the occupied bins that the reference population has and
+compares a subset, giving us a proportion of bins that our subset
+captures.
+
+If we subset the data.
+
+``` r
+
+set.seed(123)
+sub_dat <- sample(pop_dat$val, size = 100)
+
+dat <-  dplyr::bind_rows(
+  list("all" = data.frame(val = pop_dat$val), 
+       "subset" = data.frame(val = sub_dat)
+       ),
+  .id = "type")
+```
+
+We can take a look at how our sampling success can vary across how many
+bins we consider.
+
+``` r
+
+
+plots <- lapply(n_bins, function(nb) {
+  ggplot(dat, 
+         aes(x = val, fill = type)) +
+    geom_histogram(bins = nb, 
+                   position = "identity") +
+    labs(
+      title = paste("Bins =", nb),
+      x = "Trait value",
+      y = "Count"
+    ) +
+    theme_classic()
+})
+
+patchwork::wrap_plots(plots, ncol = 2)
+```
+
+![](Measures_files/figure-html/unnamed-chunk-22-1.png)
+
+[`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md)
+will be sensitive to how many bins you select, with more bins most
+likely resulting in smaller values, especially if you have small
+subsamples. When used in simulated annealing,
+[`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md)
+will generally result in an even selection of samples across the trait
+distribution (uniform distribution) so long as more bins are occupied.
+It will not check how the trait values are distributed across the bins.
+If you are interested in maintaining trait distributions,
+[`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md)
+would be a better fit.
 
 ------------------------------------------------------------------------
 
