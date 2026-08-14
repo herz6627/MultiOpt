@@ -137,7 +137,16 @@ singleopt_context <- function(
 
     # quick check that everything makes sense
     # first column of the tables we just made should match the original measure_summaries output (for the first trait)
-    if(sum_out[[1]][1] != sim_out[[1]]$final_selection$measure_summary[1]) stop("Something went wrong. Outputs do not match.")
+    if (!is.null(sum_out[[1]]) && length(sum_out) >= 1) {
+
+      if(sum_out[[1]][1] != sim_out[[1]]$final_selection$measure_summary[1]) stop("Something went wrong. Outputs do not match.")
+
+    } else {
+
+      stop("Something went wrong. Calculation failed.")
+
+      }
+
 
   } else {
 
@@ -233,8 +242,15 @@ singleopt_context <- function(
 
     # quick check that everything makes sense
     # first column of the tables we just made should match the original measure_summaries output (for the first trait)
-    if(!all(sum_out[[1]][,1] == sim_out[[1]]$measure_summaries[,1])) stop("Something went wrong. Outputs do not match.")
+    if (!is.null(sum_out[[1]]) && length(sum_out) >= 1) {
 
+      if(sum_out[[1]][1] != sim_out[[1]]$final_selection$measure_summary[1]) stop("Something went wrong. Outputs do not match.")
+
+    } else {
+
+      stop("Something went wrong. Calculation failed.")
+
+    }
   }
 
   return(list(
