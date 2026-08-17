@@ -129,6 +129,7 @@ multiopt_sa <- function(
 ) {
 
   objectives = length(trait_list)
+  trait_names <- names(trait_list)
 
   if(verbose) message(paste("\nFound", objectives, "objective(s)."))
 
@@ -141,7 +142,6 @@ multiopt_sa <- function(
   if(any(!sapply(trait_list, is.matrix))) stop("All trait data within 'trait_list' must be in matrix format.")
 
   check_similar_scale(trait_list)
-
 
   if (is.null(n_t) && is.null(initial_weights)) stop("Either 'n_t' or 'initial_weights' must be provided.")
 
@@ -156,10 +156,22 @@ multiopt_sa <- function(
   if (!(length(trait_list) == length(measure_list) &&
         length(measure_list) == length(measure_args_list))) stop("`trait_list`, `measure_list`, and `measure_args_list`, do not have same lengths.")
 
-  if (!(setequal(names(trait_list), names(measure_list)) &&
-        setequal(names(measure_list), names(measure_args_list)))) stop("`trait_list`, `measure_list`, and `measure_args_list`, names do not match.")
+  if (!setequal(trait_names, names(measure_list)) ||
+      !setequal(trait_names, names(measure_args_list))) {
+
+    stop(
+      "`trait_list`, `measure_list`, and `measure_args_list` ",
+      "must contain the same names."
+    )
+
+  }
+
 
   # Set up ------------------------------------------------------------------
+
+  # ensure datasets are in the same order
+  measure_list <- measure_list[trait_names]
+  measure_args_list <- measure_args_list[trait_names]
 
   # number of individuals
   n_g <- nrow(trait_list[[1]])
@@ -186,7 +198,7 @@ multiopt_sa <- function(
     # allocate chain
     chain <- list(
       weight = matrix(NA_real_, max_steps, n_g),
-      values = matrix(NA_real_, max_steps, objectives, dimnames = list(NULL, names(trait_list))),
+      values = matrix(NA_real_, max_steps, objectives, dimnames = list(NULL, trait_names)),
       accept = rep(NA, max_steps) #logical(max_steps)
     )
 
@@ -201,7 +213,7 @@ multiopt_sa <- function(
   if (nda) {
 
     archive = list(
-      archive_summary = matrix(unlist(measure_out), nrow = 1, dimnames = list(NULL, names(trait_list))),
+      archive_summary = matrix(unlist(measure_out), nrow = 1, dimnames = list(NULL, trait_names)),
       archive_weights = matrix(initial_weights, nrow = 1)
     )
 
