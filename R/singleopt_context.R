@@ -75,6 +75,29 @@ singleopt_context <- function(
   # checks
   if(n_runs <= 0 || n_runs %% 1 != 0) stop("`n_runs` must be positive and an integer.")
 
+
+  # Check that all three lists contain the same names
+  trait_names <- names(trait_list)
+
+  if (!setequal(trait_names, names(measure_list)) ||
+      !setequal(trait_names, names(measure_args_list))) {
+
+    stop(
+      "`trait_list`, `measure_list`, and `measure_args_list` ",
+      "must contain the same names."
+    )
+
+  }
+
+  # Explicitly reorder
+  measure_list <- measure_list[
+    match(trait_names, names(measure_list))
+  ]
+
+  measure_args_list <- measure_args_list[
+    match(trait_names, names(measure_args_list))
+  ]
+
   # run multi_opt for a single trait ----------------------------------------
 
   if (n_runs == 1) {

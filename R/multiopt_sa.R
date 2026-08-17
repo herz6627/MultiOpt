@@ -169,9 +169,9 @@ multiopt_sa <- function(
 
   # Set up ------------------------------------------------------------------
 
-  # ensure datasets are in the same order
-  measure_list <- measure_list[trait_names]
-  measure_args_list <- measure_args_list[trait_names]
+  # # ensure datasets are in the same order
+  # measure_list <- measure_list[trait_names]
+  # measure_args_list <- measure_args_list[trait_names]
 
   # number of individuals
   n_g <- nrow(trait_list[[1]])
