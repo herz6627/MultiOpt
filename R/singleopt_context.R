@@ -240,20 +240,6 @@ singleopt_context <- function(
       measure_args_list = measure_args_list
     )
 
-    # a <- sum_out[[1]][1]
-    # # b <- sim_out[[1]]$final_selection$measure_summary[1]
-    # c <- sim_out[[1]]$measure_summaries
-    #
-    # cat("a:", length(a), "\n")
-    # # cat("b:", length(b), "\n")
-    # cat("c:", length(c), "\n")
-    #
-    # print(a)
-    # # print(b)
-    # print(c)
-
-
-
     # quick check that everything makes sense
     # first column of the tables we just made should match the original measure_summaries output (for the first trait)
     if (!is.null(sum_out[[1]]) && length(sum_out) >= 1) {
