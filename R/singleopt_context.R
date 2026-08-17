@@ -245,7 +245,7 @@ singleopt_context <- function(
     if (!is.null(sum_out[[1]]) && length(sum_out) >= 1) {
 
       if (!isTRUE(all.equal( # allows for rounding differences
-        sum_out[[1]]$x,
+        sum_out[[1]][[1]],
         as.vector(sim_out[[1]]$measure_summaries)
       ))) {
         stop("Something went wrong. Outputs do not match.")
@@ -253,7 +253,11 @@ singleopt_context <- function(
 
     } else {
 
-      stop("Something went wrong. Calculation failed.")
+      if (is.null(sum_out[[1]])) {
+
+      stop("Something went wrong. Calculation failed when making sum_out.")
+
+      } else stop("Something went wrong.")
 
     }
   }
