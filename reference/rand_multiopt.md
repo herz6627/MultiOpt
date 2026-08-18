@@ -94,8 +94,8 @@ nd_samples = 500
 )
 
 test = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = T)
-#> Starting simulation at 2026-08-18 20:51:57.030359 
-#> Work completed in 0.36 minutes
+#> Starting simulation at 2026-08-18 21:12:17.448903 
+#> Work completed in 0.71 minutes
 str(test)
 #> List of 3
 #>  $ measure_summaries: num [1:5, 1:2] 0.755 0.794 0.764 0.744 0.594 ...
