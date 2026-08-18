@@ -694,11 +694,13 @@ plot_pareto <- function(
         n = length(trait_names),
         palette = "Purple-Yellow"
       )
+      names(cols) <- trait_names # adding names will keep labeling consistent
 
       shapes = rep(
         c(21, 22, 23, 24, 25), # only want the ones with outlines
         length.out = length(trait_names)
       )
+      names(shapes) <- trait_names
 
       # add to plot
       p <- p +
