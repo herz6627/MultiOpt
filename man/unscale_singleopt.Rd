@@ -4,12 +4,15 @@
 \alias{unscale_singleopt}
 \title{Back transform output to original scale}
 \usage{
-unscale_singleopt(trait_list, singleopt_output)
+unscale_singleopt(trait_list, singleopt_output, skip_traits = NULL)
 }
 \arguments{
 \item{trait_list}{Original list of trait data as used in `singleopt_context`.}
 
 \item{singleopt_output}{Archive output from `singleopt_context`.}
+
+\item{skip_traits}{Optional characted vector specifing if any traits should
+be excluded from back transformation.}
 }
 \value{
 List with archive values and weights matching formatting of `singleopt_output`.
