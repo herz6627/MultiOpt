@@ -123,7 +123,7 @@ unscale_multiopt <- function(trait_list, multiopt_output, skip_traits = NULL){
   # check skip_traits are valid
   if (!is.null(skip_traits) &&
       !all(skip_traits %in% trait_names)) {
-    stop("One or more skip_traits are not present in trait_list.")
+    warning("One or more skip_traits are not present in trait_list.")
   }
 
   # traits to back transform
@@ -202,7 +202,7 @@ unscale_rand_multiopt <- function(trait_list, rand_multiopt_output, skip_traits 
   # check skip_traits are valid
   if (!is.null(skip_traits) &&
       !all(skip_traits %in% trait_names)) {
-    stop("One or more skip_traits are not present in trait_list.")
+    warning("One or more skip_traits are not present in trait_list.")
   }
 
   # traits to back transform
