@@ -60,9 +60,6 @@ The final value is the mean diversity across all \\L\\ loci:
 
 Assumes loci are bi-allelic.
 
-The "speed" and "storage" options calculate the same quantity using
-different computational approaches.
-
 For extra large matrices, this function accepts BEDmatrix formats
 (BEDMatrix package). There are probably other options that will work. If
 the genotype matrix object runs with

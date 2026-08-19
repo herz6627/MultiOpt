@@ -8,7 +8,7 @@ function assumes trait data was transformed using \`scale_traits\`.
 ## Usage
 
 ``` r
-unscale_multiopt(trait_list, multiopt_output)
+unscale_multiopt(trait_list, multiopt_output, skip_traits = NULL)
 ```
 
 ## Arguments
@@ -20,6 +20,10 @@ unscale_multiopt(trait_list, multiopt_output)
 - multiopt_output:
 
   Unmodified output from \`multiopt_sa\`.
+
+- skip_traits:
+
+  Character vector of trait names that should not be back transformed.
 
 ## Value
 

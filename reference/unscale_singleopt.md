@@ -9,7 +9,7 @@ trait scale. This function assumes trait data was transformed using
 ## Usage
 
 ``` r
-unscale_singleopt(trait_list, singleopt_output)
+unscale_singleopt(trait_list, singleopt_output, skip_traits = NULL)
 ```
 
 ## Arguments
@@ -21,6 +21,11 @@ unscale_singleopt(trait_list, singleopt_output)
 - singleopt_output:
 
   Archive output from \`singleopt_context\`.
+
+- skip_traits:
+
+  Optional characted vector specifing if any traits should be excluded
+  from back transformation.
 
 ## Value
 
