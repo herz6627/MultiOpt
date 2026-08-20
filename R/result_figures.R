@@ -786,7 +786,7 @@ plot_pareto <- function(
             length = unit(0.2, "cm")
           )
         ) +
-        coord_cartesian(clip = "off") +
+        # coord_cartesian(clip = "off") +
         theme(aspect.ratio = 1) # Forces the plot canvas to be square which helps make the arrows the same length
 
     }
@@ -805,7 +805,10 @@ plot_pareto <- function(
         )) +
       ggplot2::labs(
         color = NULL
-      )
+      ) +
+      # add some white space to plot
+      ggplot2::scale_x_continuous(expand = ggplot2::expansion(mult = 0.2)) +
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = 0.2))
 
     return(p)
   })
