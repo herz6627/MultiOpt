@@ -657,26 +657,8 @@ plot_pareto <- function(
           color = group
         )
       ) +
-      ggplot2::geom_point(
-        alpha = 0.5,
-        size = 3
-      ) +
       ggplot2::theme_bw()
 
-    # add multi-objective if needed
-    if (!is.null(multi_list)) {
-
-      p <- p +
-        ggplot2::geom_point(data = multi_dat,
-                            shape = 3,
-                            alpha = 0.75,
-                            size = 3,
-                            ggplot2::aes(
-                              color = group # need to specify in aes() so it appears on the legend
-                            )
-        )
-
-    }
 
     # add single-objective if needed
     if (!is.null(single_list)) {
@@ -781,6 +763,27 @@ plot_pareto <- function(
 
     }
 
+    # add pareto points
+    p <-  p +
+      ggplot2::geom_point(
+      alpha = 0.5,
+      size = 3
+    )
+
+    # add multi-objective if needed
+    if (!is.null(multi_list)) {
+
+      p <- p +
+        ggplot2::geom_point(data = multi_dat,
+                            shape = 3,
+                            alpha = 0.75,
+                            size = 3,
+                            ggplot2::aes(
+                              color = group # need to specify in aes() so it appears on the legend
+                            )
+        )
+
+    }
 
     # scale front and final results
     p <-  p +
@@ -798,6 +801,7 @@ plot_pareto <- function(
       )
 
     return(p)
+
   })
 
   final_plot <- patchwork::wrap_plots(plot_list) +
