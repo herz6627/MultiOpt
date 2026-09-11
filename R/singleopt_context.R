@@ -75,6 +75,29 @@ singleopt_context <- function(
   # checks
   if(n_runs <= 0 || n_runs %% 1 != 0) stop("`n_runs` must be positive and an integer.")
 
+
+  # Check that all three lists contain the same names
+  trait_names <- names(trait_list)
+
+  if (!setequal(trait_names, names(measure_list)) ||
+      !setequal(trait_names, names(measure_args_list))) {
+
+    stop(
+      "`trait_list`, `measure_list`, and `measure_args_list` ",
+      "must contain the same names."
+    )
+
+  }
+
+  # Explicitly reorder
+  measure_list <- measure_list[
+    match(trait_names, names(measure_list))
+  ]
+
+  measure_args_list <- measure_args_list[
+    match(trait_names, names(measure_args_list))
+  ]
+
   # run multi_opt for a single trait ----------------------------------------
 
   if (n_runs == 1) {
@@ -137,7 +160,16 @@ singleopt_context <- function(
 
     # quick check that everything makes sense
     # first column of the tables we just made should match the original measure_summaries output (for the first trait)
-    if(sum_out[[1]][1] != sim_out[[1]]$final_selection$measure_summary[1]) stop("Something went wrong. Outputs do not match.")
+    if (!is.null(sum_out[[1]]) && length(sum_out) >= 1) {
+
+      if(sum_out[[1]][1] != sim_out[[1]]$final_selection$measure_summary[1]) stop("Something went wrong. Outputs do not match.")
+
+    } else {
+
+      stop("Something went wrong. Calculation failed.")
+
+      }
+
 
   } else {
 
@@ -233,8 +265,24 @@ singleopt_context <- function(
 
     # quick check that everything makes sense
     # first column of the tables we just made should match the original measure_summaries output (for the first trait)
-    if(!all(sum_out[[1]][,1] == sim_out[[1]]$measure_summaries[,1])) stop("Something went wrong. Outputs do not match.")
+    if (!is.null(sum_out[[1]]) && length(sum_out) >= 1) {
 
+      if (!isTRUE(all.equal( # allows for rounding differences
+        sum_out[[1]][[1]],
+        as.vector(sim_out[[1]]$measure_summaries)
+      ))) {
+        stop("Something went wrong. Outputs do not match.")
+      }
+
+    } else {
+
+      if (is.null(sum_out[[1]])) {
+
+      stop("Something went wrong. Calculation failed when making sum_out.")
+
+      } else stop("Something went wrong.")
+
+    }
   }
 
   return(list(

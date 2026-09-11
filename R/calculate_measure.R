@@ -50,6 +50,7 @@ calculate_measure <- function(
 
   for (trait in names(list_of_trait_data)) {
 
+    # get the trait data and what function will be used
     x <- list_of_trait_data[[trait]]
     fun <- list_of_measures[[trait]]
 
@@ -233,7 +234,7 @@ shannon_diversity <- function(v, w=NULL, q=1, direction = 1) {
 
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
-  if (nrow(v) <= 1 || ncol(v) <= 1) stop("v should have more than 1 row/col.")
+
   if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
 
 
@@ -343,7 +344,7 @@ allele_enrichment <- function(v, w = NULL, loc = NULL, rec = FALSE, direction = 
 
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
-  if (nrow(v) <= 1 || ncol(v) <= 1) stop("v should have more than 1 row/col.")
+
   if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
 
   # calculate
@@ -400,7 +401,9 @@ weighted_mean_of_vector <- function(v, w, disp = 0, direction = 1) {
 
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
-  if (nrow(v) <= 1) stop("v should have only 1 row.")
+
+  if (dim(v)[2] != 1) stop("v should have only 1 column.")
+
   if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
 
   # force into vector
@@ -446,7 +449,9 @@ sum_of_squared_difference <- function(v, w, disp=0, direction = 1) {
 
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
-  if (nrow(v) <= 1) stop("v should have only 1 row.")
+
+  if (dim(v)[2] != 1) stop("v should have only 1 column.")
+
   if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
 
   # force into vector
@@ -494,7 +499,9 @@ weighted_mean_of_absolute_difference <- function(v, w, disp=0, direction = 1) {
 
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
-  if (nrow(v) <= 1) stop("v should have only 1 row.")
+
+  if (dim(v)[2] != 1) stop("v should have only 1 column.")
+
   if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
 
   # force into vector
@@ -547,7 +554,8 @@ weighted_mean_of_absolute_difference <- function(v, w, disp=0, direction = 1) {
 #' @export
 weighted_mean_of_pairwise_matrix <- function(v, w, direction = 1) {
 
-  if(!is.matrix(v) | nrow(v) != ncol(v)) stop("v must be a pairwise matrix.")
+  if(!is.matrix(v) | dim(v)[1] != dim(v)[2]) stop("v must be a pairwise matrix.")
+
   if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
 
   wlen <- length(w)
@@ -625,7 +633,7 @@ wasserstein_measure <- function(v, w, ...) {
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
 
-  if (nrow(v) <= 1) stop("v should have only 1 row.")
+  if (dim(v)[2] != 1) stop("v should have only 1 column.")
 
   # if(!direction %in% c(-1, 1)) stop("`direction` must be -1 or 1")
 
@@ -695,13 +703,18 @@ trait_coverage <- function(v, w, n_bins = 10) {
   # run checks
   if (!is.matrix(v)) stop("v must be a matrix.")
 
-  if (nrow(v) <= 1) stop("v should have only 1 row.")
+  if (dim(v)[2] != 1) stop("v should have only 1 column.")
 
   if (any(w < 0) || any(w != floor(w))) {
     stop("`w` must contain non-negative integer selection counts.")
   }
 
   if(n_bins > length(v)) warning("n_bins > length(v), check that this makes sense.")
+
+  if(n_bins > sum(w)) warning("n_bins > sum(w), check that this makes sense,
+                              as output will be artifically low due to forced blank bins.")
+
+  if (length(v) != length(w)) stop("length(v) != length(w)")
 
   # force into vector
   v_vec <- as.numeric(v)

@@ -4,12 +4,15 @@
 \alias{unscale_multiopt}
 \title{Back transform output to original scale}
 \usage{
-unscale_multiopt(trait_list, multiopt_output)
+unscale_multiopt(trait_list, multiopt_output, skip_traits = NULL)
 }
 \arguments{
 \item{trait_list}{Original list of trait data as used in `multiopt_sa`.}
 
 \item{multiopt_output}{Unmodified output from `multiopt_sa`.}
+
+\item{skip_traits}{Character vector of trait names that should not be
+back transformed.}
 }
 \value{
 Object of same dimensions and formatting as `multiopt_output`.

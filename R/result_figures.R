@@ -138,9 +138,11 @@ plot_selection <- function(
   if(any(lapply(trait_list, ncol) != 1)) stop("Trait data should only have 1 column for each trait. If you are attempting to use a pairwise matrix, this is not supported.")
 
   # loop through traits if needed -------------------------------------------
-  dat <- as.data.frame(t(individs_selected))
+  # dat <- as.data.frame(individs_selected)
 
   if(length(trait_list) == 1) { # only 1 trait
+
+    dat <- as.data.frame(individs_selected)
 
     # get data table put together
     trait_dat = trait_list[[1]]
@@ -153,10 +155,12 @@ plot_selection <- function(
     colnames(trait_dat) <- c("trait", "n_selected")
 
     # put plot together
-    trait_dat |>
+    p_out <- trait_dat |>
       as.data.frame() |>
       dplyr::mutate(id = dplyr::row_number()) |>
-      ggplot2::ggplot(ggplot2::aes(x = reorder(id, -trait), y = trait, fill = n_selected)) +
+      ggplot2::ggplot(ggplot2::aes(x = reorder(id, -trait),
+                                   y = trait,
+                                   fill = n_selected)) +
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::theme_classic() +
       ggplot2::scale_fill_gradientn(
@@ -180,6 +184,8 @@ plot_selection <- function(
   } else {
 
     # multiple traits
+
+    dat <- as.data.frame(t(individs_selected))
 
     # format data
     trait_names = names(trait_list)
@@ -221,12 +227,13 @@ plot_selection <- function(
     }
     )
 
-    patchwork::wrap_plots(plot_list) +
+    p_out <- patchwork::wrap_plots(plot_list) +
       patchwork::plot_layout(guides = "collect") &
       ggplot2::theme(legend.position = "bottom")
 
   }
 
+  return(p_out)
 }
 
 
@@ -427,9 +434,10 @@ plot_selection_single <- function(
       patchwork::wrap_plots(plot_list) +
         patchwork::plot_layout(guides = "collect") +
         patchwork::plot_annotation(
-          title = paste("Optimization for", names(individs_selected)[x])
-        ) &
-        ggplot2::theme(legend.position = "bottom")
+          title = paste("Optimization for", names(individs_selected)[x]),
+          theme = ggplot2::theme(legend.position = "bottom")
+        ) #&
+        # ggplot2::theme(legend.position = "bottom")
 
 
     })
@@ -668,11 +676,13 @@ plot_pareto <- function(
         n = length(trait_names),
         palette = "Purple-Yellow"
       )
+      names(cols) <- trait_names # adding names will keep labeling consistent
 
       shapes = rep(
-        c(21, 22, 23, 24, 25), # only want the ones with outlines
+        c(22, 23, 24, 25, 21), # only want the ones with outlines
         length.out = length(trait_names)
       )
+      names(shapes) <- trait_names
 
       # add to plot
       p <- p +
@@ -758,7 +768,7 @@ plot_pareto <- function(
             length = unit(0.2, "cm")
           )
         ) +
-        coord_cartesian(clip = "off") +
+        # coord_cartesian(clip = "off") +
         theme(aspect.ratio = 1) # Forces the plot canvas to be square which helps make the arrows the same length
 
     }
@@ -798,7 +808,10 @@ plot_pareto <- function(
         )) +
       ggplot2::labs(
         color = NULL
-      )
+      ) +
+      # add some white space to plot
+      ggplot2::scale_x_continuous(expand = ggplot2::expansion(mult = 0.2)) +
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = 0.2))
 
     return(p)
 
