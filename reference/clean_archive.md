@@ -17,7 +17,7 @@ clean_archive(summary, wts, archive)
 
   Named list or numeric vector of objective values for the candidate
   solution. If provided as a list, it will be coerced to a numeric
-  vector via \`unlist()\`.
+  vector via [`unlist()`](https://rdrr.io/r/base/unlist.html).
 
 - wts:
 

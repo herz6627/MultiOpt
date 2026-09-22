@@ -1,10 +1,10 @@
 # Back transform output to original scale
 
 This function uses the original transformed trait data provided to
-\`singleopt_context\` and the corresponding output from
-\`singleopt_context\` to back transform archive values to the original
+`singleopt_context` and the corresponding output from
+`singleopt_context` to back transform archive values to the original
 trait scale. This function assumes trait data was transformed using
-\`scale_traits\`.
+`scale_traits`.
 
 ## Usage
 
@@ -16,11 +16,11 @@ unscale_singleopt(trait_list, singleopt_output, skip_traits = NULL)
 
 - trait_list:
 
-  Original list of trait data as used in \`singleopt_context\`.
+  Original list of trait data as used in `singleopt_context`.
 
 - singleopt_output:
 
-  Archive output from \`singleopt_context\`.
+  Archive output from `singleopt_context`.
 
 - skip_traits:
 
@@ -30,7 +30,7 @@ unscale_singleopt(trait_list, singleopt_output, skip_traits = NULL)
 ## Value
 
 List with archive values and weights matching formatting of
-\`singleopt_output\`.
+`singleopt_output`.
 
 ## Details
 

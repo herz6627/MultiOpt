@@ -1,10 +1,10 @@
 # Compute weighted deviation of a vector from a target value
 
 Calculates the absolute difference between a weighted mean of a numeric
-vector (\`vs\`) and a specified target value (\`disp\`). Weights are
-applied element-wise and normalized by their sum. This could be used to
-minimize the use of individuals low levels of heterozygosity, or to
-place arbitrary constraints on genotype composition.
+vector (`vs`) and a specified target value (`disp`). Weights are applied
+element-wise and normalized by their sum. This could be used to minimize
+the use of individuals low levels of heterozygosity, or to place
+arbitrary constraints on genotype composition.
 
 ## Usage
 
@@ -20,7 +20,7 @@ weighted_mean_of_vector(v, w, disp = 0, direction = 1)
 
 - w:
 
-  Numeric vector of individual weights with same length as \`v\`.
+  Numeric vector of individual weights with same length as `v`.
 
 - disp:
 
@@ -37,7 +37,7 @@ weighted_mean_of_vector(v, w, disp = 0, direction = 1)
 ## Value
 
 A single numeric value representing the absolute deviation between the
-weighted mean of \`v\` and \`disp\`.
+weighted mean of `v` and `disp`.
 
 ## Details
 

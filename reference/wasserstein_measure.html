@@ -60,7 +60,7 @@ Assumes that v provides the total population distribution of trait variation.</p
 
 
 <dt id="arg-w">w<a class="anchor" aria-label="anchor" href="#arg-w"></a></dt>
-<dd><p>Numeric vector of individual weights with same length as `v`.</p></dd>
+<dd><p>Numeric vector of individual weights with same length as <code>v</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -75,10 +75,9 @@ by -1.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>As `MultiOpt` aims to maximize measures, but smaller \(W_p\) are
+    <p>As <code>MultiOpt</code> aims to maximize measures, but smaller \(W_p\) are
 better, we multiply the \(W_p\) by -1 to allow for minimizing
 the differences in distributions.</p>
-
 <p>This function examines how well distributions match. If you are more interested
 in checking the full range of trait data is captured in the subset,
 <code><a href="trait_coverage.html">trait_coverage()</a></code> would be a better fit.</p>

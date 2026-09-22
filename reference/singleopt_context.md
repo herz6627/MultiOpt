@@ -2,9 +2,9 @@
 
 This function aims to address "If I prioritize a single trait for
 simulated annealing, what are the results of the other traits?." This is
-complimentary analysis to \`multiopt_sa\` and \`rand_multiopt\`,
-allowing users to explore what trade offs happen when incorporating
-multiple objectives. No chains or archives are returned.
+complimentary analysis to `multiopt_sa` and `rand_multiopt`, allowing
+users to explore what trade offs happen when incorporating multiple
+objectives. No chains or archives are returned.
 
 ## Usage
 
@@ -37,13 +37,18 @@ singleopt_context(
 - measure_list:
 
   List of objective functions corresponding to each element of
-  trait_list. Possible functions include: \[nei_diversity()\],
-  \[shannon_diversity()\], \[allele_enrichment()\],
-  \[weighted_mean_of_vector()\], \[sum_of_squared_difference()\],
-  \[weighted_mean_of_absolute_difference()\],
-  \[weighted_mean_of_pairwise_matrix()\], \[wasserstein_measure()\], or
-  \[trait_coverage()\]. See function descriptions for specific details
-  and required arguments.
+  trait_list. Possible functions include:
+  [`nei_diversity()`](https://herz6627.github.io/MultiOpt/reference/nei_diversity.md),
+  [`shannon_diversity()`](https://herz6627.github.io/MultiOpt/reference/shannon_diversity.md),
+  [`allele_enrichment()`](https://herz6627.github.io/MultiOpt/reference/allele_enrichment.md),
+  [`weighted_mean_of_vector()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_vector.md),
+  [`sum_of_squared_difference()`](https://herz6627.github.io/MultiOpt/reference/sum_of_squared_difference.md),
+  [`weighted_mean_of_absolute_difference()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_absolute_difference.md),
+  [`weighted_mean_of_pairwise_matrix()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_pairwise_matrix.md),
+  [`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md),
+  or
+  [`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md).
+  See function descriptions for specific details and required arguments.
 
 - measure_args_list:
 
@@ -80,12 +85,12 @@ singleopt_context(
 
 - p_depends_delta:
 
-  Logical; if \`TRUE\`, acceptance probabilities depend on the magnitude
+  Logical; if `TRUE`, acceptance probabilities depend on the magnitude
   of objective change.
 
 - acceptance_multipliers:
 
-  Numeric scalar or vector of the same length as \`trait_list\`
+  Numeric scalar or vector of the same length as `trait_list`
   controlling acceptance probability for each objective.
 
 - verbose:
@@ -99,22 +104,24 @@ singleopt_context(
 - parallel:
 
   Logical; whether to run in parallel. If TRUE, user will need to set up
-  the session using \`future::plan()\`
+  the session using
+  [`future::plan()`](https://future.futureverse.org/reference/plan.html)
 
 ## Value
 
-A list of the same length of \`trait_list\` with an element for each
-trait found in \`trait_list\`. Within each list element, a table with
-measure results for each trait is returned, with the column with the
-same name as the list element being the single objective used in the
-simulated annealing run(s).
+A list of the same length of `trait_list` with an element for each trait
+found in `trait_list`. Within each list element, a table with measure
+results for each trait is returned, with the column with the same name
+as the list element being the single objective used in the simulated
+annealing run(s).
 
 ## Details
 
 Compatible with parallel computing when n_reps \> 1. See
-\`rand_multiopt()\` for more details.
+[`rand_multiopt()`](https://herz6627.github.io/MultiOpt/reference/rand_multiopt.md)
+for more details.
 
-Output value can be back transformed using \`unscale_singleopt\`.
+Output value can be back transformed using `unscale_singleopt`.
 
 ## Examples
 

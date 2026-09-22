@@ -37,7 +37,7 @@ accept_reject(
 - c:
 
   Penalty multipliers. Single value of vector of same length as
-  \`summary\`.
+  `summary`.
 
 - c_all:
 

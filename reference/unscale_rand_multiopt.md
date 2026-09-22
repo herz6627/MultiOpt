@@ -1,9 +1,9 @@
 # Back transform output to original scale
 
 This function uses the original transformed trait data provided in
-\`rand_multiopt\` and the corresponding output from \`rand_multiopt\` to
+`rand_multiopt` and the corresponding output from `rand_multiopt` to
 back transform simulation output to the original trait scale. This
-function assumes trait data was transformed using \`scale_traits\`.
+function assumes trait data was transformed using `scale_traits`.
 
 ## Usage
 
@@ -15,11 +15,11 @@ unscale_rand_multiopt(trait_list, rand_multiopt_output, skip_traits = NULL)
 
 - trait_list:
 
-  Original list of trait data as used in \`rand_multiopt\`.
+  Original list of trait data as used in `rand_multiopt`.
 
 - rand_multiopt_output:
 
-  Unmodified output from \`rand_multiopt\`.
+  Unmodified output from `rand_multiopt`.
 
 - skip_traits:
 
@@ -27,7 +27,7 @@ unscale_rand_multiopt(trait_list, rand_multiopt_output, skip_traits = NULL)
 
 ## Value
 
-Object of same dimensions and formatting as \`rand_multiopt_output\`.
+Object of same dimensions and formatting as `rand_multiopt_output`.
 
 ## Details
 

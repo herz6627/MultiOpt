@@ -65,19 +65,19 @@ and optional additional arguments.</p>
 
 <dl><dt id="arg-list-of-trait-data">list_of_trait_data<a class="anchor" aria-label="anchor" href="#arg-list-of-trait-data"></a></dt>
 <dd><p>Named list of trait datasets. Each element
-is passed to its corresponding measure function as argument `v`. Trait data must be matrices.</p></dd>
+is passed to its corresponding measure function as argument <code>v</code>. Trait data must be matrices.</p></dd>
 
 
 <dt id="arg-list-of-measures">list_of_measures<a class="anchor" aria-label="anchor" href="#arg-list-of-measures"></a></dt>
 <dd><p>Named list of functions corresponding to
-`list_of_trait_data`. Each function is applied to the matching
+<code>list_of_trait_data</code>. Each function is applied to the matching
 trait dataset.</p></dd>
 
 
 <dt id="arg-list-of-args">list_of_args<a class="anchor" aria-label="anchor" href="#arg-list-of-args"></a></dt>
 <dd><p>Optional named list of additional argument lists
 supplied to each measure function. Names should match
-`list_of_trait_data`.</p></dd>
+<code>list_of_trait_data</code>.</p></dd>
 
 
 <dt id="arg-w">w<a class="anchor" aria-label="anchor" href="#arg-w"></a></dt>
@@ -91,18 +91,17 @@ supplied to each measure function. Names should match
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The function iterates over the named elements of
-`list_of_trait_data`, applies the corresponding function from
-`list_of_measures`, and returns the resulting values as a named list.</p>
+<code>list_of_trait_data</code>, applies the corresponding function from
+<code>list_of_measures</code>, and returns the resulting values as a named list.</p>
 <p>Measure functions must accept the trait data through an argument
-named `v`, and weights through an argument named `w`.</p>
-
+named <code>v</code>, and weights through an argument named <code>w</code>.</p>
 <p>For each trait:</p><ol><li><p>The corresponding trait dataset is extracted.</p></li>
 <li><p>The associated measure function is retrieved and validated.</p></li>
 <li><p>Additional user-supplied arguments are combined with the
-        common weight vector `w`.</p></li>
-<li><p>The function is evaluated using `do.call()`.</p></li>
-</ol><p>The names of `list_of_trait_data`, `list_of_measures`, and
-`list_of_args` are expected to align.</p>
+common weight vector <code>w</code>.</p></li>
+<li><p>The function is evaluated using <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code>.</p></li>
+</ol><p>The names of <code>list_of_trait_data</code>, <code>list_of_measures</code>, and
+<code>list_of_args</code> are expected to align.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

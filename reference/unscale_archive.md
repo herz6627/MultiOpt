@@ -1,9 +1,9 @@
 # Back transform output to original scale
 
 This function uses the original transformed trait data provided in
-\`multiopt_sa\` or \`rand_multiopt\` and the corresponding output from
-\`multiopt_sa\` or \`rand_multiopt\` to back transform archive values to
-the original trait scale.
+`multiopt_sa` or `rand_multiopt` and the corresponding output from
+`multiopt_sa` or `rand_multiopt` to back transform archive values to the
+original trait scale.
 
 ## Usage
 
@@ -15,12 +15,12 @@ unscale_archive(trait_list, archive_output, skip_traits = NULL)
 
 - trait_list:
 
-  Original list of trait data as used in \`multiopt_sa\`.
+  Original list of trait data as used in `multiopt_sa`.
 
 - archive_output:
 
-  Archive output from \`multiopt_sa\` (out\$archive), \`rand_multiopt\`
-  (out\$archive) or \`explore_pareto\`.
+  Archive output from `multiopt_sa` (out\$archive), `rand_multiopt`
+  (out\$archive) or `explore_pareto`.
 
 - skip_traits:
 
@@ -29,12 +29,12 @@ unscale_archive(trait_list, archive_output, skip_traits = NULL)
 ## Value
 
 List with archive values and weights matching formatting of
-\`archive_output\`.
+`archive_output`.
 
 ## Details
 
 This function assumes trait data was transformed using
-\`scale_traits()\`.
+[`scale_traits()`](https://herz6627.github.io/MultiOpt/reference/scale_traits.md).
 
 Note that this function takes the absolute value of transformed trait
 variables.

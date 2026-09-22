@@ -54,37 +54,36 @@ replicates. Supports both single-trait and multi-trait visualization modes.</p>
 
 <dl><dt id="arg-individs-selected">individs_selected<a class="anchor" aria-label="anchor" href="#arg-individs-selected"></a></dt>
 <dd><p>Matrix or data structure indicating selected
-individuals across replicates as produced by `rand_multiopt` (out$individs_selected).</p></dd>
+individuals across replicates as produced by <code>rand_multiopt</code> (out$individs_selected).</p></dd>
 
 
 <dt id="arg-trait-list">trait_list<a class="anchor" aria-label="anchor" href="#arg-trait-list"></a></dt>
 <dd><p>Named list of trait data frames, each containing a
 single column of trait values. Must not contain multi-column objects
-(e.g. pairwise matrices are not supported). This data does not need to be the same supplied to `rand_multiopt`,
+(e.g. pairwise matrices are not supported). This data does not need to be the same supplied to <code>rand_multiopt</code>,
 but does need to be in the same order for each individual.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A ggplot2 object (single trait case) or a patchwork object
-  containing pairwise trait scatterplots (multi-trait case).</p>
+containing pairwise trait scatterplots (multi-trait case).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>For each individual, selection frequency is computed as the number of
 replicates in which the individual was selected (ignoring weights).</p>
-
 <p>The function operates in two modes:</p>
-<p>**Single trait case**</p><ul><li><p>Aggregates trait values with selection frequency.</p></li>
+<p><strong>Single trait case</strong></p><ul><li><p>Aggregates trait values with selection frequency.</p></li>
 <li><p>Produces a bar plot ordered by trait value.</p></li>
 <li><p>Fill indicates number of replicates in which each individual
-        was selected.</p></li>
-</ul><p>**Multi-trait case**</p><ul><li><p>Constructs a data frame of trait values.</p></li>
+was selected.</p></li>
+</ul><p><strong>Multi-trait case</strong></p><ul><li><p>Constructs a data frame of trait values.</p></li>
 <li><p>Computes selection frequency per individual.</p></li>
 <li><p>Generates all pairwise trait scatterplots.</p></li>
 <li><p>Uses fill color to indicate selection frequency.</p></li>
 </ul><p>Selection frequency is computed as the row-wise count of nonzero
-entries in `individs_selected`.</p>
+entries in <code>individs_selected</code>.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -17,7 +17,7 @@ trait_coverage(v, w, n_bins = 10)
 
 - w:
 
-  Numeric vector of individual weights with same length as \`v\`. to the
+  Numeric vector of individual weights with same length as `v`. to the
   observations in v. Values with a count of zero are excluded from the
   selected subset.
 

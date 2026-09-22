@@ -20,25 +20,25 @@ plot_pareto(
 - archive_list:
 
   A list containing Pareto archive output, expected to include an
-  element \`archive_summary\` with trait values. Either \$archive from
-  \`multiopt_sa\` or \`rand_multiopt\` or output from \`explore_pareto\`
+  element `archive_summary` with trait values. Either \$archive from
+  `multiopt_sa` or `rand_multiopt` or output from `explore_pareto`
 
 - multi_list:
 
   Optional list containing multi-objective optimization results from
-  \`rand_multiopt\` or \`multiopt_sa\`. Must include either
-  \`measure_summaries\` or \`final_selection\$measure_summary\`.
+  `rand_multiopt` or `multiopt_sa`. Must include either
+  `measure_summaries` or `final_selection$measure_summary`.
 
 - single_list:
 
   Optional list of single-objective optimization results from
-  \`singleopt_context\`.
+  `singleopt_context`.
 
 - measure_type:
 
   Optional list of direction of optimization. List elements should have
   the same names as traits in archive_list and values should be
-  \`"minimize"\`, \`"maximize"\`, or \`"diversify"\`.
+  `"minimize"`, `"maximize"`, or `"diversify"`.
 
 ## Value
 

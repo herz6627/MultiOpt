@@ -57,7 +57,7 @@ unscaled dataset.</p>
 
 <dl><dt id="arg-x-scaled">x_scaled<a class="anchor" aria-label="anchor" href="#arg-x-scaled"></a></dt>
 <dd><p>Numeric vector, matrix, or array containing values
-scaled to the range [0, 1].</p></dd>
+scaled to the range 0, 1.</p></dd>
 
 
 <dt id="arg-x-unscaled">x_unscaled<a class="anchor" aria-label="anchor" href="#arg-x-unscaled"></a></dt>
@@ -67,8 +67,8 @@ reference scale used for back-transformation.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object with the same structure as `x_scaled`, transformed
-  back to the scale of `x_unscaled`.</p>
+    <p>An object with the same structure as <code>x_scaled</code>, transformed
+back to the scale of <code>x_unscaled</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -76,10 +76,9 @@ reference scale used for back-transformation.</p></dd>
 <p>$$
 x = x_{scaled} \times (\max(x_{ref}) - \min(x_{ref})) + \min(x_{ref})
 $$</p>
-
 <p>The minimum and maximum used for back-transformation are calculated
-from `x_unscaled` with missing values ignored.</p>
-<p>This function assumes that `x_scaled` was originally generated using
+from <code>x_unscaled</code> with missing values ignored.</p>
+<p>This function assumes that <code>x_scaled</code> was originally generated using
 min-max scaling based on the same reference distribution.</p>
     </div>
 

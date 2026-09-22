@@ -13,7 +13,7 @@ plot_chain(chain_list)
 
 - chain_list:
 
-  Chain output from \`multiopt_sa\` (out\$chain).
+  Chain output from `multiopt_sa` (out\$chain).
 
 ## Value
 

@@ -1,9 +1,9 @@
 # Compute weighted mean absolute deviation from a target value
 
 Calculates the weighted mean of absolute differences between a numeric
-vector (\`v\`) and a displacement value (\`disp\`). Each absolute
-deviation is weighted by a corresponding value in \`w\`, and the result
-is normalized by the sum of weights.
+vector (`v`) and a displacement value (`disp`). Each absolute deviation
+is weighted by a corresponding value in `w`, and the result is
+normalized by the sum of weights.
 
 ## Usage
 
@@ -19,7 +19,7 @@ weighted_mean_of_absolute_difference(v, w, disp = 0, direction = 1)
 
 - w:
 
-  Numeric vector of individual weights with same length as \`v\`.
+  Numeric vector of individual weights with same length as `v`.
 
 - disp:
 
@@ -36,7 +36,7 @@ weighted_mean_of_absolute_difference(v, w, disp = 0, direction = 1)
 ## Value
 
 A single numeric value representing the weighted mean absolute deviation
-of \`v\` from \`disp\`.
+of `v` from `disp`.
 
 ## Details
 

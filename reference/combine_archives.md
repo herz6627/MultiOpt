@@ -1,6 +1,6 @@
 # Combine two archives and reduce if needed
 
-Combines two archives from \`multiopt_sa\` and reduces to one archive,
+Combines two archives from `multiopt_sa` and reduces to one archive,
 filtering to only non-dominated values. Both archives should be produced
 from the same simulated annealing arguments and trait data sets. Order
 of which archive value is assigned to archive1 or archive2 is arbitrary
@@ -16,11 +16,11 @@ combine_archives(archive1, archive2)
 
 - archive1:
 
-  Archive from \`multiopt_sa\` (out1\$archive)
+  Archive from `multiopt_sa` (out1\$archive)
 
 - archive2:
 
-  Archive from \`multiopt_sa\` (out2\$archive)
+  Archive from `multiopt_sa` (out2\$archive)
 
 ## Value
 

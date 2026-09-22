@@ -19,15 +19,14 @@ explore_pareto(
 
 - multiopt_archive_output:
 
-  Unmodified archive output from \`multiopt_sa\`. out\$archive
+  Unmodified archive output from `multiopt_sa`. out\$archive
 
 - nd_samples:
 
   How many observations of the Pareto Front to explore. Will only impact
   settings for multiopt_sa internally, results may be larger than the
-  provided \`nd_samples\` Should probably be set higher than what you
-  initially set for \`multiopt_sa\` for maximum Pareto front
-  exploration.
+  provided `nd_samples` Should probably be set higher than what you
+  initially set for `multiopt_sa` for maximum Pareto front exploration.
 
 - max_steps:
 
@@ -38,17 +37,17 @@ explore_pareto(
 
 - ...:
 
-  The same arguments used to initially run \`multiopt_sa\`. If you
-  supply \`initial_weights\` it will be overwritten.
+  The same arguments used to initially run `multiopt_sa`. If you supply
+  `initial_weights` it will be overwritten.
 
 ## Value
 
-Returns a list matching the formatting of \`multiopt_archive_output\`,
-but with hopefully more observations of the front.
+Returns a list matching the formatting of `multiopt_archive_output`, but
+with hopefully more observations of the front.
 
 ## Details
 
-Can use \`unscale_archive\` to back transform data to original trait
+Can use `unscale_archive` to back transform data to original trait
 scales.
 
 ## References

@@ -26,7 +26,8 @@ multiopt_sa(
   nda = F,
   nd_samples = 100,
   save_chain = T,
-  verbose = T
+  verbose = T,
+  warn = T
 )
 ```
 
@@ -40,13 +41,18 @@ multiopt_sa(
 - measure_list:
 
   List of objective functions corresponding to each element of
-  trait_list. Possible functions include: \[nei_diversity()\],
-  \[shannon_diversity()\], \[allele_enrichment()\],
-  \[weighted_mean_of_vector()\], \[sum_of_squared_difference()\],
-  \[weighted_mean_of_absolute_difference()\],
-  \[weighted_mean_of_pairwise_matrix()\], \[wasserstein_measure()\], or
-  \[trait_coverage()\]. See function descriptions for specific details
-  and required arguments.
+  trait_list. Possible functions include:
+  [`nei_diversity()`](https://herz6627.github.io/MultiOpt/reference/nei_diversity.md),
+  [`shannon_diversity()`](https://herz6627.github.io/MultiOpt/reference/shannon_diversity.md),
+  [`allele_enrichment()`](https://herz6627.github.io/MultiOpt/reference/allele_enrichment.md),
+  [`weighted_mean_of_vector()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_vector.md),
+  [`sum_of_squared_difference()`](https://herz6627.github.io/MultiOpt/reference/sum_of_squared_difference.md),
+  [`weighted_mean_of_absolute_difference()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_absolute_difference.md),
+  [`weighted_mean_of_pairwise_matrix()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_pairwise_matrix.md),
+  [`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md),
+  or
+  [`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md).
+  See function descriptions for specific details and required arguments.
 
 - measure_args_list:
 
@@ -83,16 +89,16 @@ multiopt_sa(
 
 - min_t:
 
-  Minimum allowable temperature when \`nda = TRUE\`.
+  Minimum allowable temperature when `nda = TRUE`.
 
 - p_depends_delta:
 
-  Logical; if \`TRUE\`, acceptance probabilities depend on the magnitude
+  Logical; if `TRUE`, acceptance probabilities depend on the magnitude
   of objective change.
 
 - acceptance_multipliers:
 
-  Numeric scalar or vector of the same length as \`trait_list\`
+  Numeric scalar or vector of the same length as `trait_list`
   controlling acceptance probability for each objective.
 
 - acceptance_multiplier_all_worse:
@@ -102,13 +108,13 @@ multiopt_sa(
 
 - nda:
 
-  Logical; if \`TRUE\`, maintain a non-dominated archive of
-  Pareto-optimal candidate solutions encountered during optimization.
+  Logical; if `TRUE`, maintain a non-dominated archive of Pareto-optimal
+  candidate solutions encountered during optimization.
 
 - nd_samples:
 
   Maximum number of archived non-dominated solutions to retain when
-  \`nda = TRUE\`. Once satisfied, simulated annealing run will stop.
+  `nda = TRUE`. Once satisfied, simulated annealing run will stop.
 
 - save_chain:
 
@@ -119,26 +125,31 @@ multiopt_sa(
 
   If TRUE, prints status updates in the console.
 
+- warn:
+
+  If TRUE will print warnings. Primarily controls warnings about trait
+  scaling.
+
 ## Value
 
 A list containing:
 
 - final_selection:
 
-  List containing the final objective values (\`measure_summary\`) and
-  selected weights (\`individs_selected\`).
+  List containing the final objective values (`measure_summary`) and
+  selected weights (`individs_selected`).
 
 - chain:
 
-  If \`save_chain = TRUE\`, a list containing optimization history,
+  If `save_chain = TRUE`, a list containing optimization history,
   including proposed weights, objective values, and acceptance status
-  for each iteration. Otherwise \`NULL\`
+  for each iteration. Otherwise `NULL`
 
 - archive:
 
-  If \`nda = TRUE\`, a list containing archived non-dominated solutions
-  (\`archive_summary\`) and associated weights (\`archive_weights\`);
-  otherwise \`NULL\`.
+  If `nda = TRUE`, a list containing archived non-dominated solutions
+  (`archive_summary`) and associated weights (`archive_weights`);
+  otherwise `NULL`.
 
 ## Details
 
@@ -152,11 +163,15 @@ Optionally, a non-dominated archive can be maintained during the search.
 
 ## See also
 
-\[nei_diversity()\], \[shannon_diversity()\], \[allele_enrichment()\],
-\[weighted_mean_of_vector()\], \[sum_of_squared_difference()\],
-\[weighted_mean_of_absolute_difference()\],
-\[weighted_mean_of_pairwise_matrix()\], \[wasserstein_measure()\],
-\[trait_coverage()\]
+[`nei_diversity()`](https://herz6627.github.io/MultiOpt/reference/nei_diversity.md),
+[`shannon_diversity()`](https://herz6627.github.io/MultiOpt/reference/shannon_diversity.md),
+[`allele_enrichment()`](https://herz6627.github.io/MultiOpt/reference/allele_enrichment.md),
+[`weighted_mean_of_vector()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_vector.md),
+[`sum_of_squared_difference()`](https://herz6627.github.io/MultiOpt/reference/sum_of_squared_difference.md),
+[`weighted_mean_of_absolute_difference()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_absolute_difference.md),
+[`weighted_mean_of_pairwise_matrix()`](https://herz6627.github.io/MultiOpt/reference/weighted_mean_of_pairwise_matrix.md),
+[`wasserstein_measure()`](https://herz6627.github.io/MultiOpt/reference/wasserstein_measure.md),
+[`trait_coverage()`](https://herz6627.github.io/MultiOpt/reference/trait_coverage.md)
 
 ## Examples
 

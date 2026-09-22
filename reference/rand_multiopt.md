@@ -1,9 +1,10 @@
 # Multiple runs of simulated annealing
 
-This is a wrapper function around \`multiopt_sa()\` for multiple
-replicates of the simulated annealing process. Results are summarized
-and condensed. Process can be run in parallel using the \`future\`
-package.
+This is a wrapper function around
+[`multiopt_sa()`](https://herz6627.github.io/MultiOpt/reference/multiopt_sa.md)
+for multiple replicates of the simulated annealing process. Results are
+summarized and condensed. Process can be run in parallel using the
+`future` package.
 
 ## Usage
 
@@ -20,11 +21,12 @@ rand_multiopt(n_runs = 20, parallel = F, multiopt_args, verbose = T)
 - parallel:
 
   Logical; whether to run in parallel. If TRUE, user will need to set up
-  the session using \`future::plan()\`
+  the session using
+  [`future::plan()`](https://future.futureverse.org/reference/plan.html)
 
 - multiopt_args:
 
-  List of arguments to supply to \`multiopt_sa\`
+  List of arguments to supply to `multiopt_sa`
 
 - verbose:
 
@@ -45,9 +47,9 @@ a list containing:
 
 - archive:
 
-  If \`nda = TRUE\`, a list containing archived non-dominated solutions
-  (\`archive_summary\`) and associated weights (\`archive_weights\`);
-  otherwise \`NULL\`. Archive is the combined archives over all
+  If `nda = TRUE`, a list containing archived non-dominated solutions
+  (`archive_summary`) and associated weights (`archive_weights`);
+  otherwise `NULL`. Archive is the combined archives over all
   randomizations.
 
 ## Examples
@@ -94,8 +96,8 @@ nd_samples = 500
 )
 
 test = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = T)
-#> Starting simulation at 2026-09-22 16:48:28.639731 
-#> Work completed in 0.73 minutes
+#> Starting simulation at 2026-09-22 19:04:25.01428 
+#> Work completed in 0.71 minutes
 str(test)
 #> List of 3
 #>  $ measure_summaries: num [1:5, 1:2] 0.755 0.794 0.764 0.744 0.594 ...

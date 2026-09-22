@@ -20,7 +20,7 @@ wasserstein_measure(v, w, ...)
 
 - w:
 
-  Numeric vector of individual weights with same length as \`v\`.
+  Numeric vector of individual weights with same length as `v`.
 
 - ...:
 
@@ -35,9 +35,9 @@ multiplied by -1.
 
 ## Details
 
-As \`MultiOpt\` aims to maximize measures, but smaller \\W_p\\ are
-better, we multiply the \\W_p\\ by -1 to allow for minimizing the
-differences in distributions.
+As `MultiOpt` aims to maximize measures, but smaller \\W_p\\ are better,
+we multiply the \\W_p\\ by -1 to allow for minimizing the differences in
+distributions.
 
 This function examines how well distributions match. If you are more
 interested in checking the full range of trait data is captured in the

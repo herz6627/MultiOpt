@@ -264,7 +264,7 @@ sa_args = list(
 )
 
 multi_out = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = F)
-#> Starting simulation at 2026-09-22 16:49:31.219801
+#> Starting simulation at 2026-09-22 19:05:24.854797
 #> Work completed in 0.59 minutes
 
 str(multi_out)
@@ -294,8 +294,8 @@ library(future)
 
 future::plan(multisession, workers = 4) # multisession indicates this is run on current machine
 multi_out = rand_multiopt(n_runs = 5, multiopt_args = sa_args, parallel = T)
-#> Starting simulation at 2026-09-22 16:50:07.375221
-#> Work completed in 0.45 minutes
+#> Starting simulation at 2026-09-22 19:06:01.170529
+#> Work completed in 0.46 minutes
 
 str(multi_out)
 #> List of 3
@@ -432,7 +432,7 @@ sa_args = list(
 )
 
 multi_out = rand_multiopt(n_runs = 10, multiopt_args = sa_args)
-#> Starting simulation at 2026-09-22 16:50:36.725742
+#> Starting simulation at 2026-09-22 19:06:30.957705
 #> Work completed in 0.15 minutes
 
 # run multiple rounds of SA

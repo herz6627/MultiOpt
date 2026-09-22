@@ -59,13 +59,13 @@ to expand the known coverage of the Pareto Front.</p>
 
 
 <dl><dt id="arg-multiopt-archive-output">multiopt_archive_output<a class="anchor" aria-label="anchor" href="#arg-multiopt-archive-output"></a></dt>
-<dd><p>Unmodified archive output from `multiopt_sa`. out$archive</p></dd>
+<dd><p>Unmodified archive output from <code>multiopt_sa</code>. out$archive</p></dd>
 
 
 <dt id="arg-nd-samples">nd_samples<a class="anchor" aria-label="anchor" href="#arg-nd-samples"></a></dt>
 <dd><p>How many observations of the Pareto Front to explore.
-Will only impact settings for multiopt_sa internally, results may be larger than the provided `nd_samples`
-Should probably be set higher than what you initially set for `multiopt_sa` for maximum Pareto front exploration.</p></dd>
+Will only impact settings for multiopt_sa internally, results may be larger than the provided <code>nd_samples</code>
+Should probably be set higher than what you initially set for <code>multiopt_sa</code> for maximum Pareto front exploration.</p></dd>
 
 
 <dt id="arg-max-steps">max_steps<a class="anchor" aria-label="anchor" href="#arg-max-steps"></a></dt>
@@ -75,16 +75,16 @@ this value does not need to be as large as when used for the full simulated anne
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>The same arguments used to initially run `multiopt_sa`. If you supply `initial_weights` it will be overwritten.</p></dd>
+<dd><p>The same arguments used to initially run <code>multiopt_sa</code>. If you supply <code>initial_weights</code> it will be overwritten.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns a list matching the formatting of `multiopt_archive_output`, but with hopefully more observations of the front.</p>
+    <p>Returns a list matching the formatting of <code>multiopt_archive_output</code>, but with hopefully more observations of the front.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Can use `unscale_archive` to back transform data to original trait scales.</p>
+    <p>Can use <code>unscale_archive</code> to back transform data to original trait scales.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

@@ -61,7 +61,7 @@ the candidate if it is dominated by any existing archive member.</p>
 <dl><dt id="arg-summary">summary<a class="anchor" aria-label="anchor" href="#arg-summary"></a></dt>
 <dd><p>Named list or numeric vector of objective values for the
 candidate solution. If provided as a list, it will be coerced to a numeric
-vector via `unlist()`.</p></dd>
+vector via <code><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist()</a></code>.</p></dd>
 
 
 <dt id="arg-wts">wts<a class="anchor" aria-label="anchor" href="#arg-wts"></a></dt>
@@ -71,14 +71,14 @@ the candidate solution.</p></dd>
 
 <dt id="arg-archive">archive<a class="anchor" aria-label="anchor" href="#arg-archive"></a></dt>
 <dd><p>List of existing non-dominated solutions. Each element is a
-  list containing:</p><dl><dt>archive_summary</dt>
+list containing:</p><dl><dt>archive_summary</dt>
 <dd><p>Numeric matrix of objective values, where each row
-  corresponds to a solution and each column to an objective.</p></dd>
+corresponds to a solution and each column to an objective.</p></dd>
 
 
-  <dt>archive_weights</dt>
+<dt>archive_weights</dt>
 <dd><p>Numeric matrix of decision variables, where each row
-  corresponds to a solution and each column an individual.</p></dd>
+corresponds to a solution and each column an individual.</p></dd>
 
 
 </dl></dd>
@@ -87,7 +87,7 @@ the candidate solution.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Updated archive list containing only non-dominated solutions after
-  reconciliation with the candidate.</p>
+reconciliation with the candidate.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -96,7 +96,6 @@ a solution A dominates B if A is greater than or equal to B in all
 objectives and strictly greater in at least one objective.</p>
 <p>Exact duplicates (within objective space) are treated as redundant and are
 not added to the archive.</p>
-
 <p>The function performs three operations:</p><ol><li><p>Checks whether the candidate is dominated by any archived solution.</p></li>
 <li><p>Identifies and removes archived solutions dominated by the candidate.</p></li>
 <li><p>Inserts the candidate if it is not dominated.</p></li>

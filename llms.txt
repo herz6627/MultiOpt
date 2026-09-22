@@ -197,7 +197,7 @@ str(test)
 - [`rand_multiopt()`](https://herz6627.github.io/MultiOpt/reference/rand_multiopt.md)
   : Multiple runs of simulated annealing
 - [`scale_traits()`](https://herz6627.github.io/MultiOpt/reference/scale_traits.md)
-  : Min-max scale trait datasets to the range \[0, 1\]
+  : Min-max scale trait datasets to the range 0, 1
 - [`shannon_diversity()`](https://herz6627.github.io/MultiOpt/reference/shannon_diversity.md)
   : Shannon diversity
 - [`singleopt_context()`](https://herz6627.github.io/MultiOpt/reference/singleopt_context.md)

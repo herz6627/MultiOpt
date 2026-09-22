@@ -2,8 +2,8 @@
 
 Produces plots showing how frequently individuals are selected across
 optimization replicates in relation to their (and other) trait values.
-This is similar to \`plot_selection\` except input values are formatted
-for \`singleopt_context\` output.
+This is similar to `plot_selection` except input values are formatted
+for `singleopt_context` output.
 
 ## Usage
 
@@ -16,17 +16,17 @@ plot_selection_single(individs_selected, trait_list)
 - individs_selected:
 
   A named list of matrices indicating selected individuals across
-  replicates (e.g. \`out\$individs_selected\` returned by
-  \`singleopt_context\`). Each element represents the results from a
+  replicates (e.g. `out$individs_selected` returned by
+  `singleopt_context`). Each element represents the results from a
   different optimization scenario.
 
 - trait_list:
 
   Named list of trait data frames, each containing a single column of
   trait values. This data does not need to be the same data supplied to
-  \`singleopt_context\`; in many cases it is preferable to use unscaled
-  or raw trait values for visualization. Trait values must be in the
-  same individual order as \`individs_selected\`. Pairwise matrices or
+  `singleopt_context`; in many cases it is preferable to use unscaled or
+  raw trait values for visualization. Trait values must be in the same
+  individual order as `individs_selected`. Pairwise matrices or
   multi-column objects are not supported.
 
 ## Value
@@ -44,7 +44,7 @@ weights).
 
 The function operates in two modes:
 
-\*\*Single trait case\*\*
+**Single trait case**
 
 - Combines trait values with selection frequency.
 
@@ -55,7 +55,7 @@ The function operates in two modes:
 - Bar fill indicates the number of replicates in which each individual
   was selected.
 
-\*\*Multi-trait case\*\*
+**Multi-trait case**
 
 - Combines all trait values into a single data frame.
 
@@ -66,7 +66,7 @@ The function operates in two modes:
 - Point fill indicates the number of replicates in which each individual
   was selected.
 
-- Pairwise plots are combined into a single figure using \`patchwork\`.
+- Pairwise plots are combined into a single figure using `patchwork`.
 
 Selection frequency is computed as the number of replicates in which an
 individual has a nonzero selection weight.

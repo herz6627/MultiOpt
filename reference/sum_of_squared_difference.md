@@ -1,10 +1,10 @@
 # \#' Compute weighted sum of squared deviations from a target value
 
 Calculates the weighted sum of squared differences between a numeric
-vector (\`v\`) and a displacement value (\`disp\`). Each squared
-deviation is weighted by a corresponding value in \`w\`.This could be
-used, e.g., to minimize the mean difference between temperature of
-origin for each sample, and temperate of a site.
+vector (`v`) and a displacement value (`disp`). Each squared deviation
+is weighted by a corresponding value in `w`.This could be used, e.g., to
+minimize the mean difference between temperature of origin for each
+sample, and temperate of a site.
 
 ## Usage
 
@@ -20,7 +20,7 @@ sum_of_squared_difference(v, w, disp = 0, direction = 1)
 
 - w:
 
-  Numeric vector of individual weights with same length as \`v\`.
+  Numeric vector of individual weights with same length as `v`.
 
 - disp:
 
@@ -37,7 +37,7 @@ sum_of_squared_difference(v, w, disp = 0, direction = 1)
 ## Value
 
 A single numeric value representing the weighted sum of squared
-deviations from \`disp\`.
+deviations from `disp`.
 
 ## Details
 

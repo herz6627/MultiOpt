@@ -62,31 +62,31 @@ multi-objective and single-objective optimization runs for comparison.</p>
 
 <dl><dt id="arg-archive-list">archive_list<a class="anchor" aria-label="anchor" href="#arg-archive-list"></a></dt>
 <dd><p>A list containing Pareto archive output,
-expected to include an element `archive_summary` with trait values.
-Either  $archive from `multiopt_sa` or `rand_multiopt` or output from `explore_pareto`</p></dd>
+expected to include an element <code>archive_summary</code> with trait values.
+Either  $archive from <code>multiopt_sa</code> or <code>rand_multiopt</code> or output from <code>explore_pareto</code></p></dd>
 
 
 <dt id="arg-multi-list">multi_list<a class="anchor" aria-label="anchor" href="#arg-multi-list"></a></dt>
 <dd><p>Optional list containing multi-objective optimization
-results from `rand_multiopt` or `multiopt_sa`. Must include either `measure_summaries` or
-`final_selection$measure_summary`.</p></dd>
+results from <code>rand_multiopt</code> or <code>multiopt_sa</code>. Must include either <code>measure_summaries</code> or
+<code>final_selection$measure_summary</code>.</p></dd>
 
 
 <dt id="arg-single-list">single_list<a class="anchor" aria-label="anchor" href="#arg-single-list"></a></dt>
 <dd><p>Optional list of single-objective optimization
-results from `singleopt_context`.</p></dd>
+results from <code>singleopt_context</code>.</p></dd>
 
 
 <dt id="arg-measure-type">measure_type<a class="anchor" aria-label="anchor" href="#arg-measure-type"></a></dt>
 <dd><p>Optional list of direction of optimization.
 List elements should have the same names as traits in archive_list and
-values should be `"minimize"`, `"maximize"`, or `"diversify"`.</p></dd>
+values should be <code>"minimize"</code>, <code>"maximize"</code>, or <code>"diversify"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A patchwork object consisting of multiple ggplot2
-  pairwise scatterplots with shared legends.</p>
+pairwise scatterplots with shared legends.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

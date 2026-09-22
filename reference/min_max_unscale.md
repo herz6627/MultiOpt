@@ -14,7 +14,7 @@ min_max_unscale(x_scaled, x_unscaled)
 - x_scaled:
 
   Numeric vector, matrix, or array containing values scaled to the range
-  \[0, 1\].
+  0, 1.
 
 - x_unscaled:
 
@@ -23,8 +23,8 @@ min_max_unscale(x_scaled, x_unscaled)
 
 ## Value
 
-An object with the same structure as \`x_scaled\`, transformed back to
-the scale of \`x_unscaled\`.
+An object with the same structure as `x_scaled`, transformed back to the
+scale of `x_unscaled`.
 
 ## Details
 
@@ -34,7 +34,7 @@ The transformation is:
 \min(x\_{ref}) \$\$
 
 The minimum and maximum used for back-transformation are calculated from
-\`x_unscaled\` with missing values ignored.
+`x_unscaled` with missing values ignored.
 
-This function assumes that \`x_scaled\` was originally generated using
+This function assumes that `x_scaled` was originally generated using
 min-max scaling based on the same reference distribution.

@@ -21,18 +21,18 @@ calculate_measure(
 - list_of_trait_data:
 
   Named list of trait datasets. Each element is passed to its
-  corresponding measure function as argument \`v\`. Trait data must be
+  corresponding measure function as argument `v`. Trait data must be
   matrices.
 
 - list_of_measures:
 
-  Named list of functions corresponding to \`list_of_trait_data\`. Each
+  Named list of functions corresponding to `list_of_trait_data`. Each
   function is applied to the matching trait dataset.
 
 - list_of_args:
 
   Optional named list of additional argument lists supplied to each
-  measure function. Names should match \`list_of_trait_data\`.
+  measure function. Names should match `list_of_trait_data`.
 
 - w:
 
@@ -44,12 +44,12 @@ A named list containing the output of each measure function.
 
 ## Details
 
-The function iterates over the named elements of \`list_of_trait_data\`,
-applies the corresponding function from \`list_of_measures\`, and
-returns the resulting values as a named list.
+The function iterates over the named elements of `list_of_trait_data`,
+applies the corresponding function from `list_of_measures`, and returns
+the resulting values as a named list.
 
 Measure functions must accept the trait data through an argument named
-\`v\`, and weights through an argument named \`w\`.
+`v`, and weights through an argument named `w`.
 
 For each trait:
 
@@ -58,9 +58,10 @@ For each trait:
 2.  The associated measure function is retrieved and validated.
 
 3.  Additional user-supplied arguments are combined with the common
-    weight vector \`w\`.
+    weight vector `w`.
 
-4.  The function is evaluated using \`do.call()\`.
+4.  The function is evaluated using
+    [`do.call()`](https://rdrr.io/r/base/do.call.html).
 
-The names of \`list_of_trait_data\`, \`list_of_measures\`, and
-\`list_of_args\` are expected to align.
+The names of `list_of_trait_data`, `list_of_measures`, and
+`list_of_args` are expected to align.

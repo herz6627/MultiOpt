@@ -65,7 +65,7 @@ objective space.</p>
 
 
 <dl><dt id="arg-pareto-front">pareto_front<a class="anchor" aria-label="anchor" href="#arg-pareto-front"></a></dt>
-<dd><p>`archive_summary` output (non-dominated archive) from a
+<dd><p><code>archive_summary</code> output (non-dominated archive) from a
 simulated annealing run where rows are non-dominated archive values and a column for each trait.
 Only two traits at a time are possible.</p></dd>
 
@@ -89,7 +89,6 @@ This should be automatically accounted for when using the MultiOpt measure funct
 as MultiOpt simulated annealing attempts to maximize objectives
 (measure functions will add a negative for minimizations).
 Thus it is important to not do any transformations to the Pareto outputs before calculating PSI.</p>
-
 <p>The Pareto Shape Index is calculated following Equations (4)–(6) of
 Unal et al. (2017). For each pair of Pareto-optimal solutions
 \(i\) and \(j\), the intersection of the corresponding solution lines
@@ -104,7 +103,7 @@ S_{i,k} - S_{i,l} - S_{j,k} + S_{j,l}
 $$</p>
 <p>where \(S_{i,k}\) and \(S_{i,l}\) are the normalized objective values
 for solution \(i\). Trait values should be normalized to the interval
-[0, 1] and transformed to a common optimization direction (minimizing or maximizing) prior to
+0, 1 and transformed to a common optimization direction (minimizing or maximizing) prior to
 computing the index.</p>
 <p>The signed distance of each intersection from the center of the normalized
 objective space is then</p>
