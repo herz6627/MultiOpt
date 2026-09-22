@@ -9,7 +9,7 @@ trait_coverage(v, w, n_bins = 10)
 \arguments{
 \item{v}{single-column matrix of numeric values. Will be coerced to a vector.}
 
-\item{w}{Numeric vector of individual weights with same length as `v`.
+\item{w}{Numeric vector of individual weights with same length as \code{v}.
 to the observations in v. Values with a count of zero are excluded
 from the selected subset.}
 
@@ -31,7 +31,6 @@ bins. The function counts how many bins contain observations in the full
 dataset and how many contain observations in the selected subset, defined
 by the selection counts in w. The returned value is the proportion of
 occupied bins in the subset relative to the full dataset.
-
 
 This function does not measure how well the proposed subset matches the
 distribution of trait data. For this type of measurement,

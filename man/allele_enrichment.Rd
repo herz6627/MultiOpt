@@ -16,13 +16,13 @@ If NULL, all individuals are weighted equally.}
 If NULL, loci are weighted equally.}
 
 \item{rec}{Logical. If TRUE, heterozygotes (1) are treated as 0,
- enforcing a recessive model where only homozygotes for the allele contribute.
+enforcing a recessive model where only homozygotes for the allele contribute.
 @param direction numeric scalar. Multiplier applied to the final metric value
- to control orientation. Use 1 for default direction, -1 to invert the sign.}
+to control orientation. Use 1 for default direction, -1 to invert the sign.}
 }
 \value{
 A single numeric value representing the weighted allele enrichment index.
-  Higher values indicate greater enrichment of the allele across individuals and loci.
+Higher values indicate greater enrichment of the allele across individuals and loci.
 }
 \description{
 Calculates enrichment of desirable allele. Given genotypes (v),

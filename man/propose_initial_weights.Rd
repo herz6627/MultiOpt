@@ -13,11 +13,11 @@ propose_initial_weights(n_g, n_t, w_max = NULL, w_min = NULL, verbose = FALSE)
 
 \item{w_max}{Optional integer vector of maximum allowable weights.
 May be:
- \itemize{
-   \item NULL (unconstrained)
-   \item a scalar applied to all individuals.
-   \item a vector of length n_g (number of individuals with trait data)
- }}
+\itemize{
+\item NULL (unconstrained)
+\item a scalar applied to all individuals.
+\item a vector of length n_g (number of individuals with trait data)
+}}
 
 \item{w_min}{Optional integer vector of minimum allowable weights.
 May be:

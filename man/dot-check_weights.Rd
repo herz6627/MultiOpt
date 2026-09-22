@@ -21,11 +21,11 @@ May be:
 
 \item{w_max}{Optional integer vector of maximum allowable weights.
 May be:
- \itemize{
-   \item NULL (unconstrained)
-   \item a scalar applied to all individuals.
-   \item a vector of length n_g (number of individuals with trait data)
- }}
+\itemize{
+\item NULL (unconstrained)
+\item a scalar applied to all individuals.
+\item a vector of length n_g (number of individuals with trait data)
+}}
 }
 \value{
 List of length 2 containing a vector of length n_g for both w_min and w_max

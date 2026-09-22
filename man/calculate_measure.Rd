@@ -13,15 +13,15 @@ calculate_measure(
 }
 \arguments{
 \item{list_of_trait_data}{Named list of trait datasets. Each element
-is passed to its corresponding measure function as argument `v`. Trait data must be matrices.}
+is passed to its corresponding measure function as argument \code{v}. Trait data must be matrices.}
 
 \item{list_of_measures}{Named list of functions corresponding to
-`list_of_trait_data`. Each function is applied to the matching
+\code{list_of_trait_data}. Each function is applied to the matching
 trait dataset.}
 
 \item{list_of_args}{Optional named list of additional argument lists
 supplied to each measure function. Names should match
-`list_of_trait_data`.}
+\code{list_of_trait_data}.}
 
 \item{w}{Numeric vector of weights applied across all measure functions.}
 }
@@ -36,22 +36,21 @@ and optional additional arguments.
 }
 \details{
 The function iterates over the named elements of
-`list_of_trait_data`, applies the corresponding function from
-`list_of_measures`, and returns the resulting values as a named list.
+\code{list_of_trait_data}, applies the corresponding function from
+\code{list_of_measures}, and returns the resulting values as a named list.
 
 Measure functions must accept the trait data through an argument
-named `v`, and weights through an argument named `w`.
-
+named \code{v}, and weights through an argument named \code{w}.
 
 For each trait:
 \enumerate{
-  \item The corresponding trait dataset is extracted.
-  \item The associated measure function is retrieved and validated.
-  \item Additional user-supplied arguments are combined with the
-        common weight vector `w`.
-  \item The function is evaluated using `do.call()`.
+\item The corresponding trait dataset is extracted.
+\item The associated measure function is retrieved and validated.
+\item Additional user-supplied arguments are combined with the
+common weight vector \code{w}.
+\item The function is evaluated using \code{do.call()}.
 }
 
-The names of `list_of_trait_data`, `list_of_measures`, and
-`list_of_args` are expected to align.
+The names of \code{list_of_trait_data}, \code{list_of_measures}, and
+\code{list_of_args} are expected to align.
 }

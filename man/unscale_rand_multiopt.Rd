@@ -7,20 +7,20 @@
 unscale_rand_multiopt(trait_list, rand_multiopt_output, skip_traits = NULL)
 }
 \arguments{
-\item{trait_list}{Original list of trait data as used in `rand_multiopt`.}
+\item{trait_list}{Original list of trait data as used in \code{rand_multiopt}.}
 
-\item{rand_multiopt_output}{Unmodified output from `rand_multiopt`.}
+\item{rand_multiopt_output}{Unmodified output from \code{rand_multiopt}.}
 
 \item{skip_traits}{Character vector of trait names that should not be
 back transformed.}
 }
 \value{
-Object of same dimensions and formatting as `rand_multiopt_output`.
+Object of same dimensions and formatting as \code{rand_multiopt_output}.
 }
 \description{
-This function uses the original transformed trait data provided in `rand_multiopt` and the corresponding output
-from `rand_multiopt` to back transform simulation output to the original trait scale.
-This function assumes trait data was transformed using `scale_traits`.
+This function uses the original transformed trait data provided in \code{rand_multiopt} and the corresponding output
+from \code{rand_multiopt} to back transform simulation output to the original trait scale.
+This function assumes trait data was transformed using \code{scale_traits}.
 }
 \details{
 Note that this function takes the absolute value of transformed trait variables.

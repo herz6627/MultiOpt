@@ -9,7 +9,7 @@ weighted_mean_of_vector(v, w, disp = 0, direction = 1)
 \arguments{
 \item{v}{single-column matrix of numeric values. Will be coerced to a vector.}
 
-\item{w}{Numeric vector of individual weights with same length as `v`.}
+\item{w}{Numeric vector of individual weights with same length as \code{v}.}
 
 \item{disp}{Numeric scalar target value to compare the weighted mean against. Defaults to 0.}
 
@@ -19,11 +19,11 @@ to control orientation for simulated annealing. Use 1 for default direction
 }
 \value{
 A single numeric value representing the absolute deviation between
-        the weighted mean of `v` and `disp`.
+the weighted mean of \code{v} and \code{disp}.
 }
 \description{
-Calculates the absolute difference between a weighted mean of a numeric vector (`vs`)
-and a specified target value (`disp`). Weights are applied element-wise and
+Calculates the absolute difference between a weighted mean of a numeric vector (\code{vs})
+and a specified target value (\code{disp}). Weights are applied element-wise and
 normalized by their sum. This could be used to minimize the use of individuals
 low levels of heterozygosity, or to place arbitrary
 constraints on genotype composition.

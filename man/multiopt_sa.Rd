@@ -21,7 +21,8 @@ multiopt_sa(
   nda = F,
   nd_samples = 100,
   save_chain = T,
-  verbose = T
+  verbose = T,
+  warn = T
 )
 }
 \arguments{
@@ -30,11 +31,11 @@ individuals in rows and trait values in columns.}
 
 \item{measure_list}{List of objective functions corresponding to each
 element of trait_list. Possible functions include:
-[nei_diversity()], [shannon_diversity()], [allele_enrichment()],
-[weighted_mean_of_vector()], [sum_of_squared_difference()],
-[weighted_mean_of_absolute_difference()],
-[weighted_mean_of_pairwise_matrix()], [wasserstein_measure()], or
-[trait_coverage()]. See function descriptions for specific details and
+\code{\link[=nei_diversity]{nei_diversity()}}, \code{\link[=shannon_diversity]{shannon_diversity()}}, \code{\link[=allele_enrichment]{allele_enrichment()}},
+\code{\link[=weighted_mean_of_vector]{weighted_mean_of_vector()}}, \code{\link[=sum_of_squared_difference]{sum_of_squared_difference()}},
+\code{\link[=weighted_mean_of_absolute_difference]{weighted_mean_of_absolute_difference()}},
+\code{\link[=weighted_mean_of_pairwise_matrix]{weighted_mean_of_pairwise_matrix()}}, \code{\link[=wasserstein_measure]{wasserstein_measure()}}, or
+\code{\link[=trait_coverage]{trait_coverage()}}. See function descriptions for specific details and
 required arguments.}
 
 \item{measure_args_list}{List containing additional arguments supplied
@@ -57,36 +58,39 @@ optimization.}
 
 \item{max_t}{Initial annealing temperature.}
 
-\item{min_t}{Minimum allowable temperature when `nda = TRUE`.}
+\item{min_t}{Minimum allowable temperature when \code{nda = TRUE}.}
 
-\item{p_depends_delta}{Logical; if `TRUE`, acceptance probabilities
+\item{p_depends_delta}{Logical; if \code{TRUE}, acceptance probabilities
 depend on the magnitude of objective change.}
 
-\item{acceptance_multipliers}{Numeric scalar or vector of the same length as `trait_list` controlling
+\item{acceptance_multipliers}{Numeric scalar or vector of the same length as \code{trait_list} controlling
 acceptance probability for each objective.}
 
 \item{acceptance_multiplier_all_worse}{Numeric scalar controlling
 acceptance probability when all objectives worsen simultaneously.}
 
-\item{nda}{Logical; if `TRUE`, maintain a non-dominated archive of
+\item{nda}{Logical; if \code{TRUE}, maintain a non-dominated archive of
 Pareto-optimal candidate solutions encountered during optimization.}
 
 \item{nd_samples}{Maximum number of archived non-dominated solutions
-to retain when `nda = TRUE`. Once satisfied, simulated annealing run will stop.}
+to retain when \code{nda = TRUE}. Once satisfied, simulated annealing run will stop.}
 
 \item{save_chain}{Logical; Whether to save the chain of results. Helpful to set to FALSE if trying to save storage.}
 
 \item{verbose}{If TRUE, prints status updates in the console.}
+
+\item{warn}{If TRUE will print warnings. Primarily controls warnings about
+trait scaling.}
 }
 \value{
 A list containing:
 \describe{
-  \item{final_selection}{List containing the final objective values
-  (`measure_summary`) and selected weights (`individs_selected`).}
-  \item{chain}{If `save_chain = TRUE`, a list containing optimization history, including proposed
-  weights, objective values, and acceptance status for each iteration. Otherwise `NULL`}
-  \item{archive}{If `nda = TRUE`, a list containing archived
-  non-dominated solutions (`archive_summary`) and associated weights (`archive_weights`); otherwise `NULL`.}
+\item{final_selection}{List containing the final objective values
+(\code{measure_summary}) and selected weights (\code{individs_selected}).}
+\item{chain}{If \code{save_chain = TRUE}, a list containing optimization history, including proposed
+weights, objective values, and acceptance status for each iteration. Otherwise \code{NULL}}
+\item{archive}{If \code{nda = TRUE}, a list containing archived
+non-dominated solutions (\code{archive_summary}) and associated weights (\code{archive_weights}); otherwise \code{NULL}.}
 }
 }
 \description{
@@ -145,9 +149,9 @@ multiopt_sa(
 
 }
 \seealso{
-[nei_diversity()], [shannon_diversity()], [allele_enrichment()],
-[weighted_mean_of_vector()], [sum_of_squared_difference()],
-[weighted_mean_of_absolute_difference()],
-[weighted_mean_of_pairwise_matrix()], [wasserstein_measure()],
-[trait_coverage()]
+\code{\link[=nei_diversity]{nei_diversity()}}, \code{\link[=shannon_diversity]{shannon_diversity()}}, \code{\link[=allele_enrichment]{allele_enrichment()}},
+\code{\link[=weighted_mean_of_vector]{weighted_mean_of_vector()}}, \code{\link[=sum_of_squared_difference]{sum_of_squared_difference()}},
+\code{\link[=weighted_mean_of_absolute_difference]{weighted_mean_of_absolute_difference()}},
+\code{\link[=weighted_mean_of_pairwise_matrix]{weighted_mean_of_pairwise_matrix()}}, \code{\link[=wasserstein_measure]{wasserstein_measure()}},
+\code{\link[=trait_coverage]{trait_coverage()}}
 }

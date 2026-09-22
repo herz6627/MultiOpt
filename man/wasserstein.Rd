@@ -49,7 +49,6 @@ W_p(F,G) =
 where \eqn{Q_F} and \eqn{Q_G} are the quantile functions of distributions
 \eqn{F} and \eqn{G}, respectively.
 
-
 For equally weighted distributions with the same number of observations,
 this simplifies to the mean p-th powered difference between corresponding
 ordered observations:
@@ -62,7 +61,6 @@ W_p =
 \right]^{1/p}.
 }
 
-
 When \code{p = 1}, the metric represents the average distance that trait
 values must be moved for one distribution to match the other.
 The equation also simplifies to:
@@ -74,7 +72,6 @@ W_p =
 |x_{(i)}-y_{(i)}|
 \right].
 }
-
 
 This metric can be sensitive to outliers because it tracks raw displacements
 rather than overlap.

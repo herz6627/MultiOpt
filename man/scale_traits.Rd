@@ -2,7 +2,7 @@
 % Please edit documentation in R/scale_traits.R
 \name{scale_traits}
 \alias{scale_traits}
-\title{Min-max scale trait datasets to the range [0, 1]}
+\title{Min-max scale trait datasets to the range \link{0, 1}}
 \usage{
 scale_traits(trait_list)
 }
@@ -12,15 +12,15 @@ numeric objects to be scaled independently.}
 }
 \value{
 A list of scaled trait datasets with the same structure
-  and names as `trait_list`.
+and names as \code{trait_list}.
 }
 \description{
 Applies min-max scaling to each element in a list of trait datasets,
-transforming values to the range [0, 1]. Scaling is performed
+transforming values to the range \link{0, 1}. Scaling is performed
 independently for each dataset using.
 }
 \details{
-Each element of `trait_list` is processed independently using
+Each element of \code{trait_list} is processed independently using
 min-max normalization:
 
 \deqn{

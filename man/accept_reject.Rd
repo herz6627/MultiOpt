@@ -23,7 +23,7 @@ accept_reject(
 
 \item{p_depends_delta}{If TRUE, acceptance depends on magnitude of worsening.}
 
-\item{c}{Penalty multipliers. Single value of vector of same length as `summary`.}
+\item{c}{Penalty multipliers. Single value of vector of same length as \code{summary}.}
 
 \item{c_all}{Multiplier when all objectives worsen.}
 }

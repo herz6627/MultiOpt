@@ -8,16 +8,16 @@ plot_selection(individs_selected, trait_list)
 }
 \arguments{
 \item{individs_selected}{Matrix or data structure indicating selected
-individuals across replicates as produced by `rand_multiopt` (out$individs_selected).}
+individuals across replicates as produced by \code{rand_multiopt} (out$individs_selected).}
 
 \item{trait_list}{Named list of trait data frames, each containing a
 single column of trait values. Must not contain multi-column objects
-(e.g. pairwise matrices are not supported). This data does not need to be the same supplied to `rand_multiopt`,
+(e.g. pairwise matrices are not supported). This data does not need to be the same supplied to \code{rand_multiopt},
 but does need to be in the same order for each individual.}
 }
 \value{
 A ggplot2 object (single trait case) or a patchwork object
-  containing pairwise trait scatterplots (multi-trait case).
+containing pairwise trait scatterplots (multi-trait case).
 }
 \description{
 Produces plots showing how frequently individuals are selected across
@@ -27,25 +27,24 @@ replicates. Supports both single-trait and multi-trait visualization modes.
 For each individual, selection frequency is computed as the number of
 replicates in which the individual was selected (ignoring weights).
 
-
 The function operates in two modes:
 
-**Single trait case**
+\strong{Single trait case}
 \itemize{
-  \item Aggregates trait values with selection frequency.
-  \item Produces a bar plot ordered by trait value.
-  \item Fill indicates number of replicates in which each individual
-        was selected.
+\item Aggregates trait values with selection frequency.
+\item Produces a bar plot ordered by trait value.
+\item Fill indicates number of replicates in which each individual
+was selected.
 }
 
-**Multi-trait case**
+\strong{Multi-trait case}
 \itemize{
-  \item Constructs a data frame of trait values.
-  \item Computes selection frequency per individual.
-  \item Generates all pairwise trait scatterplots.
-  \item Uses fill color to indicate selection frequency.
+\item Constructs a data frame of trait values.
+\item Computes selection frequency per individual.
+\item Generates all pairwise trait scatterplots.
+\item Uses fill color to indicate selection frequency.
 }
 
 Selection frequency is computed as the row-wise count of nonzero
-entries in `individs_selected`.
+entries in \code{individs_selected}.
 }

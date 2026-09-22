@@ -10,12 +10,12 @@ min_max_scale(x)
 \item{x}{A numeric vector, matrix, or array.}
 }
 \value{
-An object with the same structure as `x`, with values
-  scaled to the range [0, 1].
+An object with the same structure as \code{x}, with values
+scaled to the range \link{0, 1}.
 }
 \description{
 Transforms numeric values using min-max normalization, rescaling
-values to the interval [0, 1] according to:
+values to the interval \link{0, 1} according to:
 }
 \details{
 \deqn{
@@ -25,10 +25,9 @@ x_{scaled} = \frac{x - \min(x)}{\max(x) - \min(x)}
 Missing values are ignored when calculating minima and maxima.
 If missing values are present, a message is produced.
 
-
-Scaling is performed using the global minimum and maximum of `x`.
-Missing values (`NA`) are retained in the output.
+Scaling is performed using the global minimum and maximum of \code{x}.
+Missing values (\code{NA}) are retained in the output.
 
 If all non-missing values are identical, the function will return
-`NaN` values due to division by zero.
+\code{NaN} values due to division by zero.
 }

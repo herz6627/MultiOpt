@@ -9,26 +9,26 @@ rand_multiopt(n_runs = 20, parallel = F, multiopt_args, verbose = T)
 \arguments{
 \item{n_runs}{Integer. How many randomizations to run.}
 
-\item{parallel}{Logical; whether to run in parallel. If TRUE, user will need to set up the session using `future::plan()`}
+\item{parallel}{Logical; whether to run in parallel. If TRUE, user will need to set up the session using \code{future::plan()}}
 
-\item{multiopt_args}{List of arguments to supply to `multiopt_sa`}
+\item{multiopt_args}{List of arguments to supply to \code{multiopt_sa}}
 
 \item{verbose}{Whether status updates should be printed to the console.}
 }
 \value{
 a list containing:
 \describe{
-  \item{measure_summaries}{Table containing the final objective values.}
-  \item{individs_selected}{Matrix of weights for each individual (columns) for each randomization (row).}
-  \item{archive}{If `nda = TRUE`, a list containing archived
-  non-dominated solutions (`archive_summary`) and associated weights (`archive_weights`); otherwise `NULL`.
-  Archive is the combined archives over all randomizations.}
+\item{measure_summaries}{Table containing the final objective values.}
+\item{individs_selected}{Matrix of weights for each individual (columns) for each randomization (row).}
+\item{archive}{If \code{nda = TRUE}, a list containing archived
+non-dominated solutions (\code{archive_summary}) and associated weights (\code{archive_weights}); otherwise \code{NULL}.
+Archive is the combined archives over all randomizations.}
 }
 }
 \description{
-This is a wrapper function around `multiopt_sa()` for multiple replicates
+This is a wrapper function around \code{multiopt_sa()} for multiple replicates
 of the simulated annealing process. Results are summarized and condensed.
-Process can be run in parallel using the `future` package.
+Process can be run in parallel using the \code{future} package.
 }
 \examples{
 

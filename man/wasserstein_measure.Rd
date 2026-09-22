@@ -9,7 +9,7 @@ wasserstein_measure(v, w, ...)
 \arguments{
 \item{v}{single-column matrix of numeric values. Will be coerced to a vector.}
 
-\item{w}{Numeric vector of individual weights with same length as `v`.}
+\item{w}{Numeric vector of individual weights with same length as \code{v}.}
 
 \item{...}{Optional additional arguments. See \code{?wasserstein} for specific
 options.}
@@ -24,10 +24,9 @@ the original trait data distribution and the proposed subset of individuals.
 Assumes that v provides the total population distribution of trait variation.
 }
 \details{
-As `MultiOpt` aims to maximize measures, but smaller \eqn{W_p} are
+As \code{MultiOpt} aims to maximize measures, but smaller \eqn{W_p} are
 better, we multiply the \eqn{W_p} by -1 to allow for minimizing
 the differences in distributions.
-
 
 This function examines how well distributions match. If you are more interested
 in checking the full range of trait data is captured in the subset,

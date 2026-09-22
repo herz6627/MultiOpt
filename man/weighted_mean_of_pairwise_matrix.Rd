@@ -17,7 +17,7 @@ to control orientation. Use 1 for default direction, -1 to invert the sign.}
 }
 \value{
 A single numeric value representing the weighted mean pairwise value.
-        Returns NA if fewer than two weighted individuals remain.
+Returns NA if fewer than two weighted individuals remain.
 }
 \description{
 Calculates the mean value of a pairwise similarity (or distance) matrix,

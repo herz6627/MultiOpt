@@ -8,14 +8,14 @@ min_max_unscale(x_scaled, x_unscaled)
 }
 \arguments{
 \item{x_scaled}{Numeric vector, matrix, or array containing values
-scaled to the range [0, 1].}
+scaled to the range \link{0, 1}.}
 
 \item{x_unscaled}{Numeric vector, matrix, or array providing the
 reference scale used for back-transformation.}
 }
 \value{
-An object with the same structure as `x_scaled`, transformed
-  back to the scale of `x_unscaled`.
+An object with the same structure as \code{x_scaled}, transformed
+back to the scale of \code{x_unscaled}.
 }
 \description{
 Transforms values from a min-max scaled scale back to their
@@ -29,10 +29,9 @@ The transformation is:
 x = x_{scaled} \times (\max(x_{ref}) - \min(x_{ref})) + \min(x_{ref})
 }
 
-
 The minimum and maximum used for back-transformation are calculated
-from `x_unscaled` with missing values ignored.
+from \code{x_unscaled} with missing values ignored.
 
-This function assumes that `x_scaled` was originally generated using
+This function assumes that \code{x_scaled} was originally generated using
 min-max scaling based on the same reference distribution.
 }

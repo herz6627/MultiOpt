@@ -27,11 +27,11 @@ individuals in rows and trait values in columns.}
 
 \item{measure_list}{List of objective functions corresponding to each
 element of trait_list. Possible functions include:
-[nei_diversity()], [shannon_diversity()], [allele_enrichment()],
-[weighted_mean_of_vector()], [sum_of_squared_difference()],
-[weighted_mean_of_absolute_difference()],
-[weighted_mean_of_pairwise_matrix()], [wasserstein_measure()], or
-[trait_coverage()]. See function descriptions for specific details and
+\code{\link[=nei_diversity]{nei_diversity()}}, \code{\link[=shannon_diversity]{shannon_diversity()}}, \code{\link[=allele_enrichment]{allele_enrichment()}},
+\code{\link[=weighted_mean_of_vector]{weighted_mean_of_vector()}}, \code{\link[=sum_of_squared_difference]{sum_of_squared_difference()}},
+\code{\link[=weighted_mean_of_absolute_difference]{weighted_mean_of_absolute_difference()}},
+\code{\link[=weighted_mean_of_pairwise_matrix]{weighted_mean_of_pairwise_matrix()}}, \code{\link[=wasserstein_measure]{wasserstein_measure()}}, or
+\code{\link[=trait_coverage]{trait_coverage()}}. See function descriptions for specific details and
 required arguments.}
 
 \item{measure_args_list}{List containing additional arguments supplied
@@ -54,34 +54,34 @@ optimization.}
 
 \item{max_t}{Initial annealing temperature.}
 
-\item{p_depends_delta}{Logical; if `TRUE`, acceptance probabilities
+\item{p_depends_delta}{Logical; if \code{TRUE}, acceptance probabilities
 depend on the magnitude of objective change.}
 
-\item{acceptance_multipliers}{Numeric scalar or vector of the same length as `trait_list` controlling
+\item{acceptance_multipliers}{Numeric scalar or vector of the same length as \code{trait_list} controlling
 acceptance probability for each objective.}
 
 \item{verbose}{If TRUE, prints status updates in the console.}
 
 \item{n_runs}{Integer. How many randomizations to run.}
 
-\item{parallel}{Logical; whether to run in parallel. If TRUE, user will need to set up the session using `future::plan()`}
+\item{parallel}{Logical; whether to run in parallel. If TRUE, user will need to set up the session using \code{future::plan()}}
 }
 \value{
-A list of the same length of `trait_list` with an element for each
-trait found in `trait_list`. Within each list element, a table with measure
+A list of the same length of \code{trait_list} with an element for each
+trait found in \code{trait_list}. Within each list element, a table with measure
 results for each trait is returned, with the column with the same name as the
 list element being the single objective used in the simulated annealing run(s).
 }
 \description{
 This function aims to address "If I prioritize a single trait for simulated annealing,
 what are the results of the other traits?." This is complimentary analysis
-to `multiopt_sa` and `rand_multiopt`, allowing users to explore what trade offs
+to \code{multiopt_sa} and \code{rand_multiopt}, allowing users to explore what trade offs
 happen when incorporating multiple objectives. No chains or archives are returned.
 }
 \details{
-Compatible with parallel computing when n_reps > 1. See `rand_multiopt()` for more details.
+Compatible with parallel computing when n_reps > 1. See \code{rand_multiopt()} for more details.
 
-Output value can be back transformed using `unscale_singleopt`.
+Output value can be back transformed using \code{unscale_singleopt}.
 }
 \examples{
 

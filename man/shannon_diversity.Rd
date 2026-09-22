@@ -14,13 +14,13 @@ Entries are assumed to be allele counts (0, 1, 2).}
 nrow(v)). If NULL, all individuals are treated equally.}
 
 \item{q}{Diversity order:
- \describe{
-   \item{0}{Locus polymorphism indicator (monomorphic = 1, polymorphic = 2)}
-   \item{1}{Shannon diversity (Hill number q = 1)}
-   \item{2}{Simpson diversity (Hill number q = 2)}
- }
+\describe{
+\item{0}{Locus polymorphism indicator (monomorphic = 1, polymorphic = 2)}
+\item{1}{Shannon diversity (Hill number q = 1)}
+\item{2}{Simpson diversity (Hill number q = 2)}
+}
 @param direction numeric scalar. Multiplier applied to the final metric value
- to control orientation. Use 1 for default direction, -1 to invert the sign.}
+to control orientation. Use 1 for default direction, -1 to invert the sign.}
 }
 \value{
 A single numeric value representing the mean per-locus Hill diversity

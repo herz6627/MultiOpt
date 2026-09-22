@@ -13,23 +13,23 @@ plot_pareto(
 }
 \arguments{
 \item{archive_list}{A list containing Pareto archive output,
-expected to include an element `archive_summary` with trait values.
-Either  $archive from `multiopt_sa` or `rand_multiopt` or output from `explore_pareto`}
+expected to include an element \code{archive_summary} with trait values.
+Either  $archive from \code{multiopt_sa} or \code{rand_multiopt} or output from \code{explore_pareto}}
 
 \item{multi_list}{Optional list containing multi-objective optimization
-results from `rand_multiopt` or `multiopt_sa`. Must include either `measure_summaries` or
-`final_selection$measure_summary`.}
+results from \code{rand_multiopt} or \code{multiopt_sa}. Must include either \code{measure_summaries} or
+\code{final_selection$measure_summary}.}
 
 \item{single_list}{Optional list of single-objective optimization
-results from `singleopt_context`.}
+results from \code{singleopt_context}.}
 
 \item{measure_type}{Optional list of direction of optimization.
 List elements should have the same names as traits in archive_list and
-values should be `"minimize"`, `"maximize"`, or `"diversify"`.}
+values should be \code{"minimize"}, \code{"maximize"}, or \code{"diversify"}.}
 }
 \value{
 A patchwork object consisting of multiple ggplot2
-  pairwise scatterplots with shared legends.
+pairwise scatterplots with shared legends.
 }
 \description{
 Generates a grid of pairwise scatterplots showing trade-offs among

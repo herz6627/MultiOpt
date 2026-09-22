@@ -9,7 +9,7 @@ sum_of_squared_difference(v, w, disp = 0, direction = 1)
 \arguments{
 \item{v}{single-column matrix of numeric values. Will be coerced to a vector.}
 
-\item{w}{Numeric vector of individual weights with same length as `v`.}
+\item{w}{Numeric vector of individual weights with same length as \code{v}.}
 
 \item{disp}{Numeric scalar target value to compare the weighted mean against. Defaults to 0.}
 
@@ -19,12 +19,12 @@ to control orientation for simulated annealing. Use 1 for default direction
 }
 \value{
 A single numeric value representing the weighted sum of squared
-        deviations from `disp`.
+deviations from \code{disp}.
 }
 \description{
 Calculates the weighted sum of squared differences between a numeric vector
-(`v`) and a displacement value (`disp`). Each squared deviation is weighted
-by a corresponding value in `w`.This could be used, e.g., to minimize
+(\code{v}) and a displacement value (\code{disp}). Each squared deviation is weighted
+by a corresponding value in \code{w}.This could be used, e.g., to minimize
 the mean difference between temperature of origin for each sample,
 and temperate of a site.
 }

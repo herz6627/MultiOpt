@@ -7,11 +7,11 @@
 plot_chain(chain_list)
 }
 \arguments{
-\item{chain_list}{Chain output from `multiopt_sa` (out$chain).}
+\item{chain_list}{Chain output from \code{multiopt_sa} (out$chain).}
 }
 \value{
 A ggplot object showing trait trajectories over iteration steps,
-  faceted by trait.
+faceted by trait.
 }
 \description{
 Visualizes the temporal trajectory of trait values through the simulated annealing

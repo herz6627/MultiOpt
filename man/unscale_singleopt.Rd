@@ -7,20 +7,20 @@
 unscale_singleopt(trait_list, singleopt_output, skip_traits = NULL)
 }
 \arguments{
-\item{trait_list}{Original list of trait data as used in `singleopt_context`.}
+\item{trait_list}{Original list of trait data as used in \code{singleopt_context}.}
 
-\item{singleopt_output}{Archive output from `singleopt_context`.}
+\item{singleopt_output}{Archive output from \code{singleopt_context}.}
 
 \item{skip_traits}{Optional characted vector specifing if any traits should
 be excluded from back transformation.}
 }
 \value{
-List with archive values and weights matching formatting of `singleopt_output`.
+List with archive values and weights matching formatting of \code{singleopt_output}.
 }
 \description{
-This function uses the original transformed trait data provided to `singleopt_context` and the corresponding output
-from `singleopt_context` to back transform archive values to the original trait scale.
-This function assumes trait data was transformed using `scale_traits`.
+This function uses the original transformed trait data provided to \code{singleopt_context} and the corresponding output
+from \code{singleopt_context} to back transform archive values to the original trait scale.
+This function assumes trait data was transformed using \code{scale_traits}.
 }
 \details{
 Note that this function takes the absolute value of transformed trait variables.

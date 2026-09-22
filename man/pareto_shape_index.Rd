@@ -7,7 +7,7 @@
 pareto_shape_index(pareto_front)
 }
 \arguments{
-\item{pareto_front}{`archive_summary` output (non-dominated archive) from a
+\item{pareto_front}{\code{archive_summary} output (non-dominated archive) from a
 simulated annealing run where rows are non-dominated archive values and a column for each trait.
 Only two traits at a time are possible.}
 }
@@ -38,7 +38,6 @@ as MultiOpt simulated annealing attempts to maximize objectives
 (measure functions will add a negative for minimizations).
 Thus it is important to not do any transformations to the Pareto outputs before calculating PSI.
 
-
 The Pareto Shape Index is calculated following Equations (4)--(6) of
 Unal et al. (2017). For each pair of Pareto-optimal solutions
 \eqn{i} and \eqn{j}, the intersection of the corresponding solution lines
@@ -58,7 +57,7 @@ Yij = (Si,k * Sj,l - Si,l * Sj,k) /
 
 where \eqn{S_{i,k}} and \eqn{S_{i,l}} are the normalized objective values
 for solution \eqn{i}. Trait values should be normalized to the interval
-[0, 1] and transformed to a common optimization direction (minimizing or maximizing) prior to
+\link{0, 1} and transformed to a common optimization direction (minimizing or maximizing) prior to
 computing the index.
 
 The signed distance of each intersection from the center of the normalized

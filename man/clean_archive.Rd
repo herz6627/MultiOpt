@@ -9,24 +9,24 @@ clean_archive(summary, wts, archive)
 \arguments{
 \item{summary}{Named list or numeric vector of objective values for the
 candidate solution. If provided as a list, it will be coerced to a numeric
-vector via `unlist()`.}
+vector via \code{unlist()}.}
 
 \item{wts}{Numeric vector decision variables associated with
 the candidate solution.}
 
 \item{archive}{List of existing non-dominated solutions. Each element is a
-  list containing:
+list containing:
 \describe{
-  \item{archive_summary}{Numeric matrix of objective values, where each row
-  corresponds to a solution and each column to an objective.}
+\item{archive_summary}{Numeric matrix of objective values, where each row
+corresponds to a solution and each column to an objective.}
 
-  \item{archive_weights}{Numeric matrix of decision variables, where each row
-  corresponds to a solution and each column an individual.}
+\item{archive_weights}{Numeric matrix of decision variables, where each row
+corresponds to a solution and each column an individual.}
 }}
 }
 \value{
 Updated archive list containing only non-dominated solutions after
-  reconciliation with the candidate.
+reconciliation with the candidate.
 }
 \description{
 Updates a Pareto archive by comparing a new mixture solution against
@@ -42,12 +42,11 @@ objectives and strictly greater in at least one objective.
 Exact duplicates (within objective space) are treated as redundant and are
 not added to the archive.
 
-
 The function performs three operations:
 \enumerate{
-  \item Checks whether the candidate is dominated by any archived solution.
-  \item Identifies and removes archived solutions dominated by the candidate.
-  \item Inserts the candidate if it is not dominated.
+\item Checks whether the candidate is dominated by any archived solution.
+\item Identifies and removes archived solutions dominated by the candidate.
+\item Inserts the candidate if it is not dominated.
 }
 }
 \examples{

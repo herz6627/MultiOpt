@@ -9,7 +9,7 @@ weighted_mean_of_absolute_difference(v, w, disp = 0, direction = 1)
 \arguments{
 \item{v}{single-column matrix of numeric values. Will be coerced to a vector.}
 
-\item{w}{Numeric vector of individual weights with same length as `v`.}
+\item{w}{Numeric vector of individual weights with same length as \code{v}.}
 
 \item{disp}{Numeric scalar target value to compare the weighted mean against. Defaults to 0.}
 
@@ -19,12 +19,12 @@ to control orientation for simulated annealing. Use 1 for default direction
 }
 \value{
 A single numeric value representing the weighted mean absolute
-        deviation of `v` from `disp`.
+deviation of \code{v} from \code{disp}.
 }
 \description{
 Calculates the weighted mean of absolute differences between a numeric vector
-(`v`) and a displacement value (`disp`). Each absolute deviation is weighted
-by a corresponding value in `w`, and the result is normalized by the sum of
+(\code{v}) and a displacement value (\code{disp}). Each absolute deviation is weighted
+by a corresponding value in \code{w}, and the result is normalized by the sum of
 weights.
 }
 \details{
