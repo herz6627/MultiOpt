@@ -49,6 +49,8 @@
 #'   to retain when `nda = TRUE`. Once satisfied, simulated annealing run will stop.
 #' @param save_chain Logical; Whether to save the chain of results. Helpful to set to FALSE if trying to save storage.
 #' @param verbose If TRUE, prints status updates in the console.
+#' @param warnings If TRUE will print warnings. Primarily controls warnings about
+#' trait scaling.
 #'
 #'
 #' @examples
@@ -125,7 +127,8 @@ multiopt_sa <- function(
     nda = F,
     nd_samples = 100,
     save_chain = T,
-    verbose = T
+    verbose = T,
+    warnings = T
 ) {
 
   objectives = length(trait_list)
@@ -139,9 +142,7 @@ multiopt_sa <- function(
     stop("All supplied measures must be functions")
   }
 
-  if(any(!sapply(trait_list, is.matrix))) stop("All trait data within 'trait_list' must be in matrix format.")
-
-  check_similar_scale(trait_list)
+  if(warnings) check_similar_scale(trait_list)
 
   if (is.null(n_t) && is.null(initial_weights)) stop("Either 'n_t' or 'initial_weights' must be provided.")
 
