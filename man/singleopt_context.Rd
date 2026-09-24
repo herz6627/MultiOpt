@@ -55,7 +55,9 @@ optimization.}
 \item{max_t}{Initial annealing temperature.}
 
 \item{p_depends_delta}{Logical; if \code{TRUE}, acceptance probabilities
-depend on the magnitude of objective change.}
+depend on the magnitude of objective change. Make sure trait and measure
+values are on similar scales, otherwise the algorithm will preferentially
+optimize the larger values.}
 
 \item{acceptance_multipliers}{Numeric scalar or vector of the same length as \code{trait_list} controlling
 acceptance probability for each objective.}

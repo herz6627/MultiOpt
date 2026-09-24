@@ -1,7 +1,7 @@
-#' Min-max scale trait datasets to the range [0, 1]
+#' Min-max scale trait datasets to the range 0 to 1
 #'
 #' Applies min-max scaling to each element in a list of trait datasets,
-#' transforming values to the range [0, 1]. Scaling is performed
+#' transforming values to the range 0 to 1. Scaling is performed
 #' independently for each dataset using.
 #'
 #' @param trait_list A list of matrices (with a single column for a trait vector or a pairwise matrix), or other
@@ -34,7 +34,7 @@ scale_traits <- function(trait_list){
 #' Min-max scale
 #'
 #' Transforms numeric values using min-max normalization, rescaling
-#' values to the interval [0, 1] according to:
+#' values to the interval 0 to 1 according to:
 #'
 #' \deqn{
 #' x_{scaled} = \frac{x - \min(x)}{\max(x) - \min(x)}
@@ -46,7 +46,7 @@ scale_traits <- function(trait_list){
 #' @param x A numeric vector, matrix, or array.
 #'
 #' @return An object with the same structure as `x`, with values
-#'   scaled to the range [0, 1].
+#'   scaled to the range 0 to 1.
 #'
 #' @details
 #' Scaling is performed using the global minimum and maximum of `x`.
@@ -75,7 +75,7 @@ min_max_scale = function(x) {
 #' }
 #'
 #' @param x_scaled Numeric vector, matrix, or array containing values
-#'   scaled to the range [0, 1].
+#'   scaled to the range of 0-1.
 #' @param x_unscaled Numeric vector, matrix, or array providing the
 #'   reference scale used for back-transformation.
 #'

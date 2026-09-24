@@ -11,11 +11,11 @@ min_max_scale(x)
 }
 \value{
 An object with the same structure as \code{x}, with values
-scaled to the range \link{0, 1}.
+scaled to the range 0 to 1.
 }
 \description{
 Transforms numeric values using min-max normalization, rescaling
-values to the interval \link{0, 1} according to:
+values to the interval 0 to 1 according to:
 }
 \details{
 \deqn{

@@ -28,7 +28,7 @@
 #' (measure functions will add a negative for minimizations).
 #' Thus it is important to not do any transformations to the Pareto outputs before calculating PSI.
 #'
-#' @param pareto_front `archive_summary` output (non-dominated archive) from a
+#' @param pareto_front \code{archive_summary} output (non-dominated archive) from a
 #' simulated annealing run where rows are non-dominated archive values and a column for each trait.
 #' Only two traits at a time are possible.
 #'
@@ -58,7 +58,7 @@
 #'
 #' where \eqn{S_{i,k}} and \eqn{S_{i,l}} are the normalized objective values
 #' for solution \eqn{i}. Trait values should be normalized to the interval
-#' [0, 1] and transformed to a common optimization direction (minimizing or maximizing) prior to
+#' 0 to 1 and transformed to a common optimization direction (minimizing or maximizing) prior to
 #' computing the index.
 #'
 #' The signed distance of each intersection from the center of the normalized

@@ -21,8 +21,7 @@ multiopt_sa(
   nda = F,
   nd_samples = 100,
   save_chain = T,
-  verbose = T,
-  warn = T
+  verbose = T
 )
 }
 \arguments{
@@ -61,7 +60,9 @@ optimization.}
 \item{min_t}{Minimum allowable temperature when \code{nda = TRUE}.}
 
 \item{p_depends_delta}{Logical; if \code{TRUE}, acceptance probabilities
-depend on the magnitude of objective change.}
+depend on the magnitude of objective change. Make sure trait and measure
+values are on similar scales, otherwise the algorithm will preferentially
+optimize the larger values.}
 
 \item{acceptance_multipliers}{Numeric scalar or vector of the same length as \code{trait_list} controlling
 acceptance probability for each objective.}
@@ -78,9 +79,6 @@ to retain when \code{nda = TRUE}. Once satisfied, simulated annealing run will s
 \item{save_chain}{Logical; Whether to save the chain of results. Helpful to set to FALSE if trying to save storage.}
 
 \item{verbose}{If TRUE, prints status updates in the console.}
-
-\item{warn}{If TRUE will print warnings. Primarily controls warnings about
-trait scaling.}
 }
 \value{
 A list containing:

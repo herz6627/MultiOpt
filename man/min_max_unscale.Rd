@@ -8,7 +8,7 @@ min_max_unscale(x_scaled, x_unscaled)
 }
 \arguments{
 \item{x_scaled}{Numeric vector, matrix, or array containing values
-scaled to the range \link{0, 1}.}
+scaled to the range of 0-1.}
 
 \item{x_unscaled}{Numeric vector, matrix, or array providing the
 reference scale used for back-transformation.}
