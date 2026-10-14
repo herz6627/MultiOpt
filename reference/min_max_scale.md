@@ -1,7 +1,7 @@
 # Min-max scale
 
 Transforms numeric values using min-max normalization, rescaling values
-to the interval 0, 1 according to:
+to the interval 0 to 1 according to:
 
 ## Usage
 
@@ -18,7 +18,7 @@ min_max_scale(x)
 ## Value
 
 An object with the same structure as `x`, with values scaled to the
-range 0, 1.
+range 0 to 1.
 
 ## Details
 

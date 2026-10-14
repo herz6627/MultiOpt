@@ -86,7 +86,9 @@ singleopt_context(
 - p_depends_delta:
 
   Logical; if `TRUE`, acceptance probabilities depend on the magnitude
-  of objective change.
+  of objective change. Make sure trait and measure values are on similar
+  scales, otherwise the algorithm will preferentially optimize the
+  larger values.
 
 - acceptance_multipliers:
 

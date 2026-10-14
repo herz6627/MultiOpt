@@ -14,7 +14,7 @@ min_max_unscale(x_scaled, x_unscaled)
 - x_scaled:
 
   Numeric vector, matrix, or array containing values scaled to the range
-  0, 1.
+  of 0-1.
 
 - x_unscaled:
 

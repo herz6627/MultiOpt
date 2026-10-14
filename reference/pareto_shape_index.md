@@ -52,8 +52,8 @@ objectives \\k\\ and \\l\\ is calculated as
 S\_{i,k} - S\_{i,l} - S\_{j,k} + S\_{j,l} } \$\$
 
 where \\S\_{i,k}\\ and \\S\_{i,l}\\ are the normalized objective values
-for solution \\i\\. Trait values should be normalized to the interval 0,
-1 and transformed to a common optimization direction (minimizing or
+for solution \\i\\. Trait values should be normalized to the interval 0
+to 1 and transformed to a common optimization direction (minimizing or
 maximizing) prior to computing the index.
 
 The signed distance of each intersection from the center of the

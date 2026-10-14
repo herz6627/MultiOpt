@@ -1,7 +1,7 @@
-# Min-max scale trait datasets to the range 0, 1
+# Min-max scale trait datasets to the range 0 to 1
 
 Applies min-max scaling to each element in a list of trait datasets,
-transforming values to the range 0, 1. Scaling is performed
+transforming values to the range 0 to 1. Scaling is performed
 independently for each dataset using.
 
 ## Usage

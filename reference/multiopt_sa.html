@@ -68,8 +68,7 @@ iteratively modified to improve one or more objective functions.</p>
 <span>  nda <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  nd_samples <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  save_chain <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  warn <span class="op">=</span> <span class="cn">T</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">T</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -133,7 +132,9 @@ optimization.</p></dd>
 
 <dt id="arg-p-depends-delta">p_depends_delta<a class="anchor" aria-label="anchor" href="#arg-p-depends-delta"></a></dt>
 <dd><p>Logical; if <code>TRUE</code>, acceptance probabilities
-depend on the magnitude of objective change.</p></dd>
+depend on the magnitude of objective change. Make sure trait and measure
+values are on similar scales, otherwise the algorithm will preferentially
+optimize the larger values.</p></dd>
 
 
 <dt id="arg-acceptance-multipliers">acceptance_multipliers<a class="anchor" aria-label="anchor" href="#arg-acceptance-multipliers"></a></dt>
@@ -162,11 +163,6 @@ to retain when <code>nda = TRUE</code>. Once satisfied, simulated annealing run 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>If TRUE, prints status updates in the console.</p></dd>
-
-
-<dt id="arg-warn">warn<a class="anchor" aria-label="anchor" href="#arg-warn"></a></dt>
-<dd><p>If TRUE will print warnings. Primarily controls warnings about
-trait scaling.</p></dd>
 
 </dl></div>
     <div class="section level2">

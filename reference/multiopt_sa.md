@@ -26,8 +26,7 @@ multiopt_sa(
   nda = F,
   nd_samples = 100,
   save_chain = T,
-  verbose = T,
-  warn = T
+  verbose = T
 )
 ```
 
@@ -94,7 +93,9 @@ multiopt_sa(
 - p_depends_delta:
 
   Logical; if `TRUE`, acceptance probabilities depend on the magnitude
-  of objective change.
+  of objective change. Make sure trait and measure values are on similar
+  scales, otherwise the algorithm will preferentially optimize the
+  larger values.
 
 - acceptance_multipliers:
 
@@ -124,11 +125,6 @@ multiopt_sa(
 - verbose:
 
   If TRUE, prints status updates in the console.
-
-- warn:
-
-  If TRUE will print warnings. Primarily controls warnings about trait
-  scaling.
 
 ## Value
 

@@ -125,7 +125,9 @@ optimization.</p></dd>
 
 <dt id="arg-p-depends-delta">p_depends_delta<a class="anchor" aria-label="anchor" href="#arg-p-depends-delta"></a></dt>
 <dd><p>Logical; if <code>TRUE</code>, acceptance probabilities
-depend on the magnitude of objective change.</p></dd>
+depend on the magnitude of objective change. Make sure trait and measure
+values are on similar scales, otherwise the algorithm will preferentially
+optimize the larger values.</p></dd>
 
 
 <dt id="arg-acceptance-multipliers">acceptance_multipliers<a class="anchor" aria-label="anchor" href="#arg-acceptance-multipliers"></a></dt>
