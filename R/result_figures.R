@@ -591,13 +591,15 @@ plot_pareto <- function(
   # get ready ---------------------------------------------------------------
 
   archive_dat = as.data.frame(archive_list$archive_summary)
-  archive_dat$group <- "Pareto"   # Assign legend category for Pareto results
 
   # get trait info
   trait_names = names(archive_dat)
 
   # all pairwise combinations
   trait_pairs <- combn(trait_names, 2, simplify = FALSE)
+
+
+  archive_dat$group <- "Pareto"   # Assign legend category for Pareto results
 
 
   ## If multi-objective results are provided ---------------------------------
@@ -703,9 +705,12 @@ plot_pareto <- function(
 
   # Shape distinguishes the result type; color distinguishes the result group
   shape_values <- c(
-    "Pareto" = 16,
-    "Multi-objective" = 3
+    "Pareto" = 16
   )
+
+  if (!is.null(multi_list)) {
+    shape_values <- c(shape_values, "Multi-objective" = 3)
+  }
 
   if (!is.null(single_list)) {
     shape_values <- c(shape_values, shapes)
@@ -771,7 +776,7 @@ plot_pareto <- function(
         ) +
         ggplot2::scale_fill_manual(
           values = cols,
-          guide = "none" # use shape legend only, not a separate fill legend
+          guide = "none" # use shape legend only
         )
 
     }
@@ -915,6 +920,7 @@ plot_pareto <- function(
     return(p)
 
   })
+
 
 
   # Combine plots and collect the shared legend -----------------------------
