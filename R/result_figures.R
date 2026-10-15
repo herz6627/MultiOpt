@@ -576,13 +576,22 @@ plot_pareto <- function(
     )
   }
 
+  if (!requireNamespace("patchwork", quietly = TRUE)) {
+    stop(
+      "Package 'patchwork' is required for this function.",
+      call. = FALSE
+    )
+  }
+
 
   if (is.null(archive_list)) stop("Archive is NULL.")
 
 
 
   # get ready ---------------------------------------------------------------
+
   archive_dat = as.data.frame(archive_list$archive_summary)
+  archive_dat$group <- "Pareto"   # Assign legend category for Pareto results
 
   # get trait info
   trait_names = names(archive_dat)
@@ -590,28 +599,34 @@ plot_pareto <- function(
   # all pairwise combinations
   trait_pairs <- combn(trait_names, 2, simplify = FALSE)
 
-  archive_dat$group <- "archive" # for legend
 
   ## If multi-objective results are provided ---------------------------------
+
   if (!is.null(multi_list)) {
 
     # try and assign
     multi_dat <- multi_list$measure_summaries
 
     # if it fails, try the other version
-    if (is.null(multi_dat)) multi_dat <- multi_list$final_selection$measure_summary
+    if (is.null(multi_dat)) {
+      multi_dat <- multi_list$final_selection$measure_summary
+    }
 
     # if that fails, we have an issue
-    if (is.null(multi_dat)) stop("There is an issue with the multi_list formatting.")
+    if (is.null(multi_dat)) {
+      stop("There is an issue with the multi_list formatting.")
+    }
 
     multi_dat = as.data.frame(multi_dat)
 
-    multi_dat$group <- "multi" # for legend
+    # Assign legend category for multi-objective results
+    multi_dat$group <- "Multi-objective"
 
   }
 
 
   ## If single-objective outputs are provided --------------------------------
+
   if (!is.null(single_list)) {
 
     single_dat <-
@@ -619,31 +634,62 @@ plot_pareto <- function(
       dplyr::bind_rows(.id = "trait") |>
       dplyr::as_tibble() |>
       dplyr::mutate(
-        group = trait # for legend
+        # Add line break to legend labels
+        group = paste0("Single-objective:\n", trait)
       )
+
+    # Make the color and shape palettes
+    single_groups <- unique(single_dat$group)
+
+    cols = grDevices::hcl.colors(
+      n = length(single_groups),
+      palette = "Purple-Yellow"
+    )
+    names(cols) <- single_groups # adding names will keep labeling consistent
+
+    shapes = rep(
+      c(22, 23, 24, 25, 21), # only want the ones with outlines
+      length.out = length(single_groups)
+    )
+    names(shapes) <- single_groups
 
   }
 
+
   ## if measure information is provided --------------------------------------
+
   if (!is.null(measure_type)) {
 
     # measure_type should specify the direction of each trait
     # check inputs
 
-    if(!all(measure_type %in% c("maximize", "minimize", "diversify"))) {
-      stop("measure_type list must contain only values of `maximize`, `minimize`, or `diversify`")
+    if (!all(measure_type %in% c("maximize", "minimize", "diversify"))) {
+      stop(
+        paste(
+          "measure_type list must contain only values of",
+          "`maximize`, `minimize`, or `diversify`"
+        )
+      )
     }
 
-    if(!setequal(names(measure_type), colnames(archive_list$archive_summary))) {
-      stop("List names for measure_type do not match names in archive_list")
+    if (
+      is.null(names(measure_type)) ||
+      !setequal(names(measure_type), colnames(archive_list$archive_summary))
+    ) {
+      stop(
+        "List names for measure_type do not match names in archive_list"
+      )
     }
 
     # set arrow direction. This will be the argument for arrow(type = )
+
     arrow_directions = lapply(measure_type, function(z) {
 
-      lookup <- c(maximize = "last",
-                  minimize = "first",
-                  diversify = "both")
+      lookup <- c(
+        maximize = "last",
+        minimize = "first",
+        diversify = "both"
+      )
 
       temp <- unname(lookup[z])
 
@@ -653,16 +699,56 @@ plot_pareto <- function(
   }
 
 
-  # make plot -------------------------------------------------------
+  # Set up legend -----------------------------------------------------------
 
-  plot_list <- lapply(trait_pairs, function(vars){
+  # Shape distinguishes the result type; color distinguishes the result group
+  shape_values <- c(
+    "Pareto" = 16,
+    "Multi-objective" = 3
+  )
+
+  if (!is.null(single_list)) {
+    shape_values <- c(shape_values, shapes)
+  }
+
+  # Only include result types that were supplied
+  legend_breaks <- "Pareto"
+
+  if (!is.null(multi_list)) {
+    legend_breaks <- c(legend_breaks, "Multi-objective")
+  }
+
+  if (!is.null(single_list)) {
+    legend_breaks <- c(legend_breaks, names(shapes))
+  }
+
+  # Set the legend symbol colors in the same order as legend_breaks
+  legend_colors <- c(
+    "black",
+    if (!is.null(multi_list)) "hotpink",
+    if (!is.null(single_list)) {
+      rep("gray20", length(shapes))
+    }
+  )
+
+  # Pareto and multi-objective symbols have no fill;
+  # single-objective symbols use their trait-specific fill colors
+  legend_fills <- c(
+    NA,
+    if (!is.null(multi_list)) NA,
+    if (!is.null(single_list)) unname(cols)
+  )
+
+
+  # make plot ---------------------------------------------------------------
+
+  plot_list <- lapply(trait_pairs, function(vars) {
 
     p <- archive_dat |>
       ggplot2::ggplot(
         ggplot2::aes(
           x = .data[[vars[1]]],
-          y = .data[[vars[2]]],
-          color = group
+          y = .data[[vars[2]]]
         )
       ) +
       ggplot2::theme_bw()
@@ -671,43 +757,28 @@ plot_pareto <- function(
     # add single-objective if needed
     if (!is.null(single_list)) {
 
-      # make the color and shape palettes
-      cols = grDevices::hcl.colors(
-        n = length(trait_names),
-        palette = "Purple-Yellow"
-      )
-      names(cols) <- trait_names # adding names will keep labeling consistent
-
-      shapes = rep(
-        c(22, 23, 24, 25, 21), # only want the ones with outlines
-        length.out = length(trait_names)
-      )
-      names(shapes) <- trait_names
-
-      # add to plot
+      # Add single-objective results using shape and fill to distinguish traits
       p <- p +
-        ggplot2::geom_point(data = single_dat,
-                            ggplot2::aes(
-                              fill = trait,
-                              shape = trait
-                            ),
-                            alpha = 0.75,
-                            size = 3,
-                            color = "gray40"
+        ggplot2::geom_point(
+          data = single_dat,
+          ggplot2::aes(
+            shape = group,
+            fill = group
+          ),
+          alpha = 0.75,
+          size = 3,
+          color = "gray20"
         ) +
-        ggplot2::scale_fill_manual(values = cols) +
-        ggplot2::scale_shape_manual(values = shapes)+
-        ggplot2::labs(
-          shape = "Single-objective\nresults",
-          fill = "Single-objective\nresults",
-          color = NULL
+        ggplot2::scale_fill_manual(
+          values = cols,
+          guide = "none" # use shape legend only, not a separate fill legend
         )
-
 
     }
 
+
     # add objective direction if specified
-    if(!is.null(measure_type)) {
+    if (!is.null(measure_type)) {
 
       # get information about the plot so far
       p_info <- ggplot2::ggplot_build(p)
@@ -726,7 +797,7 @@ plot_pareto <- function(
         x = x_lims[1] + 0.01 * diff(x_lims),
         xend = x_lims[1] + (0.01 + arrow_length) * diff(x_lims),
         y = y_lims[1],
-        yend =  y_lims[1]
+        yend = y_lims[1]
       )
 
       # Build arrow along y-axis
@@ -739,33 +810,43 @@ plot_pareto <- function(
 
       # add arrows to plot
       p <- p +
-        geom_segment(
+        ggplot2::geom_segment(
           data = x_arrow,
-          aes(x = x, xend = xend, y = y, yend = yend),
+          ggplot2::aes(
+            x = x,
+            xend = xend,
+            y = y,
+            yend = yend
+          ),
           inherit.aes = FALSE,
           linewidth = 1,
           lineend = "butt", # this makes the arrow sharp rather than smoothed
           linejoin = "mitre", # this makes the arrow sharp rather than smoothed
-          arrow = arrow(
+          arrow = grid::arrow(
             ends = arrow_directions[[vars[1]]],
             type = "closed",
             angle = 25, # width of arrow
-            length = unit(0.2, "cm")
+            length = grid::unit(0.2, "cm")
           )
         ) +
 
-        geom_segment(
+        ggplot2::geom_segment(
           data = y_arrow,
-          aes(x = x, xend = xend, y = y, yend = yend),
+          ggplot2::aes(
+            x = x,
+            xend = xend,
+            y = y,
+            yend = yend
+          ),
           inherit.aes = FALSE,
           linewidth = 1,
           lineend = "butt",
           linejoin = "mitre",
-          arrow = arrow(
+          arrow = grid::arrow(
             ends = arrow_directions[[vars[2]]],
             type = "closed",
             angle = 25,
-            length = unit(0.2, "cm")
+            length = grid::unit(0.2, "cm")
           )
         ) +
         # coord_cartesian(clip = "off") +
@@ -773,56 +854,79 @@ plot_pareto <- function(
 
     }
 
+
     # add pareto points
-    p <-  p +
+    p <- p +
       ggplot2::geom_point(
-      alpha = 0.5,
-      size = 3
-    )
+        ggplot2::aes(shape = group),
+        color = "black",
+        alpha = 0.5,
+        size = 3
+      )
+
 
     # add multi-objective if needed
     if (!is.null(multi_list)) {
 
       p <- p +
-        ggplot2::geom_point(data = multi_dat,
-                            shape = 3,
-                            alpha = 0.75,
-                            size = 3,
-                            ggplot2::aes(
-                              color = group # need to specify in aes() so it appears on the legend
-                            )
+        ggplot2::geom_point(
+          data = multi_dat,
+          ggplot2::aes(shape = group),
+          color = "hotpink",
+          alpha = 0.75,
+          size = 3
         )
 
     }
 
-    # scale front and final results
-    p <-  p +
-      ggplot2::scale_color_manual(
-        values = c(
-          "black", # Pareto front
-          "hotpink" # multi-objective results
-        ),
-        labels = c(
-          "Pareto front",
-          "Multi-objective\nresults"
-        )) +
+
+    # scale shapes and format the shared legend -----------------------------
+
+    p <- p +
+      ggplot2::scale_shape_manual(
+        values = shape_values,
+        breaks = legend_breaks,
+        drop = FALSE
+      ) +
+      ggplot2::guides(
+        shape = ggplot2::guide_legend(
+          title = NULL,
+          override.aes = list(
+            fill = legend_fills,
+            color = legend_colors,
+            alpha = 0.75,
+            size = 3
+          ),
+          nrow = 2,
+          byrow = TRUE
+        )
+      ) +
       ggplot2::labs(
-        color = NULL
+        shape = NULL
       ) +
       # add some white space to plot
-      ggplot2::scale_x_continuous(expand = ggplot2::expansion(mult = 0.2)) +
-      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = 0.2))
+      ggplot2::scale_x_continuous(
+        expand = ggplot2::expansion(mult = 0.2)
+      ) +
+      ggplot2::scale_y_continuous(
+        expand = ggplot2::expansion(mult = 0.2)
+      )
 
     return(p)
 
   })
 
+
+  # Combine plots and collect the shared legend -----------------------------
+
   final_plot <- patchwork::wrap_plots(plot_list) +
     patchwork::plot_layout(guides = "collect") &
-    ggplot2::theme(legend.position = "bottom")
+    ggplot2::theme(
+      legend.position = "bottom",
+      legend.title = ggplot2::element_blank()
+    )
 
   return(final_plot)
 
 }
-
 
