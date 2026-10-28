@@ -759,3 +759,97 @@ trait_coverage <- function(v, w, n_bins = 10) {
 }
 
 
+
+#' Compute Weighted Mean Deviation from a Target
+#'
+#' Calculates a score reflecting how closely the weighted mean of a
+#' numeric vector matches a specified target value. This can be used as an
+#' optimization objective to select collections whose weighted mean
+#' approaches a desired value. Higher scores
+#' indicate a closer match.
+#'
+#' @inheritParams weighted_mean_of_vector
+#' @param disp The target value for the weighted mean. Defaults to 0.5.
+#' @param direction Direction multiplier applied to the metric: -1 for
+#'   minimization or 1 for maximization.
+#'
+#' @return A numeric score, with higher values indicating a closer
+#'   match to the target when `direction = 1`.
+#'
+#' @details
+#' The function calculates the absolute deviation between the weighted
+#' mean and the target, then negates it so that a perfect match scores
+#' zero and increasingly poor matches have increasingly negative scores.
+#'
+#'
+#' The weighted mean is:
+#'
+#' \deqn{
+#' \bar{v}_w = \frac{\sum_{i=1}^{n} w_i v_i}{\sum_{i=1}^{n} w_i}
+#' }
+#'
+#' The optimization score is:
+#'
+#' \deqn{
+#' S = -\left|\bar{v}_w - disp\right|
+#' }
+#'
+#' where \(v_i\) is the value of individual \(i\), \(w_i\) is its
+#' corresponding weight, and \(disp\) is the target weighted mean.
+#' The score is maximized at zero when the weighted mean equals the
+#' target. More negative scores indicate greater deviation from the
+#' target.
+#'
+#' @examples
+#' v <- matrix(c(0, 0, 1, 1, 1, 0))
+#' w <- rep(1, 6)
+#'
+#' # Target a mean of 0.5 for binary data
+#' weighted_mean_deviation_from_target(v, w, disp = 0.5)
+#'
+#' # Target a mean of 10 for continuous data
+#' v <- matrix(c(8, 10, 12))
+#' weighted_mean_deviation_from_target(v, w = c(1, 2, 1), disp = 10)
+#'
+#' @export
+weighted_mean_deviation_from_target <- function(
+    v,
+    w,
+    disp = 0.5,
+    direction = 1
+) {
+
+  # run checks
+  if (!is.matrix(v)) stop("`v` must be a matrix.")
+
+  if (ncol(v) != 1) stop("`v` should have only 1 column.")
+
+  if (!is.numeric(v) || any(!is.finite(v))) {
+    stop("`v` must contain finite numeric values.")
+  }
+
+  if (!is.numeric(w) || length(v) != length(w)) {
+    stop("`w` must be numeric and have the same length as `v`.")
+  }
+
+  if (any(!is.finite(w)) || any(w < 0) || sum(w) <= 0) {
+    stop("`w` must be finite, nonnegative, and have a positive sum.")
+  }
+
+  if (length(disp) != 1 || !is.numeric(disp) || !is.finite(disp)) {
+    stop("`disp` must be a single finite numeric value.")
+  }
+
+  if (length(direction) != 1 || !direction %in% c(-1, 1)) {
+    stop("`direction` must be -1 or 1.")
+  }
+
+  # calculate
+  weighted_mean <- sum(as.numeric(v) * w) / sum(w)
+
+  score <- -abs(weighted_mean - disp)
+
+  direction * score
+}
+
+
